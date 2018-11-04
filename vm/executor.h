@@ -3,11 +3,16 @@
 
 #include <stdint.h>
 #include "stack.h"
+#include "stream.h"
 
-typedef uint64_t (*EXECUTOR)(STACK*, uint64_t);
+typedef char* (*EXECUTOR)(STACK* stack, char* instruction_ptr, STREAM* program);
 
-uint64_t nop_executor(STACK *, uint64_t);
+char* halt_executor(STACK *stack, char *instruction_ptr, STREAM *program);
 
-uint64_t push_executor(STACK *, uint64_t);
+char* nop_executor(STACK *stack, char *instruction_ptr, STREAM *program);
+
+char* push_executor(STACK *stack, char *instruction_ptr, STREAM *program);
+
+char* pop_executor(STACK *stack, char *instruction_ptr, STREAM *program);
 
 #endif /* EXECUTOR_H */

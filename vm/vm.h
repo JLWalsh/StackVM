@@ -2,18 +2,19 @@
 #define VM_H
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "stack.h"
 #include "executor.h"
 
 typedef struct VM_T
 {
-  uint64_t    *instruction_ptr;
-  uint64_t    *program;
+  char      *instruction_ptr;
+  STREAM      *program;
   STACK       stack;
   EXECUTOR    executors[256];
 } VM;
 
-VM vm_create(uint64_t* program);
+VM vm_create(STREAM* program);
 
 void vm_run(VM *vm);
 

@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 typedef struct STREAM_T {
-  char* raw;
+  char* current;
   char* select_start;
 } STREAM;
 
@@ -12,7 +12,7 @@ STREAM stream_create(char *raw);
 
 char *stream_peek(STREAM *stream);
 
-char *stream_find(STREAM *stream, char to_find);
+void stream_seek(STREAM *stream, char*);
 
 void stream_select_start(STREAM *stream);
 

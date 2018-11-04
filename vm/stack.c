@@ -26,7 +26,7 @@ OBJECT stack_top(STACK *stack)
 
 OBJECT stack_pop(STACK *stack)
 {
-  return stack->objects[stack->size--];
+  return stack->objects[--stack->size];
 }
 
 void stack_push(STACK *stack, OBJECT object)
