@@ -5,7 +5,7 @@
 STREAM stream_create(char* raw)
 {
     STREAM stream;
-    stream.current = raw;
+    stream.current      = raw;
     stream.select_start = NULL;
 
     return stream;

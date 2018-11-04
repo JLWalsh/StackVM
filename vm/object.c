@@ -3,7 +3,7 @@
 OBJECT object_of_int(int16_t int_val)
 {
     OBJECT object;
-    object.type = INT;
+    object.type        = INT;
     object.val.int_val = int_val;
 
     return object;
@@ -12,7 +12,7 @@ OBJECT object_of_int(int16_t int_val)
 OBJECT object_of_uint(uint16_t uint_val)
 {
     OBJECT object;
-    object.type = UINT;
+    object.type         = UINT;
     object.val.uint_val = uint_val;
 
     return object;
@@ -21,7 +21,7 @@ OBJECT object_of_uint(uint16_t uint_val)
 OBJECT object_of_str(char* str_val)
 {
     OBJECT object;
-    object.type = STR;
+    object.type        = STR;
     object.val.str_val = str_val;
 
     return object;
@@ -30,7 +30,7 @@ OBJECT object_of_str(char* str_val)
 OBJECT object_of_ptr(void* ptr_val)
 {
     OBJECT object;
-    object.type = PTR;
+    object.type        = PTR;
     object.val.ptr_val = ptr_val;
 
     return object;

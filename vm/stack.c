@@ -4,9 +4,9 @@
 STACK stack_create(uint16_t num_objects)
 {
     STACK stack;
-    stack.objects = (OBJECT*)malloc(sizeof(OBJECT) * num_objects);
+    stack.objects  = (OBJECT*)malloc(sizeof(OBJECT) * num_objects);
     stack.max_size = num_objects;
-    stack.size = 0;
+    stack.size     = 0;
 
     return stack;
 }

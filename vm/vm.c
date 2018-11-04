@@ -7,8 +7,8 @@ VM vm_create(STREAM* program)
     STACK stack = stack_create(10);
 
     VM vm;
-    vm.stack = stack;
-    vm.program = program;
+    vm.stack           = stack;
+    vm.program         = program;
     vm.instruction_ptr = stream_peek(program);
 
     vm.executors[0] = nop_executor;
