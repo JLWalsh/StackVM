@@ -21,9 +21,7 @@ char* push_executor(STACK* stack, char* instruction_ptr, STREAM* program)
     OBJECT obj = object_parse(program);
     stack_push(stack, obj);
 
-    printf("Pushing type %u\n", obj.type);
-
-    return stream_peek(program) + sizeof(char); // Includes \0
+    return stream_peek(program) + 1;
 }
 
 char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
@@ -78,4 +76,6 @@ char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program)
             stack_push(stack, a);
         }
     }
+
+    return instruction_ptr + sizeof(OPCODE);
 }
