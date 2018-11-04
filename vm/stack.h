@@ -6,11 +6,11 @@
 
 #include "object.h"
 
-typedef struct
+typedef struct STACK_T
 {
-  uint16_t max_size;
-  uint16_t size;
-  OBJECT *objects;
+  uint16_t  max_size;
+  uint16_t  size;
+  OBJECT    *objects;
 } STACK;
 
 STACK stack_create(uint16_t num_objects);

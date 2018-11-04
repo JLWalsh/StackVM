@@ -10,15 +10,15 @@ enum TYPE {
   STR
 };
 
-typedef struct
+typedef struct OBJECT_T
 {
   uint16_t type;
 
   union val {
-    uint16_t uint_val;
-    int16_t int_val;
-    char *str_val;
-    void *ptr_val;
+    uint16_t  uint_val;
+    int16_t   int_val;
+    char      *str_val;
+    void      *ptr_val;
   } val;
 
 } OBJECT;

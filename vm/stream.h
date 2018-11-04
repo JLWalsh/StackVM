@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef struct {
+typedef struct STREAM_T {
   char* raw;
   char* select_start;
 } STREAM;
