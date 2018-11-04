@@ -1,4 +1,5 @@
 #include "stack.h"
+#include <malloc.h>
 
 STACK stack_create(uint16_t num_objects)
 {

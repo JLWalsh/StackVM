@@ -1,9 +1,7 @@
 #ifndef INCLUDE_STACK
 #define INCLUDE_STACK
 
-#include <malloc.h>
 #include <stdint.h>
-
 #include "object.h"
 
 typedef struct STACK_T

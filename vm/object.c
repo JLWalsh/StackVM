@@ -1,5 +1,4 @@
 #include "object.h"
-#include "stdio.h"
 
 OBJECT object_of_int(int16_t int_val)
 {
@@ -43,9 +42,6 @@ OBJECT object_parse(STREAM *stream) {
       return object_of_uint(uint_val);
     }
     case STR: {
-      // char* string_end = stream_find(stream, '\0');
-      // size_t advance = string_end - stream_peek(stream);
-      // char* string = stream_advance(stream, advance);
       stream_select_start(stream);
 
       while(*stream_peek(stream) != '\0') {

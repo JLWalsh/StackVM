@@ -1,7 +1,6 @@
-#include <malloc.h>
-#include <stdio.h>
 #include "stream.h"
-#include "string.h"
+#include <malloc.h>
+#include <string.h>
 
 STREAM stream_create(char *raw)
 {
