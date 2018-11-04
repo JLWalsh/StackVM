@@ -23,6 +23,8 @@ typedef struct OBJECT_T {
 
 } OBJECT;
 
+void object_free(OBJECT);
+
 OBJECT object_of_int(int16_t int_val);
 
 OBJECT object_of_uint(uint16_t uint_val);
