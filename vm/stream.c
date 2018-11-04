@@ -2,44 +2,47 @@
 #include <malloc.h>
 #include <string.h>
 
-STREAM stream_create(char *raw)
+STREAM stream_create(char* raw)
 {
-  STREAM stream;
-  stream.current = raw;
-  stream.select_start = NULL;
+    STREAM stream;
+    stream.current = raw;
+    stream.select_start = NULL;
 
-  return stream;
+    return stream;
 }
 
-char *stream_peek(STREAM *stream)
+char* stream_peek(STREAM* stream)
 {
-  return stream->current;
+    return stream->current;
 }
 
-void stream_seek(STREAM *stream, char *pos) {
-  stream->current = pos;
-}
-
-char *stream_advance(STREAM *stream, size_t advancement)
+void stream_seek(STREAM* stream, char* pos)
 {
-  char *value = stream->current;
-
-  stream->current += advancement;
-
-  return value;
+    stream->current = pos;
 }
 
-void stream_select_start(STREAM *stream) {
-  stream->select_start = stream->current;
+char* stream_advance(STREAM* stream, size_t advancement)
+{
+    char* value = stream->current;
+
+    stream->current += advancement;
+
+    return value;
 }
 
-char *stream_select_end(STREAM *stream) {
-  size_t length = stream->current - stream->select_start + 1;
-  
-  char* selection = (char*) malloc(length * sizeof(char));
-  strncpy(selection, stream->select_start, length);
-  
-  stream->select_start = NULL;
+void stream_select_start(STREAM* stream)
+{
+    stream->select_start = stream->current;
+}
 
-  return selection;
+char* stream_select_end(STREAM* stream)
+{
+    size_t length = stream->current - stream->select_start + 1;
+
+    char* selection = (char*)malloc(length * sizeof(char));
+    strncpy(selection, stream->select_start, length);
+
+    stream->select_start = NULL;
+
+    return selection;
 }

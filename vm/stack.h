@@ -1,24 +1,23 @@
 #ifndef INCLUDE_STACK
 #define INCLUDE_STACK
 
-#include <stdint.h>
 #include "object.h"
+#include <stdint.h>
 
-typedef struct STACK_T
-{
-  uint16_t  max_size;
-  uint16_t  size;
-  OBJECT    *objects;
+typedef struct STACK_T {
+    uint16_t max_size;
+    uint16_t size;
+    OBJECT* objects;
 } STACK;
 
 STACK stack_create(uint16_t num_objects);
 
 void stack_free(STACK stack);
 
-OBJECT stack_pop(STACK *stack);
+OBJECT stack_pop(STACK* stack);
 
-void stack_push(STACK *stack, OBJECT object);
+void stack_push(STACK* stack, OBJECT object);
 
-OBJECT stack_top(STACK *stack);
+OBJECT stack_top(STACK* stack);
 
 #endif
