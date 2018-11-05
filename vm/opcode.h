@@ -23,8 +23,8 @@ enum OPCODES {
     OP_S_CAT, // Concatenate two strings
 
     // Memory operations
-    OP_GLOAD, // Load from memory
-    OP_GSTORE, // Store to memory
+    OP_GLOAD, // Load from (global) memory
+    OP_GSTORE, // Store to (global) memory
     OP_LOAD, // Load from local (frame) memory
     OP_STORE, // Store to local (frame) memory
 
