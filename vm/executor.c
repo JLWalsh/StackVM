@@ -1,6 +1,8 @@
 #include "executor.h"
 #include "opcode.h"
 #include "stdio.h"
+#include <stdlib.h>
+#include <string.h>
 
 char* halt_executor(STACK* stack, char* instruction_ptr, STREAM* program)
 {
@@ -19,9 +21,7 @@ char* push_executor(STACK* stack, char* instruction_ptr, STREAM* program)
     OBJECT obj = object_parse(program);
     stack_push(stack, obj);
 
-    printf("Pushing type %u\n", obj.type);
-
-    return stream_peek(program) + sizeof(char); // Includes \0
+    return stream_peek(program) + 1;
 }
 
 char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
@@ -44,6 +44,37 @@ char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
     default: {
         printf("Unrecognized type: %u\n", popped.type);
     }
+    }
+
+    return instruction_ptr + sizeof(OPCODE);
+}
+
+char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program)
+{
+    OBJECT a = stack_pop(stack);
+    OBJECT b = stack_pop(stack);
+
+    if (a.type == b.type) {
+        if (a.type == INT) {
+            OBJECT c = object_of_int(a.val.int_val + b.val.int_val);
+
+            stack_push(stack, c);
+        }
+
+        if (a.type == UINT) {
+            OBJECT c = object_of_uint(a.val.uint_val + b.val.uint_val);
+
+            stack_push(stack, c);
+        }
+
+        if (a.type == STR) {
+            size_t new_len = strlen(a.val.str_val) + strlen(b.val.str_val) + 1;
+            realloc(a.val.str_val, new_len);
+            strcat(a.val.str_val, b.val.str_val);
+
+            object_free(b);
+            stack_push(stack, a);
+        }
     }
 
     return instruction_ptr + sizeof(OPCODE);

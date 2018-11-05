@@ -1,4 +1,16 @@
 #include "object.h"
+#include <stdlib.h>
+
+void object_free(OBJECT obj)
+{
+    if (obj.type == PTR) {
+        free(obj.val.ptr_val);
+    }
+
+    if (obj.type == STR) {
+        free(obj.val.str_val);
+    }
+}
 
 OBJECT object_of_int(int16_t int_val)
 {

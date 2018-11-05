@@ -15,6 +15,7 @@ VM vm_create(STREAM* program)
     vm.executors[1] = push_executor;
     vm.executors[2] = pop_executor;
     vm.executors[3] = halt_executor;
+    vm.executors[4] = dadd_executor;
 
     return vm;
 }

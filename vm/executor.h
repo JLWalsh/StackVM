@@ -15,4 +15,6 @@ char* push_executor(STACK* stack, char* instruction_ptr, STREAM* program);
 
 char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program);
 
+char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program);
+
 #endif /* EXECUTOR_H */
