@@ -2,6 +2,7 @@
 #define STREAM_H
 
 #include <stdint.h>
+#include <stdlib.h>
 
 typedef struct STREAM_T {
     char* current;
