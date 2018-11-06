@@ -13,8 +13,6 @@ enum TYPE {
 
 typedef uint16_t OBJECT_TYPE;
 typedef int16_t  INTEGER;
-typedef char     STRING;
-typedef uint32_t POINTER;
 typedef float    FLOAT;
 typedef double   DOUBLE;
 
