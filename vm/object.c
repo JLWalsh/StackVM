@@ -61,7 +61,7 @@ OBJECT object_parse(STREAM* stream)
         return object_of_str(str_val);
     }
     case T_PTR: {
-        uint32_t ptr_addr = *((uint32_t*)stream_advance(stream, sizeof(uint32_t)));
+        POINTER ptr_addr = *((POINTER*)stream_advance(stream, sizeof(POINTER)));
 
         return object_of_ptr((void*)ptr_addr);
     }
