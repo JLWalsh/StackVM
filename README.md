@@ -1,7 +1,7 @@
 # Stack VM
 ### A VM written in C
 
-In short, Stack VM (SVM for short) is a barebones virtual machine written in C. As the name states, it is a stack-based machine. The machine will feature detailed types (i.e not just one type to represent numbers like in JS), native string support, and (hopefully) be lightweight enough to be ported to small microcontrollers. 
+In short, Stack VM (SVM for short) is a barebones virtual machine written in C. As the name states, it is a stack-based machine. The machine will feature detailed types (i.e not just one type to represent numbers like in JS), native string support, and (hopefully) be lightweight enough to be ported to small embedded devices. 
 
 ### To get started
 In case you want to try it out or contribute to this project, you will need:
@@ -11,6 +11,12 @@ In case you want to try it out or contribute to this project, you will need:
 - The GCC compiler
   - It might compile with other compilers, but I have not tried
 - Clang-format
+
+### To build the project
+`make` or `make build`
+
+#### Or in debug
+`make build-debug`
 
 ### Example program
 This is an extremely rudimentary program that prints `Hello world!`.
