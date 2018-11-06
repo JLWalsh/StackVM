@@ -1,6 +1,6 @@
 #include "executor.h"
 #include "opcode.h"
-#include "stdio.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -29,11 +29,11 @@ char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
     OBJECT popped = stack_pop(stack);
 
     switch (popped.type) {
-    case INT: {
+    case T_INT: {
         printf("Popped INT: %i\n", popped.val.int_val);
         break;
     }
-    case STR: {
+    case T_STR: {
         printf("Popped STR: %s\n", popped.val.str_val);
         break;
     }
@@ -51,15 +51,15 @@ char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program)
     OBJECT b = stack_pop(stack);
 
     if (a.type == b.type) {
-        if (a.type == INT) {
+        if (a.type == T_INT) {
             OBJECT c = object_of_int(a.val.int_val + b.val.int_val);
 
             stack_push(stack, c);
         }
 
-        if (a.type == STR) {
+        if (a.type == T_STR) {
             size_t new_len = strlen(a.val.str_val) + strlen(b.val.str_val) + 1;
-            realloc(a.val.str_val, new_len);
+            a.val.str_val  = realloc(a.val.str_val, new_len);
             strcat(a.val.str_val, b.val.str_val);
 
             object_free(b);

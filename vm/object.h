@@ -2,36 +2,33 @@
 #define INCLUDE_OBJECT
 
 #include "stream.h"
+#include "type.h"
 #include <stdint.h>
 
-enum TYPE {
-    INT,
-    UINT,
-    STR,
-    PTR
-};
-
 typedef struct OBJECT_T {
-    uint16_t type;
+    OBJECT_TYPE type;
 
     union val {
-        uint16_t uint_val;
-        int16_t int_val;
-        char* str_val;
-        void* ptr_val;
+        INTEGER int_val;
+        char*   str_val;
+        void*   ptr_val;
+        DOUBLE  dbl_val;
+        FLOAT   flt_val;
     } val;
 
 } OBJECT;
 
 void object_free(OBJECT);
 
-OBJECT object_of_int(int16_t int_val);
-
-OBJECT object_of_uint(uint16_t uint_val);
+OBJECT object_of_int(INTEGER int_val);
 
 OBJECT object_of_str(char* str_val);
 
 OBJECT object_of_ptr(void* ptr_val);
+
+OBJECT object_of_dbl(DOUBLE dbl_val);
+
+OBJECT object_of_flt(FLOAT flt_val);
 
 OBJECT object_parse(STREAM* stream);
 

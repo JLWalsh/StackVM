@@ -112,7 +112,7 @@ enum OPCODES {
 
     // Pointer operations
     OP_P_CMP,
-    OP_P_NULL_CMP, // Compare against null
-}
+    OP_P_NULL_CMP // Compare against null
+};
 
 #endif /* OPCODE_H */

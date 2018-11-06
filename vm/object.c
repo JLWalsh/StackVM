@@ -3,29 +3,20 @@
 
 void object_free(OBJECT obj)
 {
-    if (obj.type == PTR) {
+    if (obj.type == T_PTR) {
         free(obj.val.ptr_val);
     }
 
-    if (obj.type == STR) {
+    if (obj.type == T_STR) {
         free(obj.val.str_val);
     }
 }
 
-OBJECT object_of_int(int16_t int_val)
+OBJECT object_of_int(INTEGER int_val)
 {
     OBJECT object;
-    object.type        = INT;
+    object.type        = T_INT;
     object.val.int_val = int_val;
-
-    return object;
-}
-
-OBJECT object_of_uint(uint16_t uint_val)
-{
-    OBJECT object;
-    object.type         = UINT;
-    object.val.uint_val = uint_val;
 
     return object;
 }
@@ -33,7 +24,7 @@ OBJECT object_of_uint(uint16_t uint_val)
 OBJECT object_of_str(char* str_val)
 {
     OBJECT object;
-    object.type        = STR;
+    object.type        = T_STR;
     object.val.str_val = str_val;
 
     return object;
@@ -42,7 +33,7 @@ OBJECT object_of_str(char* str_val)
 OBJECT object_of_ptr(void* ptr_val)
 {
     OBJECT object;
-    object.type        = PTR;
+    object.type        = T_PTR;
     object.val.ptr_val = ptr_val;
 
     return object;
@@ -50,20 +41,15 @@ OBJECT object_of_ptr(void* ptr_val)
 
 OBJECT object_parse(STREAM* stream)
 {
-    uint16_t type = *((uint16_t*)stream_advance(stream, sizeof(uint16_t)));
+    OBJECT_TYPE type = *((OBJECT_TYPE*)stream_advance(stream, sizeof(OBJECT_TYPE)));
 
     switch (type) {
-    case INT: {
-        int16_t int_val = *((int16_t*)stream_advance(stream, sizeof(int16_t)));
+    case T_INT: {
+        INTEGER int_val = *((INTEGER*)stream_advance(stream, sizeof(INTEGER)));
 
         return object_of_int(int_val);
     }
-    case UINT: {
-        uint16_t uint_val = *((uint16_t*)stream_advance(stream, sizeof(uint16_t)));
-
-        return object_of_uint(uint_val);
-    }
-    case STR: {
+    case T_STR: {
         stream_select_start(stream);
 
         while (*stream_peek(stream) != '\0') {
@@ -74,8 +60,8 @@ OBJECT object_parse(STREAM* stream)
 
         return object_of_str(str_val);
     }
-    case PTR: {
-        uint64_t ptr_addr = *((uint64_t*)stream_advance(stream, sizeof(uint64_t)));
+    case T_PTR: {
+        POINTER ptr_addr = *((POINTER*)stream_advance(stream, sizeof(POINTER)));
 
         return object_of_ptr((void*)ptr_addr);
     }
