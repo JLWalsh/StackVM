@@ -1,0 +1,5 @@
+OP_I_ADD,
+OP_I_SUB,
+OP_I_MUL,
+OP_I_DIV,
+OP_I_NEG,
