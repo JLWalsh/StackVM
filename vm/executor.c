@@ -1,6 +1,6 @@
 #include "executor.h"
 #include "opcode.h"
-#include "stdio.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -59,7 +59,7 @@ char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program)
 
         if (a.type == STR) {
             size_t new_len = strlen(a.val.str_val) + strlen(b.val.str_val) + 1;
-            realloc(a.val.str_val, new_len);
+            a.val.str_val  = realloc(a.val.str_val, new_len);
             strcat(a.val.str_val, b.val.str_val);
 
             object_free(b);
