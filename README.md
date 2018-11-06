@@ -1,5 +1,6 @@
 # Stack VM
 ### A VM written in C
+[![Build Status](https://travis-ci.org/JLWalsh/StackVM.svg?branch=master)](https://travis-ci.org/JLWalsh/StackVM)
 
 In short, Stack VM (SVM for short) is a barebones virtual machine written in C. As the name states, it is a stack-based machine. The machine will feature detailed types (i.e not just one type to represent numbers like in JS), native string support, and (hopefully) be lightweight enough to be ported to small microcontrollers. 
 
