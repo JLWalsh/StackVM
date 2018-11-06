@@ -33,10 +33,6 @@ char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
         printf("Popped INT: %i\n", popped.val.int_val);
         break;
     }
-    case UINT: {
-        printf("Popped UINT: %u\n", popped.val.uint_val);
-        break;
-    }
     case STR: {
         printf("Popped STR: %s\n", popped.val.str_val);
         break;
@@ -57,12 +53,6 @@ char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program)
     if (a.type == b.type) {
         if (a.type == INT) {
             OBJECT c = object_of_int(a.val.int_val + b.val.int_val);
-
-            stack_push(stack, c);
-        }
-
-        if (a.type == UINT) {
-            OBJECT c = object_of_uint(a.val.uint_val + b.val.uint_val);
 
             stack_push(stack, c);
         }
