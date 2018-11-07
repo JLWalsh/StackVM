@@ -4,13 +4,27 @@ import os
 OPCODE_PREFIX = "OP"
 OPCODE_TEXT_SEPARATOR = "_"
 
-def split_lines(file):
-    file_clean = file.replace("\r", "")
+def extract_raw_opcodes(file):
+    file_clean = file.replace("\r", "").replace(",", "").replace(" ", "")
     
-    return file_clean.split("\n")
+    lines = file_clean.split("\n")
+    raw_opcodes = []
+
+    for line in lines:
+      try:
+        comment_start = line.index('//')
+        raw_opcode = line[:comment_start]
+
+        if raw_opcode:
+          raw_opcodes.append(raw_opcode)
+      except:
+        if line:
+          raw_opcodes.append(line)
+
+    return raw_opcodes
 
 def extract_opcode_name(raw_opcode):
-    opcode = raw_opcode.replace(OPCODE_PREFIX, "").replace(OPCODE_TEXT_SEPARATOR, "").replace("   ", "").replace(",", "")
+    opcode = raw_opcode.replace(OPCODE_PREFIX, "").replace(OPCODE_TEXT_SEPARATOR, "").replace("   ", "")
 
     return opcode.lower()
 
@@ -23,16 +37,20 @@ def create_definition(opcode):
 def create_declaration(opcode):
     return create_signature(opcode) + ';'
 
+def create_assignement(raw_opcode, opcode):
+    return f'vm.executors[{raw_opcode}] = {opcode};'
+
 def write_file(name, content):
     with open(name, 'w') as file:
         file.write('\n'.join(content))
 
 def main():
     parser = argparse.ArgumentParser(description="Generate executor function signatures for opcodes")
-    parser.add_argument('filename', 
-    help='The file which contains the list of the opcodes, separated by \\n')
+    
+    parser.add_argument('filename', help='The file which contains the list of the opcodes, separated by \\n')
     parser.add_argument('--declarations', action='store_true')
     parser.add_argument('--definitions', action='store_true')
+    parser.add_argument('--array-assignment', action='store_true')
 
     args = parser.parse_args()
 
@@ -40,7 +58,7 @@ def main():
 
     with open(args.filename, 'r') as opcodes_file:
         data = opcodes_file.read()
-        raw_opcodes = split_lines(data)
+        raw_opcodes = extract_raw_opcodes(data)
         opcodes = [extract_opcode_name(opcode) for opcode in raw_opcodes]
 
         if args.declarations:
@@ -50,6 +68,10 @@ def main():
         if args.definitions:
             definitions = [create_definition(opcode) for opcode in opcodes]
             write_file(f'{filename_no_ext}.definitions.c', definitions)
+
+        if args.array_assignment:
+            assignements = [create_assignement(raw_opcode, opcode) for raw_opcode, opcode in zip(raw_opcodes, opcodes)]
+            write_file(f'{filename_no_ext}.assignements.c', assignements)
 
 if __name__ == "__main__":
     main()
