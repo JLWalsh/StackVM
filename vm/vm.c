@@ -1,4 +1,5 @@
 #include "vm.h"
+#include "executor.h"
 #include "opcode.h"
 #include <stdio.h>
 
@@ -96,6 +97,6 @@ void vm_run(VM* vm)
 
         OPCODE opcode = *((OPCODE*)stream_advance(vm->program, sizeof(OPCODE)));
 
-        vm->instruction_ptr = vm->executors[opcode](&vm->stack, vm->instruction_ptr, vm->program);
+        // vm->instruction_ptr = vm->executors[opcode](&vm->stack, vm->instruction_ptr, vm->program);
     }
 }
