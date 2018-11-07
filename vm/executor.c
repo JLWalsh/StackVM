@@ -4,68 +4,298 @@
 #include <stdlib.h>
 #include <string.h>
 
-char* halt_executor(STACK* stack, char* instruction_ptr, STREAM* program)
+STATE op_jmp(STACK* stack, STREAM* program, STATE vm)
 {
-    printf("Halting");
-    return NULL;
 }
 
-char* nop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
+STATE op_jle(STACK* stack, STREAM* program, STATE vm)
 {
-    printf("Nooooooooooope!");
-    return instruction_ptr + sizeof(OPCODE);
 }
 
-char* push_executor(STACK* stack, char* instruction_ptr, STREAM* program)
+STATE op_jl(STACK* stack, STREAM* program, STATE vm)
 {
-    OBJECT obj = object_parse(program);
-    stack_push(stack, obj);
-
-    return stream_peek(program) + 1;
 }
 
-char* pop_executor(STACK* stack, char* instruction_ptr, STREAM* program)
+STATE op_jge(STACK* stack, STREAM* program, STATE vm)
 {
-    OBJECT popped = stack_pop(stack);
-
-    switch (popped.type) {
-    case T_INT: {
-        printf("Popped INT: %i\n", popped.val.int_val);
-        break;
-    }
-    case T_STR: {
-        printf("Popped STR: %s\n", popped.val.str_val);
-        break;
-    }
-    default: {
-        printf("Unrecognized type: %u\n", popped.type);
-    }
-    }
-
-    return instruction_ptr + sizeof(OPCODE);
 }
 
-char* dadd_executor(STACK* stack, char* instruction_ptr, STREAM* program)
+STATE op_jg(STACK* stack, STREAM* program, STATE vm)
 {
-    OBJECT a = stack_pop(stack);
-    OBJECT b = stack_pop(stack);
+}
 
-    if (a.type == b.type) {
-        if (a.type == T_INT) {
-            OBJECT c = object_of_int(a.val.int_val + b.val.int_val);
+STATE op_je(STACK* stack, STREAM* program, STATE vm)
+{
+}
 
-            stack_push(stack, c);
-        }
+STATE op_jne(STACK* stack, STREAM* program, STATE vm)
+{
+}
 
-        if (a.type == T_STR) {
-            size_t new_len = strlen(a.val.str_val) + strlen(b.val.str_val) + 1;
-            a.val.str_val  = realloc(a.val.str_val, new_len);
-            strcat(a.val.str_val, b.val.str_val);
+STATE op_call(STACK* stack, STREAM* program, STATE vm)
+{
+}
 
-            object_free(b);
-            stack_push(stack, a);
-        }
-    }
+STATE op_ret(STACK* stack, STREAM* program, STATE vm)
+{
+}
 
-    return instruction_ptr + sizeof(OPCODE);
+STATE op_retvoid(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_slen(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_scat(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_gload(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_gstore(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_load(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_store(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_halt(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_n(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_push(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_p(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_iadd(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_isub(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_imul(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_idiv(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ineg(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_irem(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_iand(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ior(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ilshift(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_irshift(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_inot(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ixor(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_itol(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_itof(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_itod(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_icmp(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ladd(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lsub(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lmul(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ldiv(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lneg(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lrem(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_land(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lor(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_llshift(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lrshift(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lnot(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lxor(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ltoi(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ltof(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ltod(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_lcmp(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_fadd(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_fsub(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_fmul(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_fdiv(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_fneg(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_frem(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ftoi(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ftol(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ftod(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_fcmp(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dadd(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dsub(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dmul(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_ddiv(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dneg(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_drem(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dtoi(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dtol(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dtof(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_dcmp(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_pcmp(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_pnullcmp(STACK* stack, STREAM* program, STATE vm)
+{
 }

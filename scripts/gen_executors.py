@@ -29,7 +29,7 @@ def extract_opcode_name(raw_opcode):
     return opcode.lower()
 
 def create_signature(opcode):
-    return f'STATE {opcode}(STACK* stack, STREAM* program, STATE vm)'
+    return f'STATE op_{opcode}(STACK* stack, STREAM* program, STATE vm)'
 
 def create_definition(opcode):
     return create_signature(opcode) + ' { \n\n}\n'
@@ -38,7 +38,7 @@ def create_declaration(opcode):
     return create_signature(opcode) + ';'
 
 def create_assignement(raw_opcode, opcode):
-    return f'vm.executors[{raw_opcode}] = {opcode};'
+    return f'vm.executors[{raw_opcode}] = op_{opcode};'
 
 def write_file(name, content):
     with open(name, 'w') as file:
