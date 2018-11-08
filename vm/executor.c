@@ -68,16 +68,47 @@ STATE op_store(STACK* stack, STREAM* program, STATE vm)
 {
 }
 
-STATE op_halt(STACK* stack, STREAM* program, STATE vm)
+STATE op_loadarg(STACK* stack, STREAM* program, STATE vm)
 {
 }
 
-STATE op_n(STACK* stack, STREAM* program, STATE vm)
+STATE op_halt(STACK* stack, STREAM* program, STATE vm)
 {
+    vm.instruction_ptr = NULL;
+
+    return vm;
+}
+
+STATE op_nop(STACK* stack, STREAM* program, STATE vm)
+{
+}
+
+STATE op_print(STACK* stack, STREAM* program, STATE vm)
+{
+    OBJECT o = stack_pop(stack);
+
+    switch (o.type) {
+    case T_INT:
+        printf("%i\n", o.val.int_val);
+        break;
+    case T_STR:
+        printf("%s\n", o.val.str_val);
+        break;
+    }
+
+    vm.instruction_ptr += sizeof(OPCODE);
+
+    return vm;
 }
 
 STATE op_push(STACK* stack, STREAM* program, STATE vm)
 {
+    OBJECT value = object_parse(program);
+    stack_push(stack, value);
+
+    vm.instruction_ptr = stream_peek(program) + sizeof(OPCODE);
+
+    return vm;
 }
 
 STATE op_p(STACK* stack, STREAM* program, STATE vm)

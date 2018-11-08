@@ -7,9 +7,9 @@
 #include <stdint.h>
 
 typedef struct VM_T {
-    char* instruction_ptr;
-    STREAM* program;
-    STACK stack;
+    STATE    state;
+    STREAM*  program;
+    STACK    stack;
     EXECUTOR executors[256];
 } VM;
 

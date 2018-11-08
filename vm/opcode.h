@@ -27,10 +27,12 @@ enum OPCODES {
     OP_GSTORE, // Store to (global) memory
     OP_LOAD, // Load from local (frame) memory
     OP_STORE, // Store to local (frame) memory
+    OP_LOADARG, // Load argument from call
 
     // Other operations
     OP_HALT, // Halt the machine
     OP_NOP, // Do nothing
+    OP_PRINT,
 
     // Stack operations
     OP_PUSH, // Push to stack

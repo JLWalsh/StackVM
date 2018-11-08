@@ -4,8 +4,8 @@
 #include "type.h"
 
 typedef struct STATE_T {
-    POINTER instruction_ptr;
-    POINTER frame_ptr;
+    char* instruction_ptr;
+    char* frame_ptr;
 } STATE;
 
 #endif /* STATE_H */

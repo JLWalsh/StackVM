@@ -8,9 +8,12 @@ VM vm_create(STREAM* program)
     STACK stack = stack_create(10);
 
     VM vm;
-    vm.stack           = stack;
-    vm.program         = program;
-    vm.instruction_ptr = stream_peek(program);
+    vm.stack   = stack;
+    vm.program = program;
+
+    STATE state;
+    state.instruction_ptr = stream_peek(program);
+    vm.state              = state;
 
     vm.executors[OP_JMP]        = op_jmp;
     vm.executors[OP_JLE]        = op_jle;
@@ -28,8 +31,10 @@ VM vm_create(STREAM* program)
     vm.executors[OP_GSTORE]     = op_gstore;
     vm.executors[OP_LOAD]       = op_load;
     vm.executors[OP_STORE]      = op_store;
+    vm.executors[OP_LOADARG]    = op_loadarg;
     vm.executors[OP_HALT]       = op_halt;
-    vm.executors[OP_NOP]        = op_n;
+    vm.executors[OP_NOP]        = op_nop;
+    vm.executors[OP_PRINT]      = op_print;
     vm.executors[OP_PUSH]       = op_push;
     vm.executors[OP_POP]        = op_p;
     vm.executors[OP_I_ADD]      = op_iadd;
@@ -92,11 +97,11 @@ VM vm_create(STREAM* program)
 
 void vm_run(VM* vm)
 {
-    while (vm->instruction_ptr != NULL) {
-        stream_seek(vm->program, vm->instruction_ptr);
+    while (vm->state.instruction_ptr != NULL) {
+        stream_seek(vm->program, vm->state.instruction_ptr);
 
         OPCODE opcode = *((OPCODE*)stream_advance(vm->program, sizeof(OPCODE)));
-
-        // vm->instruction_ptr = vm->executors[opcode](&vm->stack, vm->instruction_ptr, vm->program);
+        printf("%u \n", opcode);
+        vm->state = vm->executors[opcode](&vm->stack, vm->program, vm->state);
     }
 }
