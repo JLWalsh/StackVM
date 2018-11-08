@@ -11,7 +11,7 @@ typedef struct STREAM_T {
 
 STREAM stream_create(char* raw);
 
-char* stream_peek(STREAM* stream);
+char* stream_position(STREAM* stream);
 
 void stream_seek(STREAM* stream, char*);
 

@@ -1,7 +1,7 @@
 #include "stream.h"
 #include <malloc.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 STREAM stream_create(char* raw)
 {
@@ -12,7 +12,7 @@ STREAM stream_create(char* raw)
     return stream;
 }
 
-char* stream_peek(STREAM* stream)
+char* stream_position(STREAM* stream)
 {
     return stream->current;
 }

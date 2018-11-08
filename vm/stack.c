@@ -28,7 +28,17 @@ OBJECT stack_pop(STACK* stack)
     return stack->objects[--stack->size];
 }
 
+OBJECT stack_at(STACK* stack, INTEGER position)
+{
+    return stack->objects[position];
+}
+
 void stack_push(STACK* stack, OBJECT object)
 {
     stack->objects[stack->size++] = object;
+}
+
+POINTER stack_position(STACK* stack)
+{
+    return (POINTER)stack->objects;
 }

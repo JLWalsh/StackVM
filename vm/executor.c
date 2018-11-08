@@ -1,332 +1,78 @@
 #include "executor.h"
 #include "opcode.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-STATE op_jmp(STACK* stack, STREAM* program, STATE vm)
+STATE op_push(STACK* stack, STREAM* program, STATE state)
 {
+    INTEGER int_val = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    stack_push(stack, object_of_int(int_val));
+
+    state.instruction_ptr = stream_position(program);
+
+    return state;
 }
 
-STATE op_jle(STACK* stack, STREAM* program, STATE vm)
+STATE op_loadarg(STACK* stack, STREAM* program, STATE state)
 {
+    INTEGER offset   = stack_pop(stack).int_val;
+    POINTER position = (POINTER)state.frame_ptr + offset;
+
+    OBJECT o = stack_at(stack, position);
+
+    stack_push(stack, o);
+
+    return state;
 }
 
-STATE op_jl(STACK* stack, STREAM* program, STATE vm)
+STATE op_call(STACK* stack, STREAM* program, STATE state)
 {
+    POINTER return_addr = (POINTER)state.instruction_ptr;
+    POINTER fp_addr     = (POINTER)state.frame_ptr;
+
+    INTEGER num_args = stack_pop(stack).int_val;
+    POINTER fun_addr = stack_pop(stack).ptr_val;
+
+    state.instruction_ptr = (char*)fun_addr;
+    state.frame_ptr       = (char*)stack_position(stack);
+
+    stack_push(stack, object_of_int(num_args));
+    stack_push(stack, object_of_ptr(return_addr));
+    stack_push(stack, object_of_ptr(fp_addr));
+
+    // TODO push x times number of local vars
+
+    return state;
 }
 
-STATE op_jge(STACK* stack, STREAM* program, STATE vm)
+STATE op_return(STACK* stack, STREAM* program, STATE state)
 {
+    OBJECT return_val     = stack_pop(stack);
+    state.frame_ptr       = (char*)stack_pop(stack).ptr_val;
+    state.instruction_ptr = (char*)stack_pop(stack).ptr_val;
+
+    INTEGER num_args = stack_pop(stack).int_val;
+
+    for (int i = 0; i < num_args; i++) {
+        stack_pop(stack);
+    }
+
+    stack_push(stack, return_val);
+
+    return state;
 }
 
-STATE op_jg(STACK* stack, STREAM* program, STATE vm)
+STATE op_halt(STACK* stack, STREAM* program, STATE state)
 {
+    state.instruction_ptr = NULL;
+
+    return state;
 }
 
-STATE op_je(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_jne(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_call(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ret(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_retvoid(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_slen(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_scat(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_gload(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_gstore(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_load(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_store(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_loadarg(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_halt(STACK* stack, STREAM* program, STATE vm)
-{
-    vm.instruction_ptr = NULL;
-
-    return vm;
-}
-
-STATE op_nop(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_print(STACK* stack, STREAM* program, STATE vm)
+STATE op_print(STACK* stack, STREAM* program, STATE state)
 {
     OBJECT o = stack_pop(stack);
 
-    switch (o.type) {
-    case T_INT:
-        printf("%i\n", o.val.int_val);
-        break;
-    case T_STR:
-        printf("%s\n", o.val.str_val);
-        break;
-    }
+    printf("%i", o.int_val);
 
-    vm.instruction_ptr += sizeof(OPCODE);
-
-    return vm;
-}
-
-STATE op_push(STACK* stack, STREAM* program, STATE vm)
-{
-    OBJECT value = object_parse(program);
-    stack_push(stack, value);
-
-    vm.instruction_ptr = stream_peek(program) + sizeof(OPCODE);
-
-    return vm;
-}
-
-STATE op_p(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_iadd(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_isub(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_imul(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_idiv(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ineg(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_irem(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_iand(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ior(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ilshift(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_irshift(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_inot(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ixor(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_itol(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_itof(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_itod(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_icmp(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ladd(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lsub(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lmul(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ldiv(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lneg(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lrem(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_land(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lor(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_llshift(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lrshift(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lnot(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lxor(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ltoi(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ltof(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ltod(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_lcmp(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_fadd(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_fsub(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_fmul(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_fdiv(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_fneg(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_frem(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ftoi(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ftol(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ftod(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_fcmp(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dadd(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dsub(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dmul(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_ddiv(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dneg(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_drem(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dtoi(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dtol(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dtof(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_dcmp(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_pcmp(STACK* stack, STREAM* program, STATE vm)
-{
-}
-
-STATE op_pnullcmp(STACK* stack, STREAM* program, STATE vm)
-{
+    return state;
 }
