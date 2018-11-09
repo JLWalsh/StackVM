@@ -15,6 +15,7 @@ VM vm_create(STREAM* program)
 
     vm.executors[OP_PUSH]    = op_push;
     vm.executors[OP_LOADARG] = op_loadarg;
+    vm.executors[OP_ADD]     = op_add;
     vm.executors[OP_CALL]    = op_call;
     vm.executors[OP_RETURN]  = op_return;
     vm.executors[OP_HALT]    = op_halt;

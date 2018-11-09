@@ -14,12 +14,28 @@ STATE op_push(STACK* stack, STREAM* program, STATE state)
 
 STATE op_loadarg(STACK* stack, STREAM* program, STATE state)
 {
-    INTEGER offset   = stack_pop(stack).int_val;
+    INTEGER offset   = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
     POINTER position = (POINTER)state.frame_ptr + offset;
-
-    OBJECT o = stack_at(stack, position);
+    OBJECT  o        = *((OBJECT*)position);
+    // OBJECT o = stack_at(stack, position);
 
     stack_push(stack, o);
+
+    state.instruction_ptr = stream_position(program);
+
+    return state;
+}
+
+STATE op_add(STACK* stack, STREAM* program, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    INTEGER c = a + b;
+
+    stack_push(stack, object_of_int(c));
+
+    state.instruction_ptr = stream_position(program);
 
     return state;
 }
@@ -29,10 +45,10 @@ STATE op_call(STACK* stack, STREAM* program, STATE state)
     POINTER return_addr = (POINTER)state.instruction_ptr;
     POINTER fp_addr     = (POINTER)state.frame_ptr;
 
-    INTEGER num_args = stack_pop(stack).int_val;
-    POINTER fun_addr = stack_pop(stack).ptr_val;
+    INTEGER fun_addr = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    INTEGER num_args = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
 
-    state.instruction_ptr = (char*)fun_addr;
+    state.instruction_ptr = state.program_start_ptr + fun_addr * sizeof(char);
     state.frame_ptr       = (char*)stack_position(stack);
 
     stack_push(stack, object_of_int(num_args));
