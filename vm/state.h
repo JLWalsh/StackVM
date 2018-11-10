@@ -8,7 +8,7 @@
 typedef struct STATE_T {
     POINTER instruction_ptr;
     POINTER program_start_ptr;
-    INTEGER frame_ptr;
+    INTEGER frame_offset;
     bool    running;
 } STATE;
 

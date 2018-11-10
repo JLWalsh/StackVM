@@ -44,5 +44,7 @@ int main(int argc, char const* argv[])
 
     vm_run(&vm);
 
+    vm_free(vm);
+
     return 0;
 }

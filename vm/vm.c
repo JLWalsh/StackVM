@@ -45,3 +45,8 @@ void vm_run(VM* vm)
         vm->state = vm->executors[opcode](&vm->stack, vm->program, vm->state);
     }
 }
+
+void vm_free(VM vm)
+{
+    stack_free(vm.stack);
+}
