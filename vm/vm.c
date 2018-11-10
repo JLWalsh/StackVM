@@ -10,8 +10,8 @@ VM vm_create(STREAM* program)
     vm.stack   = stack;
     vm.program = program;
 
-    char* initial_pos = stream_position(program);
-    vm.state          = state_create(initial_pos, initial_pos);
+    POINTER initial_pos = stream_position(program);
+    vm.state            = state_create(initial_pos, &stack);
 
     vm.executors[OP_PUSH]    = op_push;
     vm.executors[OP_LOADARG] = op_loadarg;
@@ -26,7 +26,7 @@ VM vm_create(STREAM* program)
 
 void vm_run(VM* vm)
 {
-    while (vm->state.instruction_ptr != NULL) {
+    while (vm->state.running) {
         stream_seek(vm->program, vm->state.instruction_ptr);
 
         OPCODE opcode = *((OPCODE*)stream_advance(vm->program, sizeof(OPCODE)));

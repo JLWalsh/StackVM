@@ -16,8 +16,7 @@ STATE op_loadarg(STACK* stack, STREAM* program, STATE state)
 {
     INTEGER offset   = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
     INTEGER position = state.frame_ptr + offset;
-    // OBJECT  o        = *((OBJECT*)position);
-    OBJECT o = stack_at(stack, position);
+    OBJECT  o        = stack_at(stack, position);
     stack_push(stack, o);
 
     state.instruction_ptr = stream_position(program);
@@ -60,7 +59,7 @@ STATE op_return(STACK* stack, STREAM* program, STATE state)
 {
     OBJECT return_val     = stack_pop(stack);
     state.frame_ptr       = stack_pop(stack).int_val;
-    state.instruction_ptr = (char*)stack_pop(stack).ptr_val;
+    state.instruction_ptr = stack_pop(stack).ptr_val;
 
     INTEGER num_args = stack_pop(stack).int_val;
 
@@ -75,7 +74,7 @@ STATE op_return(STACK* stack, STREAM* program, STATE state)
 
 STATE op_halt(STACK* stack, STREAM* program, STATE state)
 {
-    state.instruction_ptr = NULL;
+    state.running = false;
 
     return state;
 }
