@@ -6,15 +6,9 @@
 enum TYPE {
     T_INT,
     T_STR,
-    T_PTR,
-    T_DBL,
-    T_FLT,
 };
 
-typedef uintptr_t POINTER;
-typedef uint16_t  OBJECT_TYPE;
 typedef int16_t   INTEGER;
-typedef float     FLOAT;
-typedef double    DOUBLE;
+typedef uintptr_t POINTER;
 
 #endif /* TYPE_H */

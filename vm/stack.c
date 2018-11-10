@@ -1,5 +1,6 @@
 #include "stack.h"
 #include <malloc.h>
+#include <stdio.h>
 
 STACK stack_create(uint16_t num_objects)
 {
@@ -28,7 +29,17 @@ OBJECT stack_pop(STACK* stack)
     return stack->objects[--stack->size];
 }
 
+OBJECT stack_at(STACK* stack, INTEGER position)
+{
+    return stack->objects[position];
+}
+
 void stack_push(STACK* stack, OBJECT object)
 {
     stack->objects[stack->size++] = object;
+}
+
+INTEGER stack_position(STACK* stack)
+{
+    return stack->size;
 }
