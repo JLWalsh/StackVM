@@ -21,6 +21,16 @@ VM vm_create(STREAM* program)
     vm.executors[OP_HALT]    = op_halt;
     vm.executors[OP_PRINT]   = op_print;
 
+    vm.executors[OP_I_PUSH] = op_ipush;
+    vm.executors[OP_I_ADD]  = op_iadd;
+    vm.executors[OP_I_SUB]  = op_isub;
+    vm.executors[OP_I_MUL]  = op_imul;
+    vm.executors[OP_I_DIV]  = op_idiv;
+    vm.executors[OP_I_AND]  = op_iand;
+    vm.executors[OP_I_NOT]  = op_inot;
+    vm.executors[OP_I_XOR]  = op_ixor;
+    vm.executors[OP_I_OR]   = op_ior;
+
     return vm;
 }
 

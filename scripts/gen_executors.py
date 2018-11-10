@@ -50,7 +50,7 @@ def main():
     parser.add_argument('filename', help='The file which contains the list of the opcodes, separated by \\n')
     parser.add_argument('--declarations', action='store_true')
     parser.add_argument('--definitions', action='store_true')
-    parser.add_argument('--array-assignment', action='store_true')
+    parser.add_argument('--assignments', action='store_true')
 
     args = parser.parse_args()
 
@@ -69,7 +69,7 @@ def main():
             definitions = [create_definition(opcode) for opcode in opcodes]
             write_file(f'{filename_no_ext}.definitions.c', definitions)
 
-        if args.array_assignment:
+        if args.assignments:
             assignements = [create_assignement(raw_opcode, opcode) for raw_opcode, opcode in zip(raw_opcodes, opcodes)]
             write_file(f'{filename_no_ext}.assignements.c', assignements)
 

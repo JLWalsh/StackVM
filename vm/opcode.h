@@ -14,6 +14,17 @@ enum OPCODES {
     OP_HALT,
     OP_PRINT,
 
+    // INT,
+    OP_I_PUSH,
+    OP_I_ADD,
+    OP_I_SUB,
+    OP_I_MUL,
+    OP_I_DIV,
+    OP_I_AND,
+    OP_I_NOT,
+    OP_I_XOR,
+    OP_I_OR,
+
     NUM_OF_OPCODES
 };
 
