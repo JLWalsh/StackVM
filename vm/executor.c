@@ -74,7 +74,10 @@ STATE op_return(STACK* stack, STREAM* program, STATE state)
 
 STATE op_halt(STACK* stack, STREAM* program, STATE state)
 {
-    state.running = false;
+    INTEGER exit_code = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+
+    state.running   = false;
+    state.exit_code = exit_code;
 
     return state;
 }

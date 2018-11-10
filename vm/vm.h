@@ -16,7 +16,7 @@ typedef struct VM_T {
 
 VM vm_create(STREAM* program);
 
-void vm_run(VM* vm);
+INTEGER vm_run(VM* vm);
 
 void vm_free(VM vm);
 

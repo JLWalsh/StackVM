@@ -7,6 +7,7 @@ STATE state_create(POINTER instruction_ptr, STACK* stack)
     state.program_start_ptr = instruction_ptr;
     state.frame_offset      = stack_position(stack);
     state.running           = true;
+    state.exit_code         = 0;
 
     return state;
 }

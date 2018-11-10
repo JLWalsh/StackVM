@@ -10,6 +10,7 @@ typedef struct STATE_T {
     POINTER program_start_ptr;
     INTEGER frame_offset;
     bool    running;
+    INTEGER exit_code;
 } STATE;
 
 STATE state_create(POINTER instruction_ptr, STACK* stack);

@@ -34,7 +34,7 @@ VM vm_create(STREAM* program)
     return vm;
 }
 
-void vm_run(VM* vm)
+INTEGER vm_run(VM* vm)
 {
     while (vm->state.running) {
         stream_seek(vm->program, vm->state.instruction_ptr);
@@ -44,6 +44,8 @@ void vm_run(VM* vm)
         vm->state.instruction_ptr += sizeof(OPCODE);
         vm->state = vm->executors[opcode](&vm->stack, vm->program, vm->state);
     }
+
+    return vm->state.exit_code;
 }
 
 void vm_free(VM vm)
