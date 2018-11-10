@@ -1,6 +1,6 @@
 ﻿---
 BasedOnStyle: WebKit
-AlignConsecutiveAssignments: 'true'
-AlignConsecutiveDeclarations: 'true'
-SortIncludes: 'true'
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+SortIncludes: true
 ...

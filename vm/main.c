@@ -7,6 +7,18 @@
 
 int main(int argc, char const* argv[])
 {
+    // char d[] = {
+    //     OP_PUSH, 5, 0, // PUSH
+    //     OP_CALL, 10, 0, 1, 0,
+    //     OP_PRINT,
+    //     OP_HALT,
+    //     OP_LOADARG, 0, 0,
+    //     OP_PUSH, 2, 0,
+    //     OP_ADD,
+    //     OP_RETURN,
+
+    // };
+
     char d[] = {
         OP_PUSH, 5, 0, // PUSH
         OP_CALL, 10, 0, 1, 0,
@@ -14,6 +26,12 @@ int main(int argc, char const* argv[])
         OP_HALT,
         OP_LOADARG, 0, 0,
         OP_PUSH, 2, 0,
+        OP_ADD,
+        OP_PUSH, 4, 0,
+        OP_CALL, 26, 0, 2, 0,
+        OP_RETURN,
+        OP_LOADARG, 0, 0,
+        OP_LOADARG, 1, 0,
         OP_ADD,
         OP_RETURN
     };
