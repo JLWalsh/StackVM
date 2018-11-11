@@ -1,5 +1,5 @@
+#include "executable.h"
 #include "opcode.h"
-#include "stream.h"
 #include "vm.h"
 #include <stdint.h>
 #include <stdio.h>
@@ -8,19 +8,12 @@
 
 int main(int argc, char const* argv[])
 {
-    // char d[] = {
-    //     OP_PUSH, 5, 0, // PUSH
-    //     OP_CALL, 10, 0, 1, 0,
-    //     OP_PRINT,
-    //     OP_HALT,
-    //     OP_LOADARG, 0, 0,
-    //     OP_PUSH, 2, 0,
-    //     OP_ADD,
-    //     OP_RETURN,
-
-    // };
-
-    char d[] = {
+    char exe[] = {
+        13, 0, 0, 0, // PROGRAM START POS
+        // CONSTANTS
+        1, 0, 2, 0,
+        3, 0, 4, 0,
+        // PROGRAM START
         OP_I_PUSH, 5, 0, // PUSH
         OP_CALL, 16, 0, 1, 0,
         OP_I_PUSH, 27, 0,
@@ -39,13 +32,14 @@ int main(int argc, char const* argv[])
         OP_RETURN
     };
 
-    STREAM program = stream_create(&d);
+    EXECUTABLE executable = executable_from(&exe);
 
-    VM vm = vm_create(&program);
+    VM vm = vm_create(executable);
 
-    int16_t exit_code = vm_run(&vm);
+    // int16_t exit_code = vm_run(&vm);
 
-    vm_free(vm);
+    // vm_free(vm);
 
-    return exit_code;
+    // return exit_code;
+    return 0;
 }

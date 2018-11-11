@@ -48,3 +48,8 @@ void* stream_select_end(STREAM* stream)
 
     return selection;
 }
+
+void* stream_start_of(STREAM* stream)
+{
+    return stream->start;
+}

@@ -9,7 +9,7 @@ typedef struct EXECUTABLE_HEADER_T {
 } EXECUTABLE_HEADER;
 
 typedef struct EXECUTABLE_T {
-    char*  constants;
+    void*  constants;
     STREAM program;
 } EXECUTABLE;
 

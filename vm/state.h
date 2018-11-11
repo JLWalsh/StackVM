@@ -1,8 +1,9 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "stack.h"
+#include "executable.h"
 #include "type.h"
+#include "vm.h"
 #include <stdbool.h>
 
 typedef struct STATE_T {
@@ -11,9 +12,9 @@ typedef struct STATE_T {
     INTEGER frame_offset;
     bool    running;
     INTEGER exit_code;
-    void*   locals;
+    void*   constants;
 } STATE;
 
-STATE state_create(POINTER instruction_ptr, STACK* stack);
+STATE state_create(VM vm, EXECUTABLE executable);
 
 #endif /* STATE_H */

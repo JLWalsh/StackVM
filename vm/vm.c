@@ -2,16 +2,14 @@
 #include "executor.h"
 #include <stdio.h>
 
-VM vm_create(STREAM* program)
+VM vm_create(EXECUTABLE executable)
 {
-    STACK stack = stack_create(10);
+    STACK stack = stack_create(10); // TODO find clean way to specify stack size
 
     VM vm;
     vm.stack   = stack;
-    vm.program = program;
-
-    POINTER initial_pos = stream_position(program);
-    vm.state            = state_create(initial_pos, &stack);
+    vm.program = executable.program;
+    vm.state   = state_create(vm, executable);
 
     vm.executors[OP_PUSH]    = op_push;
     vm.executors[OP_LOADARG] = op_loadarg;
