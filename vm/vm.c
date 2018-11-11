@@ -35,12 +35,12 @@ VM vm_create(EXECUTABLE executable)
 INTEGER vm_run(VM* vm)
 {
     while (vm->state.running) {
-        stream_seek(vm->program, vm->state.instruction_ptr);
+        stream_seek(&vm->program, vm->state.instruction_ptr);
 
-        OPCODE opcode = *((OPCODE*)stream_advance(vm->program, sizeof(OPCODE)));
+        OPCODE opcode = *((OPCODE*)stream_advance(&vm->program, sizeof(OPCODE)));
 
         vm->state.instruction_ptr += sizeof(OPCODE);
-        vm->state = vm->executors[opcode](&vm->stack, vm->program, vm->state);
+        vm->state = vm->executors[opcode](&vm->stack, &vm->program, vm->state);
     }
 
     return vm->state.exit_code;
