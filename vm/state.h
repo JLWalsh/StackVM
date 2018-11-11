@@ -11,6 +11,7 @@ typedef struct STATE_T {
     INTEGER frame_offset;
     bool    running;
     INTEGER exit_code;
+    void*   locals;
 } STATE;
 
 STATE state_create(POINTER instruction_ptr, STACK* stack);

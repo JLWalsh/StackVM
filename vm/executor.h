@@ -16,6 +16,9 @@ STATE op_return(STACK* stack, STREAM* program, STATE state);
 STATE op_halt(STACK* stack, STREAM* program, STATE state);
 STATE op_print(STACK* stack, STREAM* program, STATE state);
 
+// String operations
+STATE op_spush(STACK* stack, STREAM* program, STATE vm);
+
 // Integer operations
 STATE op_ipush(STACK* stack, STREAM* program, STATE vm);
 STATE op_iadd(STACK* stack, STREAM* program, STATE vm);
