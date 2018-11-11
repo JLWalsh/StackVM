@@ -91,6 +91,12 @@ STATE op_print(STACK* stack, STREAM* program, STATE state)
     return state;
 }
 
+// String operations
+STATE op_spush(STACK* stack, STREAM* program, STATE vm)
+{
+    INTEGER str_pos = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+}
+
 // Integer operations
 STATE op_ipush(STACK* stack, STREAM* program, STATE vm)
 {

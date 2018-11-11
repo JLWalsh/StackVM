@@ -1,6 +1,7 @@
 #ifndef EXECUTABLE_H
 #define EXECUTABLE_H
 
+#include "stream.h"
 #include <stdint.h>
 
 typedef struct EXECUTABLE_HEADER_T {
@@ -8,10 +9,10 @@ typedef struct EXECUTABLE_HEADER_T {
 } EXECUTABLE_HEADER;
 
 typedef struct EXECUTABLE_T {
-    char* constants;
-    char* program;
+    char*  constants;
+    STREAM program;
 } EXECUTABLE;
 
-EXECUTABLE executable_of(char* bytes);
+EXECUTABLE executable_from(char* bytes);
 
 #endif /* EXECUTABLE_H */

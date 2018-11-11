@@ -1,20 +1,20 @@
 #include "executable.h"
-#include "constant.h"
 #include "stream.h"
 
-EXECUTABLE executable_of(char* bytes)
+EXECUTABLE executable_from(char* bytes)
 {
-    STREAM executable = stream_create(bytes);
+    STREAM program = stream_create(bytes);
 
-    EXECUTABLE_HEADER header = *((EXECUTABLE_HEADER*)stream_advance(&executable, sizeof(EXECUTABLE_HEADER)));
+    EXECUTABLE_HEADER header = *((EXECUTABLE_HEADER*)stream_advance(&program, sizeof(EXECUTABLE_HEADER)));
 
-    size_t constants_size = header.program_start - stream_position(&executable);
-    char*  constants      = (char*)malloc(constants_size);
+    size_t constants_size         = header.program_start - stream_position(&program);
+    void*  constants              = malloc(constants_size);
+    void*  constants_from_program = stream_advance(&program, constants_size);
+    memcpy(constants, constants_from_program, constants_size);
 
-    while (stream_position(&executable) < header.program_start) {
-        CONSTANT_HEADER constant_header = *((CONSTANT_HEADER*)stream_advance(&executable, sizeof(CONSTANT_HEADER)));
-        stream_select_start(&executable);
-        stream_advance(&executable, constant_header.size);
-        char* constant = stream_select_end(&executable);
-    }
+    EXECUTABLE executable;
+    executable.constants = constants;
+    executable.program   = program;
+
+    return executable;
 }
