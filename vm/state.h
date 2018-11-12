@@ -3,7 +3,6 @@
 
 #include "executable.h"
 #include "type.h"
-#include "vm.h"
 #include <stdbool.h>
 
 typedef struct STATE_T {
@@ -15,6 +14,6 @@ typedef struct STATE_T {
     void*   constants;
 } STATE;
 
-STATE state_create(VM vm, EXECUTABLE executable);
+STATE state_create(POINTER instruction_ptr, EXECUTABLE executable);
 
 #endif /* STATE_H */

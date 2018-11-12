@@ -9,7 +9,7 @@ VM vm_create(EXECUTABLE executable)
     VM vm;
     vm.stack   = stack;
     vm.program = executable.program;
-    vm.state   = state_create(vm, executable);
+    vm.state   = state_create(stream_start_of(&vm.program), executable);
 
     vm.executors[OP_PUSH]    = op_push;
     vm.executors[OP_LOADARG] = op_loadarg;
