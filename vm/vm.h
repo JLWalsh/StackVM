@@ -5,6 +5,7 @@
 #include "executor.h"
 #include "opcode.h"
 #include "stack.h"
+#include "state.h"
 #include <stdbool.h>
 #include <stdint.h>
 

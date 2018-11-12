@@ -23,6 +23,6 @@ void* stream_select_end(STREAM* stream);
 
 void* stream_advance(STREAM* stream, size_t advancement);
 
-void* stream_start_of(STREAM* stream);
+POINTER stream_start_of(STREAM* stream);
 
 #endif /* STREAM_H */
