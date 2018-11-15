@@ -6,9 +6,7 @@
 typedef uint8_t OPCODE;
 
 enum OPCODES {
-    OP_PUSH,
     OP_LOADARG,
-    OP_ADD,
     OP_CALL,
     OP_RETURN,
     OP_HALT,

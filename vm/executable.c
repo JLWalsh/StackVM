@@ -1,4 +1,5 @@
 #include "executable.h"
+#include "opcode.h"
 #include "stream.h"
 #include <string.h>
 
@@ -13,7 +14,7 @@ EXECUTABLE executable_from(char* bytes)
     void*  constants_from_source = stream_advance(&program, constants_size);
     memcpy(extracted_constants, constants_from_source, constants_size);
 
-    size_t program_size        = header.program_start - stream_position(&program) - 1;
+    size_t program_size        = header.program_end - header.program_start + 1;
     void*  extracted_program   = malloc(program_size);
     void*  program_from_source = stream_advance(&program, program_size);
     memcpy(extracted_program, program_from_source, program_size);

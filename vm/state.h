@@ -7,13 +7,12 @@
 
 typedef struct STATE_T {
     POINTER instruction_ptr;
-    POINTER program_start_ptr;
     INTEGER frame_offset;
     bool    running;
     INTEGER exit_code;
     void*   constants;
 } STATE;
 
-STATE state_create(POINTER instruction_ptr, EXECUTABLE executable);
+STATE state_create(EXECUTABLE executable);
 
 #endif /* STATE_H */

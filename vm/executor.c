@@ -2,36 +2,12 @@
 #include "opcode.h"
 #include <stdio.h>
 
-STATE op_push(STACK* stack, STREAM* program, STATE state)
-{
-    INTEGER int_val = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
-    stack_push(stack, object_of_int(int_val));
-
-    state.instruction_ptr = stream_position(program);
-
-    return state;
-}
-
 STATE op_loadarg(STACK* stack, STREAM* program, STATE state)
 {
     INTEGER offset   = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
     INTEGER position = state.frame_offset + offset;
     OBJECT  o        = stack_at(stack, position);
     stack_push(stack, o);
-
-    state.instruction_ptr = stream_position(program);
-
-    return state;
-}
-
-STATE op_add(STACK* stack, STREAM* program, STATE state)
-{
-    INTEGER a = stack_pop(stack).int_val;
-    INTEGER b = stack_pop(stack).int_val;
-
-    INTEGER c = a + b;
-
-    stack_push(stack, object_of_int(c));
 
     state.instruction_ptr = stream_position(program);
 
@@ -45,7 +21,7 @@ STATE op_call(STACK* stack, STREAM* program, STATE state)
 
     POINTER return_addr = (POINTER)stream_position(program);
 
-    state.instruction_ptr = state.program_start_ptr + fun_addr * sizeof(char);
+    state.instruction_ptr = fun_addr * sizeof(char);
     state.frame_offset    = stack_position(stack) - num_args;
 
     stack_push(stack, object_of_int(num_args));

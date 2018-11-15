@@ -9,7 +9,8 @@
 int main(int argc, char const* argv[])
 {
     char exe[] = {
-        13, 0, 0, 0, // PROGRAM START POS
+        17, 0, 0, 0, // PROGRAM START POS
+        56, 0, 0, 0,
         // CONSTANTS
         1, 0, 2, 0,
         3, 0, 4, 0,
@@ -22,24 +23,23 @@ int main(int argc, char const* argv[])
         OP_HALT, 3, 0,
         OP_LOADARG, 0, 0,
         OP_I_PUSH, 2, 0,
-        OP_ADD,
+        OP_I_ADD,
         OP_I_PUSH, 4, 0,
         OP_CALL, 32, 0, 2, 0,
         OP_RETURN,
         OP_LOADARG, 0, 0,
         OP_LOADARG, 1, 0,
-        OP_ADD,
+        OP_I_ADD,
         OP_RETURN
     };
 
     EXECUTABLE executable = executable_from(&exe);
-
+    // printf("%u", stream_advance(&executable.program, sizeof(OPCODE)));
     VM vm = vm_create(executable);
 
-    // int16_t exit_code = vm_run(&vm);
+    int16_t exit_code = vm_run(&vm);
+    vm_free(vm);
 
-    // vm_free(vm);
-
-    // return exit_code;
-    return 0;
+    return exit_code;
+    // return 0;
 }

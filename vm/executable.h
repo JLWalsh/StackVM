@@ -6,6 +6,7 @@
 
 typedef struct EXECUTABLE_HEADER_T {
     uint32_t program_start;
+    uint32_t program_end;
 } EXECUTABLE_HEADER;
 
 typedef struct EXECUTABLE_T {
