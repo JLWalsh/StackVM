@@ -1,21 +1,25 @@
 #ifndef VM_H
 #define VM_H
 
+#include "executable.h"
 #include "executor.h"
 #include "opcode.h"
 #include "stack.h"
+#include "state.h"
 #include <stdbool.h>
 #include <stdint.h>
 
 typedef struct VM_T {
     STATE    state;
-    STREAM*  program;
+    STREAM   program;
     STACK    stack;
     EXECUTOR executors[NUM_OF_OPCODES];
 } VM;
 
-VM vm_create(STREAM* program);
+VM vm_create(EXECUTABLE executable);
 
-void vm_run(VM* vm);
+INTEGER vm_run(VM* vm);
+
+void vm_free(VM vm);
 
 #endif /* VM_H */

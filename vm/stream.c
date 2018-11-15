@@ -48,3 +48,8 @@ void* stream_select_end(STREAM* stream)
 
     return selection;
 }
+
+POINTER stream_start_of(STREAM* stream)
+{
+    return (POINTER)stream->start;
+}
