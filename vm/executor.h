@@ -14,8 +14,12 @@ STATE op_return(STACK* stack, STREAM* program, STATE state);
 STATE op_halt(STACK* stack, STREAM* program, STATE state);
 STATE op_print(STACK* stack, STREAM* program, STATE state);
 
-// Constant operations
-STATE op_sload(STACK* stack, STREAM* program, STATE vm);
+// Pointer operations
+STATE op_ppush(STACK* stack, STREAM* program, STATE vm);
+
+// String opertions
+STATE op_scat(STACK* stack, STREAM* program, STATE VM);
+STATE op_sprint(STACK* stack, STREAM* program, STATE VM);
 
 // Integer operations
 STATE op_iload(STACK* stack, STREAM* program, STATE VM);

@@ -20,8 +20,8 @@ EXECUTABLE executable_from(char* bytes)
     memcpy(extracted_program, program_from_source, program_size);
 
     EXECUTABLE executable;
-    executable.constants = extracted_constants;
-    executable.program   = stream_create(extracted_program);
+    executable.heap    = stream_create(extracted_constants); // TODO implement configurable heap size
+    executable.program = stream_create(extracted_program);
 
     return executable;
 }

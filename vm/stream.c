@@ -18,6 +18,11 @@ POINTER stream_position(STREAM* stream)
     return (POINTER)(stream->current - stream->start);
 }
 
+void* stream_at(STREAM* stream, POINTER position)
+{
+    return stream->start + position;
+}
+
 void stream_seek(STREAM* stream, POINTER position)
 {
     stream->current = stream->start + position;
