@@ -67,13 +67,31 @@ STATE op_print(STACK* stack, STREAM* program, STATE state)
     return state;
 }
 
-// String operations
-STATE op_spush(STACK* stack, STREAM* program, STATE vm)
+// Constant operations
+STATE op_sload(STACK* stack, STREAM* program, STATE vm)
 {
-    INTEGER str_pos = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    POINTER str_pos = *((ULONG*)stream_advance(program, sizeof(ULONG))); // TODO check if this is legit
+
+    stack_push(stack, object_of_ptr(str_pos));
+
+    vm.instruction_ptr = stream_position(program);
+
+    return vm;
 }
 
 // Integer operations
+STATE op_iload(STACK* stack, STREAM* program, STATE vm)
+{
+    INTEGER offset = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+
+    INTEGER int_val = ((char*)vm.constants)[offset];
+    stack_push(stack, object_of_int(int_val));
+
+    vm.instruction_ptr = stream_position(program);
+
+    return vm;
+}
+
 STATE op_ipush(STACK* stack, STREAM* program, STATE vm)
 {
     INTEGER value = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));

@@ -2,11 +2,11 @@
 #define EXECUTABLE_H
 
 #include "stream.h"
-#include <stdint.h>
+#include "type.h"
 
 typedef struct EXECUTABLE_HEADER_T {
-    uint32_t program_start;
-    uint32_t program_end;
+    ULONG program_start;
+    ULONG program_end;
 } EXECUTABLE_HEADER;
 
 typedef struct EXECUTABLE_T {

@@ -12,7 +12,11 @@ enum OPCODES {
     OP_HALT,
     OP_PRINT,
 
-    // INT,
+    // STRING
+    OP_S_LOAD,
+
+    // INT
+    OP_I_LOAD,
     OP_I_PUSH,
     OP_I_ADD,
     OP_I_SUB,

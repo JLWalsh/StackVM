@@ -17,6 +17,9 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_HALT]    = op_halt;
     vm.executors[OP_PRINT]   = op_print;
 
+    vm.executors[OP_S_LOAD] = op_sload;
+
+    vm.executors[OP_I_LOAD] = op_iload;
     vm.executors[OP_I_PUSH] = op_ipush;
     vm.executors[OP_I_ADD]  = op_iadd;
     vm.executors[OP_I_SUB]  = op_isub;
