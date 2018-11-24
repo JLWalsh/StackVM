@@ -2,6 +2,7 @@
 #define STATE_H
 
 #include "executable.h"
+#include "stream.h"
 #include "type.h"
 #include <stdbool.h>
 
@@ -10,7 +11,7 @@ typedef struct STATE_T {
     INTEGER frame_offset;
     bool    running;
     INTEGER exit_code;
-    void*   constants;
+    STREAM  heap; // TODO create heap struct instead of using stream
 } STATE;
 
 STATE state_create(EXECUTABLE executable);

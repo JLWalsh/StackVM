@@ -9,6 +9,8 @@ enum TYPE {
 };
 
 typedef int16_t   INTEGER;
+typedef int32_t   LONG;
+typedef uint32_t  ULONG;
 typedef uintptr_t POINTER;
 
 #endif /* TYPE_H */

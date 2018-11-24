@@ -1,5 +1,6 @@
 #include "executor.h"
 #include "opcode.h"
+#include "vmstring.h"
 #include <stdio.h>
 
 STATE op_loadarg(STACK* stack, STREAM* program, STATE state)
@@ -67,13 +68,70 @@ STATE op_print(STACK* stack, STREAM* program, STATE state)
     return state;
 }
 
-// String operations
-STATE op_spush(STACK* stack, STREAM* program, STATE vm)
+// Pointer operations
+STATE op_ppush(STACK* stack, STREAM* program, STATE vm)
 {
-    INTEGER str_pos = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    INTEGER offset = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+
+    stack_push(stack, object_of_ptr(offset));
+
+    vm.instruction_ptr = stream_position(program);
+
+    return vm;
+}
+
+// String operations
+STATE op_scat(STACK* stack, STREAM* program, STATE vm)
+{
+    POINTER str_a = stack_pop(stack).int_val; // TODO check if this is allowed
+    POINTER str_b = stack_pop(stack).int_val;
+
+    INTEGER store_pos = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+
+    VMSTRING_HEADER* str_a_header   = (VMSTRING_HEADER*)stream_at(&vm.heap, str_a);
+    VMSTRING_HEADER* str_b_header   = (VMSTRING_HEADER*)stream_at(&vm.heap, str_b);
+    VMSTRING_HEADER* str_out_header = (VMSTRING_HEADER*)stream_at(&vm.heap, store_pos);
+
+    vmstring_concat(str_a_header, str_b_header, str_out_header);
+
+    vm.instruction_ptr = stream_position(program);
+
+    return vm;
+}
+
+STATE op_sprint(STACK* stack, STREAM* program, STATE vm)
+{
+    INTEGER store_pos = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+
+    VMSTRING_HEADER* str_header = (VMSTRING_HEADER*)stream_at(&vm.heap, store_pos);
+
+    char* str = (char*)str_header + sizeof(VMSTRING_HEADER);
+    printf("Len is %u\n", str_header->length);
+    for (int pos = 0; pos < str_header->length; pos++) {
+        printf("pos is %i, ", pos);
+        printf("%i\n", *str);
+        str++;
+    }
+
+    vm.instruction_ptr = stream_position(program);
+
+    return vm;
 }
 
 // Integer operations
+STATE op_iload(STACK* stack, STREAM* program, STATE vm)
+{
+    INTEGER offset = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    stream_seek(&vm.heap, offset);
+
+    INTEGER int_val = *((INTEGER*)stream_advance(&vm.heap, sizeof(INTEGER)));
+    stack_push(stack, object_of_int(int_val));
+
+    vm.instruction_ptr = stream_position(program);
+
+    return vm;
+}
+
 STATE op_ipush(STACK* stack, STREAM* program, STATE vm)
 {
     INTEGER value = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));

@@ -12,7 +12,15 @@ enum OPCODES {
     OP_HALT,
     OP_PRINT,
 
-    // INT,
+    // PTR
+    OP_P_PUSH,
+
+    // STRING
+    OP_S_CAT,
+    OP_S_PRINT,
+
+    // INT
+    OP_I_LOAD,
     OP_I_PUSH,
     OP_I_ADD,
     OP_I_SUB,

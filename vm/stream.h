@@ -15,6 +15,8 @@ STREAM stream_create(char* raw);
 
 POINTER stream_position(STREAM* stream);
 
+void* stream_at(STREAM* stream, POINTER position);
+
 void stream_seek(STREAM* stream, POINTER position);
 
 void stream_select_start(STREAM* stream);
