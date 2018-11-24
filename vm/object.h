@@ -6,7 +6,6 @@
 typedef union OBJECT_T {
     INTEGER int_val;
     POINTER ptr_val;
-    char*   str_val;
 } OBJECT;
 
 OBJECT object_of_int(INTEGER int_val);
