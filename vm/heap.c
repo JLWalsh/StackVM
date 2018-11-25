@@ -1,4 +1,5 @@
 #include "heap.h"
+#include <stdio.h>
 
 HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
 {
@@ -10,8 +11,10 @@ HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
     constants_chunk->next     = NULL;
     constants_chunk->size     = constants.length;
     constants_chunk->flags    = CHUNK_READONLY;
+    char* data                = (char*)constants_chunk + sizeof(CHUNK);
+    memcpy(data, constants.data, constants.length);
 
-    CHUNK* writable_chunk    = ((char*)constants_chunk) + sizeof(CHUNK) + constants.length;
+    CHUNK* writable_chunk    = (CHUNK*)((char*)constants_chunk) + sizeof(CHUNK) + constants.length;
     writable_chunk->next     = NULL;
     writable_chunk->previous = constants_chunk;
     writable_chunk->size     = min_writable_size;
@@ -36,14 +39,18 @@ void heap_dump(HEAP heap)
     int chunk_counter = 0;
 
     CHUNK* current = (CHUNK*)heap.start;
-    while (current->next != NULL) {
+    for (;;) {
+        if (current == NULL) {
+            break;
+        }
+
         printf("Chunk #%i (Flag: %i, size: %i):\n", chunk_counter, current->flags, current->size);
 
         char* data = (char*)current + sizeof(CHUNK);
         for (int i = 0; i < current->size; i++) {
             printf("%i\n", data[i]);
         }
-
+        chunk_counter++;
         current = current->next;
     }
 }
