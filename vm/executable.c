@@ -21,3 +21,9 @@ EXECUTABLE executable_from(char* bytes)
 
     return executable;
 }
+
+void executable_free(EXECUTABLE executable)
+{
+    stream_free(executable.program);
+    stream_free(executable.heap);
+}

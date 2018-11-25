@@ -1,6 +1,5 @@
 #include "vm.h"
 #include "executor.h"
-#include <stdio.h>
 
 VM vm_create(EXECUTABLE executable)
 {

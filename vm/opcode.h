@@ -1,8 +1,6 @@
 #ifndef OPCODE_H
 #define OPCODE_H
 
-#include <stdint.h>
-
 enum OPCODES {
     OP_LOADARG,
     OP_CALL,

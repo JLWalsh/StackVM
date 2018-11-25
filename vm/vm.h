@@ -6,8 +6,6 @@
 #include "opcode.h"
 #include "stack.h"
 #include "state.h"
-#include <stdbool.h>
-#include <stdint.h>
 
 typedef struct VM_T {
     STATE    state;

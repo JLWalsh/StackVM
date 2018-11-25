@@ -21,4 +21,6 @@ void stream_seek(STREAM* stream, POINTER position);
 
 void* stream_advance(STREAM* stream, size_t advancement);
 
+void stream_free(STREAM stream);
+
 #endif /* STREAM_H */
