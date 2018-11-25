@@ -22,7 +22,7 @@ void* stream_at(STREAM* stream, POINTER position)
 {
     char* raw_chars = (char*)stream->raw;
 
-    return (void*)raw_chars[position];
+    return (void*)(raw_chars + position);
 }
 
 void stream_seek(STREAM* stream, POINTER position)

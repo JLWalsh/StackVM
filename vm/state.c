@@ -7,7 +7,6 @@ STATE state_create(EXECUTABLE executable)
     state.frame_position  = 0;
     state.running         = true;
     state.exit_code       = 0;
-    state.heap            = executable.heap;
 
     return state;
 }

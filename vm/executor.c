@@ -80,3 +80,13 @@ STATE op_ppush(STACK* stack, STREAM* program, STATE vm)
 
     return vm;
 }
+
+STATE op_ipush(STACK* stack, STREAM* program, STATE vm)
+{
+    return vm;
+}
+
+STATE op_iadd(STACK* stack, STREAM* program, STATE vm)
+{
+    return vm;
+}

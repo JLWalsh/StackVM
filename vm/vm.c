@@ -19,19 +19,8 @@ VM vm_create(EXECUTABLE executable)
 
     vm.executors[OP_P_PUSH] = op_ppush;
 
-    vm.executors[OP_S_CAT]   = op_scat;
-    vm.executors[OP_S_PRINT] = op_sprint;
-
-    vm.executors[OP_I_LOAD] = op_iload;
     vm.executors[OP_I_PUSH] = op_ipush;
     vm.executors[OP_I_ADD]  = op_iadd;
-    vm.executors[OP_I_SUB]  = op_isub;
-    vm.executors[OP_I_MUL]  = op_imul;
-    vm.executors[OP_I_DIV]  = op_idiv;
-    vm.executors[OP_I_AND]  = op_iand;
-    vm.executors[OP_I_NOT]  = op_inot;
-    vm.executors[OP_I_XOR]  = op_ixor;
-    vm.executors[OP_I_OR]   = op_ior;
 
     return vm;
 }

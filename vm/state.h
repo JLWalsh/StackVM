@@ -11,7 +11,6 @@ typedef struct STATE_T {
     INTEGER frame_position;
     bool    running;
     INTEGER exit_code;
-    STREAM  heap; // TODO create heap struct instead of using stream
 } STATE;
 
 STATE state_create(EXECUTABLE executable);
