@@ -18,8 +18,8 @@ STATE op_loadarg(STACK* stack, STREAM* program, STATE state)
 
 STATE op_call(STACK* stack, STREAM* program, STATE state)
 {
-    POINTER fun_addr = *((POINTER*)stream_advance(program, sizeof(POINTER)));
-    INTEGER num_args = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    POINTER  fun_addr = *((POINTER*)stream_advance(program, sizeof(POINTER)));
+    UINTEGER num_args = *((UINTEGER*)stream_advance(program, sizeof(UINTEGER)));
 
     POINTER return_addr = stream_position(program);
 
@@ -83,10 +83,21 @@ STATE op_ppush(STACK* stack, STREAM* program, STATE vm)
 
 STATE op_ipush(STACK* stack, STREAM* program, STATE vm)
 {
+    INTEGER value = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+
+    stack_push(stack, object_of_int(value));
+
+    vm.instruction_ptr = stream_position(program);
+
     return vm;
 }
 
 STATE op_iadd(STACK* stack, STREAM* program, STATE vm)
 {
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a + b));
+
     return vm;
 }

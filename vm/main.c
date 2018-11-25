@@ -27,31 +27,34 @@ int main(int argc, char const* argv[])
     // };
 
     char exe[] = {
-        36, 0, 0, 0, 0, 0, 0, 0, // PROGRAM START POS
-        8, 0, 0, 0, 0, 0, 0, 0,
+        54, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
+        // 34, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
+        8, 0, 0, 0, 0, 0, 0, 0, // CONSTS LEN
         // CONSTANTS
         1, 0, 2, 0,
         3, 0, 4, 0,
         // PROGRAM START
-        OP_I_PUSH, 5, 0, // PUSH
-        OP_CALL, 16, 0, 1, 0, 0, 0, 0, 0,
-        OP_PRINT,
-        OP_HALT, 3, 0,
-        OP_LOADARG, 0, 0,
-        OP_I_PUSH, 2, 0,
-        OP_I_ADD,
-        OP_RETURN
+        OP_I_PUSH, 0, 5, 0, // PUSH
+        OP_CALL, 0,
+        18, 0, 0, 0, // FUN ADDR
+        1, 0, // NUM ARGS
+        OP_PRINT, 0,
+        OP_HALT, 0, 3, 0,
+        OP_LOADARG, 0, 0, 0,
+        OP_I_PUSH, 0, 2, 0,
+        OP_I_ADD, 0,
+        OP_RETURN, 0
     };
 
     EXECUTABLE executable = executable_from(&exe);
+    // printf("%u first opcode is\n", *((UINTEGER*)stream_advance(&executable.program, sizeof(UINTEGER))));
+    // stream_advance(&executable.program, 26);
+    // printf("%u last opcode is\n", *((UINTEGER*)stream_advance(&executable.program, sizeof(OPCODE))));
+    VM vm = vm_create(executable);
 
-    INTEGER c1 = *((INTEGER*)stream_advance(&executable.program, sizeof(INTEGER)));
-    printf("\n c1 is%i", c1);
-    // VM vm = vm_create(executable);
+    int16_t exit_code = vm_run(&vm);
+    vm_free(vm);
 
-    // int16_t exit_code = vm_run(&vm);
-    // vm_free(vm);
-
-    // return exit_code;
+    return exit_code;
     return 0;
 }
