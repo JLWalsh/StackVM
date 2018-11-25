@@ -6,8 +6,8 @@ VM vm_create(EXECUTABLE executable)
     VM vm;
     vm.stack   = stack_create(10); // TODO find clean way to specify stack size
     vm.program = executable.program;
-    // vm.heap    = heap_create(100); // TODO also applies to heap
-    vm.state = state_create(executable);
+    vm.heap    = heap_from(executable.constants, 100); // TODO also applies to heap
+    vm.state   = state_create(executable);
 
     vm.executors[OP_LOADARG] = op_loadarg;
     vm.executors[OP_CALL]    = op_call;

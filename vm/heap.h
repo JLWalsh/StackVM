@@ -22,7 +22,14 @@ typedef struct HEAP_T {
 } HEAP;
 
 HEAP heap_from(CONSTANTS constants, size_t min_writable_size);
+
 void heap_free(HEAP heap);
+
+POINTER heap_alloc(HEAP heap, size_t size);
+
+void heap_dealloc(HEAP heap, POINTER value);
+
+void* heap_at(HEAP heap, POINTER value);
 
 void heap_dump(HEAP heap);
 

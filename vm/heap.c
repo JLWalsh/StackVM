@@ -1,12 +1,13 @@
 #include "heap.h"
 #include <stdio.h>
+#include <string.h>
 
 HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
 {
     size_t chunk_headers_size = sizeof(CHUNK) * 2;
     size_t size               = chunk_headers_size + constants.length + min_writable_size;
 
-    CHUNK* constants_chunk    = (CHUNK*)malloc(size);
+    CHUNK* constants_chunk    = (CHUNK*)((char*)malloc(size + 1) + 1); // First byte is reserved for VM_NULL
     constants_chunk->previous = NULL;
     constants_chunk->next     = NULL;
     constants_chunk->size     = constants.length;
@@ -32,6 +33,31 @@ HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
 void heap_free(HEAP heap)
 {
     free(heap.start);
+}
+
+POINTER heap_alloc(HEAP heap, size_t size)
+{
+    CHUNK* current = heap.start;
+
+    while (current != NULL) {
+        if (current->size >= size) {
+            // todo allocate
+        }
+
+        current = current->next;
+    }
+
+    if (current == NULL) {
+        return VM_NULL;
+    }
+}
+
+void heap_dealloc(HEAP heap, POINTER value)
+{
+}
+
+void* heap_at(HEAP heap, POINTER value)
+{
 }
 
 void heap_dump(HEAP heap)

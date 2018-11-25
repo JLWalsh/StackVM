@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define VM_NULL 0
+
 typedef int16_t  INTEGER;
 typedef uint16_t UINTEGER;
 typedef uint32_t POINTER;

@@ -47,13 +47,14 @@ int main(int argc, char const* argv[])
     };
 
     EXECUTABLE executable = executable_from(&exe);
-    HEAP       heap       = heap_from(executable.constants, 10);
-    heap_dump(heap);
-    // VM vm = vm_create(executable);
 
-    // int16_t exit_code = vm_run(&vm);
-    // vm_free(vm);
+    VM vm = vm_create(executable);
 
-    // return exit_code;
-    return 0;
+    int16_t exit_code = vm_run(&vm);
+
+    executable_free(executable);
+    vm_free(vm);
+
+    return exit_code;
+    // return 0;
 }
