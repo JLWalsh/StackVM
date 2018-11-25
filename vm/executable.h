@@ -5,8 +5,8 @@
 #include "type.h"
 
 typedef struct EXECUTABLE_HEADER_T {
-    ULONG program_start;
-    ULONG program_end;
+    ULONG executable_length;
+    ULONG constants_length;
 } EXECUTABLE_HEADER;
 
 typedef struct EXECUTABLE_T {
