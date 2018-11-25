@@ -3,12 +3,11 @@
 
 VM vm_create(EXECUTABLE executable)
 {
-    STACK stack = stack_create(10); // TODO find clean way to specify stack size
-
     VM vm;
-    vm.stack   = stack;
+    vm.stack   = stack_create(10); // TODO find clean way to specify stack size
     vm.program = executable.program;
-    vm.state   = state_create(executable);
+    // vm.heap    = heap_create(100); // TODO also applies to heap
+    vm.state = state_create(executable);
 
     vm.executors[OP_LOADARG] = op_loadarg;
     vm.executors[OP_CALL]    = op_call;
@@ -32,7 +31,7 @@ INTEGER vm_run(VM* vm)
         OPCODE opcode = *((OPCODE*)stream_advance(&vm->program, sizeof(OPCODE)));
 
         vm->state.instruction_ptr += sizeof(OPCODE);
-        vm->state = vm->executors[opcode](&vm->stack, &vm->program, vm->state);
+        vm->state = vm->executors[opcode](&vm->stack, &vm->program, &vm->heap, vm->state);
     }
 
     return vm->state.exit_code;

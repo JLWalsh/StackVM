@@ -16,8 +16,8 @@ EXECUTABLE executable_from(char* bytes)
     memcpy(program, bytes + program_offset, program_size);
 
     EXECUTABLE executable;
-    executable.heap    = stream_create(constants, header->constants_length); // TODO implement configurable heap size
-    executable.program = stream_create(program, program_size);
+    executable.constants = constants_create(constants, header->constants_length);
+    executable.program   = stream_create(program, program_size);
 
     return executable;
 }
@@ -25,5 +25,4 @@ EXECUTABLE executable_from(char* bytes)
 void executable_free(EXECUTABLE executable)
 {
     stream_free(executable.program);
-    stream_free(executable.heap);
 }

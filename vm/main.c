@@ -1,4 +1,5 @@
 #include "executable.h"
+#include "heap.h"
 #include "opcode.h"
 #include "vm.h"
 #include <stdint.h>
@@ -28,7 +29,6 @@ int main(int argc, char const* argv[])
 
     char exe[] = {
         54, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
-        // 34, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
         8, 0, 0, 0, 0, 0, 0, 0, // CONSTS LEN
         // CONSTANTS
         1, 0, 2, 0,
@@ -47,14 +47,13 @@ int main(int argc, char const* argv[])
     };
 
     EXECUTABLE executable = executable_from(&exe);
-    // printf("%u first opcode is\n", *((UINTEGER*)stream_advance(&executable.program, sizeof(UINTEGER))));
-    // stream_advance(&executable.program, 26);
-    // printf("%u last opcode is\n", *((UINTEGER*)stream_advance(&executable.program, sizeof(OPCODE))));
-    VM vm = vm_create(executable);
+    HEAP       heap       = heap_from(executable.constants, 10);
+    heap_dump(heap);
+    // VM vm = vm_create(executable);
 
-    int16_t exit_code = vm_run(&vm);
-    vm_free(vm);
+    // int16_t exit_code = vm_run(&vm);
+    // vm_free(vm);
 
-    return exit_code;
+    // return exit_code;
     return 0;
 }
