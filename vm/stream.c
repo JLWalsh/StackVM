@@ -3,58 +3,38 @@
 #include <stdlib.h>
 #include <string.h>
 
-STREAM stream_create(char* raw)
+STREAM stream_create(void* raw, size_t size)
 {
     STREAM stream;
-    stream.current      = raw;
-    stream.start        = raw;
-    stream.select_start = NULL;
+    stream.raw     = raw;
+    stream.current = 0;
+    stream.size    = size;
 
     return stream;
 }
 
 POINTER stream_position(STREAM* stream)
 {
-    return (POINTER)(stream->current - stream->start);
+    return stream->current;
 }
 
 void* stream_at(STREAM* stream, POINTER position)
 {
-    return stream->start + position;
+    char* raw_chars = (char*)stream->raw;
+
+    return (void*)(raw_chars + position);
 }
 
 void stream_seek(STREAM* stream, POINTER position)
 {
-    stream->current = stream->start + position;
+    stream->current = position;
 }
 
 void* stream_advance(STREAM* stream, size_t advancement)
 {
-    char* value = stream->current;
+    void* value = stream_at(stream, stream->current);
 
     stream->current += advancement;
 
     return value;
-}
-
-void stream_select_start(STREAM* stream)
-{
-    stream->select_start = stream->current;
-}
-
-void* stream_select_end(STREAM* stream)
-{
-    size_t length = stream->current - stream->select_start + 1;
-
-    void* selection = malloc(length * sizeof(char));
-    strncpy(selection, stream->select_start, length);
-
-    stream->select_start = NULL;
-
-    return selection;
-}
-
-POINTER stream_start_of(STREAM* stream)
-{
-    return (POINTER)stream->start;
 }

@@ -39,7 +39,7 @@ void stack_push(STACK* stack, OBJECT object)
     stack->objects[stack->size++] = object;
 }
 
-INTEGER stack_position(STACK* stack)
+INTEGER stack_size(STACK* stack)
 {
     return stack->size;
 }

@@ -6,7 +6,7 @@
 
 typedef struct STACK_T {
     uint16_t max_size;
-    uint16_t size; // todo rename this to index
+    uint16_t size;
     OBJECT*  objects;
 } STACK;
 
@@ -22,6 +22,6 @@ void stack_push(STACK* stack, OBJECT object);
 
 OBJECT stack_top(STACK* stack);
 
-INTEGER stack_position(STACK* stack);
+INTEGER stack_size(STACK* stack);
 
 #endif
