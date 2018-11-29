@@ -5,15 +5,16 @@
 #include <stdlib.h>
 
 typedef enum CHUNK_FLAGS_T {
-    CHUNK_NONE,
-    CHUNK_READONLY = 0xf,
+    CHUNK_FLAGS_NONE,
+    CHUNK_FLAGS_READONLY,
+    CHUNK_FLAGS_ALLOCATED
 } CHUNK_FLAGS;
 
 typedef struct CHUNK_T {
     struct CHUNK_T* previous;
     struct CHUNK_T* next;
     size_t          size;
-    CHUNK_FLAGS     flags;
+    INTEGER         flags;
 } CHUNK;
 
 typedef struct HEAP_T {
@@ -30,6 +31,8 @@ POINTER heap_alloc(HEAP heap, size_t size);
 void heap_dealloc(HEAP heap, POINTER value);
 
 void* heap_at(HEAP heap, POINTER value);
+
+POINTER heap_ptr_of_chunk(HEAP heap, CHUNK* chunk);
 
 void heap_dump(HEAP heap);
 

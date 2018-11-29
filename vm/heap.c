@@ -1,4 +1,5 @@
 #include "heap.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -11,7 +12,7 @@ HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
     constants_chunk->previous = NULL;
     constants_chunk->next     = NULL;
     constants_chunk->size     = constants.length;
-    constants_chunk->flags    = CHUNK_READONLY;
+    constants_chunk->flags    = CHUNK_FLAGS_READONLY | CHUNK_FLAGS_ALLOCATED;
     char* data                = (char*)constants_chunk + sizeof(CHUNK);
     memcpy(data, constants.data, constants.length);
 
@@ -19,7 +20,7 @@ HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
     writable_chunk->next     = NULL;
     writable_chunk->previous = constants_chunk;
     writable_chunk->size     = min_writable_size;
-    writable_chunk->flags    = 0;
+    writable_chunk->flags    = CHUNK_FLAGS_NONE;
 
     constants_chunk->next = writable_chunk;
 
@@ -40,8 +41,16 @@ POINTER heap_alloc(HEAP heap, size_t size)
     CHUNK* current = heap.start;
 
     while (current != NULL) {
-        if (current->size >= size) {
-            // todo allocate
+        INTEGER flags       = current->flags;
+        bool    isAllocated = (flags >> CHUNK_FLAGS_ALLOCATED) & 1;
+        bool    isReadonly  = (flags >> CHUNK_FLAGS_READONLY) & 1;
+
+        if (current->size >= size && !isAllocated && !isReadonly) {
+            POINTER pointer = heap_ptr_of_chunk(heap, current);
+
+            current->flags |= 1 << CHUNK_FLAGS_ALLOCATED;
+
+            return pointer;
         }
 
         current = current->next;
@@ -50,14 +59,31 @@ POINTER heap_alloc(HEAP heap, size_t size)
     if (current == NULL) {
         return VM_NULL;
     }
+
+    return VM_NULL;
 }
 
 void heap_dealloc(HEAP heap, POINTER value)
 {
+    char*  data_start  = heap.start[value];
+    CHUNK* chunk_start = (CHUNK*)(data_start - sizeof(CHUNK));
+
+    chunk_start->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED); // TODO make method that stitches free chunks back together (basically the start of the GC)
 }
 
 void* heap_at(HEAP heap, POINTER value)
 {
+    char* chunk_start = heap.start[value];
+    chunk_start += sizeof(CHUNK);
+
+    return (void*)chunk_start;
+}
+
+POINTER heap_ptr_of_chunk(HEAP heap, CHUNK* chunk)
+{
+    POINTER offset_from_start = (char*)chunk - heap.start;
+
+    return offset_from_start;
 }
 
 void heap_dump(HEAP heap)
