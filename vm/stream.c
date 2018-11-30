@@ -1,7 +1,4 @@
 #include "stream.h"
-#include <malloc.h>
-#include <stdlib.h>
-#include <string.h>
 
 STREAM stream_create(void* raw, size_t size)
 {
@@ -37,4 +34,9 @@ void* stream_advance(STREAM* stream, size_t advancement)
     stream->current += advancement;
 
     return value;
+}
+
+void stream_free(STREAM stream)
+{
+    free(stream.raw);
 }

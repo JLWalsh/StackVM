@@ -2,7 +2,7 @@
 ### A VM written in C
 [![Build Status](https://travis-ci.org/JLWalsh/StackVM.svg?branch=master)](https://travis-ci.org/JLWalsh/StackVM)
 
-In short, Stack VM (SVM for short) is a barebones virtual machine written in C. As the name states, it is a stack-based machine. The machine will feature detailed types (i.e not just one type to represent numbers like in JS), native string support, and (hopefully) be lightweight enough to be ported to small embedded devices. 
+In short, Stack VM (SVM for short) is a barebones virtual machine written in C. As the name states, it is a stack-based machine. The machine will features detailed types (i.e not just one type to represent numbers like in JS), native string support, and (hopefully) be lightweight enough to be ported to small embedded devices. As of now, the SVM is capable of operating on primitives such as integers, and more complex types such as strings. It currently has support for memory allocation operations, but they might be removed in favour of a more object-oriented instruction set that would replace `OP_ALLOC [size]` with something like `OP_NEW [objectid]`. 
 
 ### To get started
 In case you want to try it out or contribute to this project, you will need:
@@ -10,21 +10,39 @@ In case you want to try it out or contribute to this project, you will need:
 - GNU Make
   - If on Windows, use MinGW32 and be sure to add it to your path
 - The GCC compiler
-  - It might compile with other compilers, but I have not tried yet!
+  - Other compilers might work, but that is TBD
 - Clang-format, because C can get messy :)
 
-### Program structure
-StackVM programs can be loaded with constants of any type. This is especially useful for strings, as we will be able to reference them using pointers, instead of storing their value in the stack. **Note that any data between the header and the program is considered to be part of the constants section, and therefore will be loaded into memory.** Here is a rough drawing of the program structure:
+### Types
+In a near future, all these types will be part of the VM in some way:
 
-| Required? | Byte                       | Length (in bytes) | Description                                      |
+| Type             | Size    | Description                                                         |
+|------------------|---------|---------------------------------------------------------------------|
+| Integer          | 2       | A signed whole number                                               |
+| Unsigned integer | 2       | A non-signed whole number                                           |
+| Pointer          | 4       | A non-signed whole number capable of representing a memory location |
+| Long             | 8       | A signed whole-number                                               |
+| Unsigned long    | 8       | A non-signed whole number                                           |
+| Float            | ? (TBD) | A high-precision number                                             |
+| Byte             | 1       | A group of eight bits                                               |
+| Opcode           | 2       | An opcode used only in the bytecode, alias of unsigned integer      |
+
+
+### Program structure
+StackVM programs can be loaded with constants of any type. Constants will be loaded in a special chunk of heap space that is read-only. Constants are especially useful for things like strings, as we can reference them using pointers, instead of storing them directly in the program. **Note that any data between the header and the program is considered to be part of the constants section, and therefore will be loaded into memory.** Here is a rough drawing of the program structure:
+
+| Required? | Byte offset                      | Length (in bytes) | Description                                      |
 |-----------|----------------------------|-------------------|--------------------------------------------------|
-| Yes       | 0                          | 4 (uint32_t)      | Program start pointer relative to start of file. |
-| Yes       | 4                          | 4 (uint32_t)      | Program end pointer relative to start of file.   |
-| No        | 8 to program start pointer | any               | Constant variables, of any size.                 |
-| Yes!      | program start pointer      | any               | The program itself.                              |
+| Yes       | 0                          | 8 (ULONG)      | File/executable length |
+| Yes       | 8                          | 4 (ULONG)      | Constants length   |
+| No        | 8                 | Determined by previous entry | Constant values that will be loaded into memory
+| Yes!      | After constants      | Determined by `executable length - constants length`               | The program itself!                              |
 
 ### To build the project
 `make` or `make build`
 
-#### Or in debug
+### Or in debug
 `make build-debug`
+
+### To clean the project
+`make clean`

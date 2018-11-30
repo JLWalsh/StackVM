@@ -1,4 +1,5 @@
 #include "executable.h"
+#include "heap.h"
 #include "opcode.h"
 #include "vm.h"
 #include <stdint.h>
@@ -27,34 +28,38 @@ int main(int argc, char const* argv[])
     // };
 
     char exe[] = {
-        54, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
-        // 34, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
-        8, 0, 0, 0, 0, 0, 0, 0, // CONSTS LEN
+        63, 0, 0, 0, 0, 0, 0, 0, // EXE LEN
+        16, 0, 0, 0, 0, 0, 0, 0, // CONSTS LEN
         // CONSTANTS
-        1, 0, 2, 0,
-        3, 0, 4, 0,
+        6, 0, // LEN
+        72, 101, 108, 108, 111, 32, // STR VAL (Hello )
+        6, 0, // LEN
+        119, 111, 114, 108, 100, 33, // STR VAL (world!)
         // PROGRAM START
-        OP_I_PUSH, 0, 5, 0, // PUSH
-        OP_CALL, 0,
-        18, 0, 0, 0, // FUN ADDR
-        1, 0, // NUM ARGS
-        OP_PRINT, 0,
-        OP_HALT, 0, 3, 0,
-        OP_LOADARG, 0, 0, 0,
-        OP_I_PUSH, 0, 2, 0,
-        OP_I_ADD, 0,
-        OP_RETURN, 0
+        OP_P_PUSH, 0,
+        0, 0, 0, 0, // Push ptr 0
+        OP_P_PUSH, 0,
+        8, 0, 0, 0, // Push ptr 8
+        OP_ALLOC, 0,
+        32, 0, 0, 0, 0, 0, 0, 0, // 32 bytes: size of Hello world!
+        // Now our storage pointer is on the stack, we are ready to call string cat
+        OP_S_CAT, 0, // String cat returns the storage pointer onto the stack
+        OP_S_PRINT, 0,
+        OP_HALT, 0,
+        OP_S_PRINT, 0,
+        // Str @ ptr
+        OP_HALT, 0
     };
 
     EXECUTABLE executable = executable_from(&exe);
-    // printf("%u first opcode is\n", *((UINTEGER*)stream_advance(&executable.program, sizeof(UINTEGER))));
-    // stream_advance(&executable.program, 26);
-    // printf("%u last opcode is\n", *((UINTEGER*)stream_advance(&executable.program, sizeof(OPCODE))));
+
     VM vm = vm_create(executable);
 
     int16_t exit_code = vm_run(&vm);
+
+    executable_free(executable);
     vm_free(vm);
 
     return exit_code;
-    return 0;
+    // return 0;
 }

@@ -1,8 +1,6 @@
 #ifndef OPCODE_H
 #define OPCODE_H
 
-#include <stdint.h>
-
 enum OPCODES {
     OP_LOADARG,
     OP_CALL,
@@ -10,8 +8,15 @@ enum OPCODES {
     OP_HALT,
     OP_PRINT,
 
+    OP_ALLOC,
+    OP_DEALLOC,
+
     // PTR
     OP_P_PUSH,
+
+    // STR
+    OP_S_CAT,
+    OP_S_PRINT,
 
     OP_I_PUSH,
     OP_I_ADD,
