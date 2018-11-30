@@ -35,7 +35,7 @@ StackVM programs can be loaded with constants of any type. Constants will be loa
 |-----------|----------------------------|-------------------|--------------------------------------------------|
 | Yes       | 0                          | 8 (ULONG)      | File/executable length |
 | Yes       | 8                          | 4 (ULONG)      | Constants length   |
-| No        | 8                 | Determined by previous entry | Constant values that will be loaded into memory
+| No        | 16                 | Determined by previous entry | Constant values that will be loaded into memory
 | Yes!      | After constants      | Determined by `executable length - constants length`               | The program itself!                              |
 
 ### To build the project
