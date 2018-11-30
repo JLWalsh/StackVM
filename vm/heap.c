@@ -16,7 +16,7 @@ HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
     char* data                = (char*)constants_chunk + sizeof(CHUNK);
     memcpy(data, constants.data, constants.length);
 
-    CHUNK* writable_chunk    = (CHUNK*)((char*)constants_chunk) + sizeof(CHUNK) + constants.length;
+    CHUNK* writable_chunk    = (CHUNK*)((char*)constants_chunk + sizeof(CHUNK) + constants.length);
     writable_chunk->next     = NULL;
     writable_chunk->previous = constants_chunk;
     writable_chunk->size     = min_writable_size;
@@ -38,17 +38,33 @@ void heap_free(HEAP heap)
 
 POINTER heap_alloc(HEAP heap, size_t size)
 {
-    CHUNK* current = heap.start;
+    CHUNK* current = (CHUNK*)heap.start;
 
     while (current != NULL) {
-        INTEGER flags       = current->flags;
-        bool    isAllocated = (flags >> CHUNK_FLAGS_ALLOCATED) & 1;
-        bool    isReadonly  = (flags >> CHUNK_FLAGS_READONLY) & 1;
+        INTEGER flags        = current->flags;
+        bool    is_allocated = (flags >> CHUNK_FLAGS_ALLOCATED) & 1;
+        bool    is_readonly  = (flags >> CHUNK_FLAGS_READONLY) & 1;
 
-        if (current->size >= size && !isAllocated && !isReadonly) {
+        if (current->size >= size && !is_allocated && !is_readonly) {
             POINTER pointer = heap_ptr_of_chunk(heap, current);
 
             current->flags |= 1 << CHUNK_FLAGS_ALLOCATED;
+
+            if (current->size > size + sizeof(CHUNK)) {
+                CHUNK* data_end = (CHUNK*)((char*)current + sizeof(CHUNK) + size);
+
+                if (current->next != NULL) {
+                    current->next->previous = data_end;
+                }
+
+                data_end->next     = current->next;
+                data_end->previous = current;
+                current->next      = data_end;
+
+                data_end->flags = CHUNK_FLAGS_NONE;
+                data_end->size  = current->size - sizeof(CHUNK) - size;
+                current->size   = size;
+            }
 
             return pointer;
         }
@@ -65,7 +81,7 @@ POINTER heap_alloc(HEAP heap, size_t size)
 
 void heap_dealloc(HEAP heap, POINTER value)
 {
-    char*  data_start  = heap.start[value];
+    char*  data_start  = &heap.start[value];
     CHUNK* chunk_start = (CHUNK*)(data_start - sizeof(CHUNK));
 
     chunk_start->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED); // TODO make method that stitches free chunks back together (basically the start of the GC)
@@ -73,7 +89,7 @@ void heap_dealloc(HEAP heap, POINTER value)
 
 void* heap_at(HEAP heap, POINTER value)
 {
-    char* chunk_start = heap.start[value];
+    char* chunk_start = &heap.start[value];
     chunk_start += sizeof(CHUNK);
 
     return (void*)chunk_start;
