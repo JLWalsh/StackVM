@@ -13,27 +13,27 @@ typedef enum CHUNK_FLAGS_T {
 typedef struct CHUNK_T {
     struct CHUNK_T* previous;
     struct CHUNK_T* next;
-    size_t          size;
+    ULONG           size;
     INTEGER         flags;
 } CHUNK;
 
 typedef struct HEAP_T {
-    char*  start;
-    size_t size;
+    char* start;
+    ULONG size;
 } HEAP;
 
-HEAP heap_from(CONSTANTS constants, size_t min_writable_size);
+HEAP heap_from(CONSTANTS constants, ULONG min_writable_size);
 
 void heap_free(HEAP heap);
 
-POINTER heap_alloc(HEAP heap, size_t size);
+POINTER heap_alloc(HEAP* heap, ULONG size);
 
-void heap_dealloc(HEAP heap, POINTER value);
+void heap_dealloc(HEAP* heap, POINTER value);
 
-void* heap_at(HEAP heap, POINTER value);
+void* heap_at(HEAP* heap, POINTER value);
 
-POINTER heap_ptr_of_chunk(HEAP heap, CHUNK* chunk);
+POINTER heap_ptr_of_chunk(HEAP* heap, CHUNK* chunk);
 
-void heap_dump(HEAP heap);
+void heap_dump(HEAP* heap);
 
 #endif /* HEAP_H */

@@ -13,3 +13,10 @@ void vmstring_concat(VMSTRING_HEADER* a, VMSTRING_HEADER* b, VMSTRING_HEADER* ou
     memcpy(a_string_offset, a + sizeof(VMSTRING_HEADER), a->length);
     memcpy(b_string_offset, b + sizeof(VMSTRING_HEADER), b->length);
 }
+
+void* vmstring_data_ptr(VMSTRING_HEADER* str)
+{
+    char* data_ptr = (char*)str + sizeof(VMSTRING_HEADER);
+
+    return (void*)data_ptr;
+}

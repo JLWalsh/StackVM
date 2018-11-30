@@ -17,8 +17,14 @@ STATE op_return(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_halt(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_print(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
-// Pointer operations
+// Pointer & memory operations
 STATE op_ppush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_alloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_dealloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+
+// String operations
+STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
 STATE op_ipush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_iadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);

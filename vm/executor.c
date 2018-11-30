@@ -2,6 +2,7 @@
 #include "opcode.h"
 #include "vmstring.h"
 #include <stdio.h>
+#include <string.h>
 
 STATE op_loadarg(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
@@ -77,6 +78,60 @@ STATE op_ppush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     stack_push(stack, object_of_ptr(pointer));
 
     state.instruction_ptr = stream_position(program);
+
+    return state;
+}
+
+STATE op_alloc(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    ULONG   alloc_size = *((ULONG*)stream_advance(program, sizeof(ULONG)));
+    POINTER ptr        = heap_alloc(heap, alloc_size);
+
+    stack_push(stack, object_of_ptr(ptr));
+
+    state.instruction_ptr = stream_position(program);
+
+    return state;
+}
+
+STATE op_dealloc(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    POINTER ptr = stack_pop(stack).ptr_val;
+    heap_dealloc(heap, ptr);
+
+    return state;
+}
+
+// String operations
+STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    POINTER dest_ptr = stack_pop(stack).ptr_val;
+    POINTER b_ptr    = stack_pop(stack).ptr_val;
+    POINTER a_ptr    = stack_pop(stack).ptr_val;
+
+    VMSTRING_HEADER* a_str    = (VMSTRING_HEADER*)heap_at(heap, a_ptr);
+    VMSTRING_HEADER* b_str    = (VMSTRING_HEADER*)heap_at(heap, b_ptr);
+    VMSTRING_HEADER* dest_str = (VMSTRING_HEADER*)heap_at(heap, dest_ptr);
+
+    dest_str->length = a_str->length + b_str->length;
+
+    memcpy(vmstring_data_ptr(dest_str), vmstring_data_ptr(a_str), a_str->length);
+    memcpy(vmstring_data_ptr(dest_str) + a_str->length, vmstring_data_ptr(b_str), b_str->length);
+
+    stack_push(stack, object_of_ptr(dest_ptr));
+
+    return state;
+}
+
+STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    POINTER          str_ptr = stack_pop(stack).ptr_val;
+    VMSTRING_HEADER* str     = (VMSTRING_HEADER*)heap_at(heap, str_ptr);
+
+    char* data = vmstring_data_ptr(str);
+    for (int i = 0; i < str->length; i++) {
+        printf("%c", data[i]);
+    }
 
     return state;
 }

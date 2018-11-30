@@ -9,4 +9,6 @@ typedef struct VMSTRING_HEADER_T {
 
 void vmstring_concat(VMSTRING_HEADER* a, VMSTRING_HEADER* b, VMSTRING_HEADER* out);
 
+void* vmstring_data_ptr(VMSTRING_HEADER* str);
+
 #endif /* VMSTRING_H */

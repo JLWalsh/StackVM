@@ -6,7 +6,7 @@ VM vm_create(EXECUTABLE executable)
     VM vm;
     vm.stack   = stack_create(10); // TODO find clean way to specify stack size
     vm.program = executable.program;
-    vm.heap    = heap_from(executable.constants, 100); // TODO also applies to heap
+    vm.heap    = heap_from(executable.constants, 500); // TODO also applies to heap
     vm.state   = state_create(executable);
 
     vm.executors[OP_LOADARG] = op_loadarg;
@@ -15,7 +15,12 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_HALT]    = op_halt;
     vm.executors[OP_PRINT]   = op_print;
 
-    vm.executors[OP_P_PUSH] = op_ppush;
+    vm.executors[OP_P_PUSH]  = op_ppush;
+    vm.executors[OP_ALLOC]   = op_alloc;
+    vm.executors[OP_DEALLOC] = op_dealloc;
+
+    vm.executors[OP_S_CAT]   = op_scat;
+    vm.executors[OP_S_PRINT] = op_sprint;
 
     vm.executors[OP_I_PUSH] = op_ipush;
     vm.executors[OP_I_ADD]  = op_iadd;

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-HEAP heap_from(CONSTANTS constants, size_t min_writable_size)
+HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
 {
     size_t chunk_headers_size = sizeof(CHUNK) * 2;
     size_t size               = chunk_headers_size + constants.length + min_writable_size;
@@ -36,9 +36,9 @@ void heap_free(HEAP heap)
     free(heap.start);
 }
 
-POINTER heap_alloc(HEAP heap, size_t size)
+POINTER heap_alloc(HEAP* heap, ULONG size)
 {
-    CHUNK* current = (CHUNK*)heap.start;
+    CHUNK* current = (CHUNK*)heap->start;
 
     while (current != NULL) {
         INTEGER flags        = current->flags;
@@ -79,34 +79,34 @@ POINTER heap_alloc(HEAP heap, size_t size)
     return VM_NULL;
 }
 
-void heap_dealloc(HEAP heap, POINTER value)
+void heap_dealloc(HEAP* heap, POINTER value)
 {
-    char*  data_start  = &heap.start[value];
+    char*  data_start  = &heap->start[value];
     CHUNK* chunk_start = (CHUNK*)(data_start - sizeof(CHUNK));
 
     chunk_start->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED); // TODO make method that stitches free chunks back together (basically the start of the GC)
 }
 
-void* heap_at(HEAP heap, POINTER value)
+void* heap_at(HEAP* heap, POINTER value)
 {
-    char* chunk_start = &heap.start[value];
+    char* chunk_start = &heap->start[value];
     chunk_start += sizeof(CHUNK);
 
     return (void*)chunk_start;
 }
 
-POINTER heap_ptr_of_chunk(HEAP heap, CHUNK* chunk)
+POINTER heap_ptr_of_chunk(HEAP* heap, CHUNK* chunk)
 {
-    POINTER offset_from_start = (char*)chunk - heap.start;
+    POINTER offset_from_start = (char*)chunk - heap->start;
 
     return offset_from_start;
 }
 
-void heap_dump(HEAP heap)
+void heap_dump(HEAP* heap)
 {
     int chunk_counter = 0;
 
-    CHUNK* current = (CHUNK*)heap.start;
+    CHUNK* current = (CHUNK*)heap->start;
     for (;;) {
         if (current == NULL) {
             break;
