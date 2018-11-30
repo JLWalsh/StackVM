@@ -8,12 +8,16 @@ HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
     size_t chunk_headers_size = sizeof(CHUNK) * 2;
     size_t size               = chunk_headers_size + constants.length + min_writable_size;
 
-    CHUNK* constants_chunk    = (CHUNK*)((char*)malloc(size + 1) + 1); // First byte is reserved for VM_NULL
+    CHUNK* constants_chunk = (CHUNK*)((char*)malloc(size + 1) + 1); // First byte is reserved for VM_NULL
+
     constants_chunk->previous = NULL;
     constants_chunk->next     = NULL;
     constants_chunk->size     = constants.length;
-    constants_chunk->flags    = CHUNK_FLAGS_READONLY | CHUNK_FLAGS_ALLOCATED;
-    char* data                = (char*)constants_chunk + sizeof(CHUNK);
+    constants_chunk->flags    = CHUNK_FLAGS_NONE;
+    constants_chunk->flags |= 1 << CHUNK_FLAGS_READONLY;
+    constants_chunk->flags |= 1 << CHUNK_FLAGS_ALLOCATED;
+
+    char* data = (char*)constants_chunk + sizeof(CHUNK);
     memcpy(data, constants.data, constants.length);
 
     CHUNK* writable_chunk    = (CHUNK*)((char*)constants_chunk + sizeof(CHUNK) + constants.length);
