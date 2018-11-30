@@ -14,6 +14,18 @@ In case you want to try it out or contribute to this project, you will need:
 - Clang-format, because C can get messy :)
 
 ### Types
+In a near future, all these types will be part of the VM in some way:
+
+| Type             | Size    | Description                                                         |
+|------------------|---------|---------------------------------------------------------------------|
+| Integer          | 2       | A signed whole number                                               |
+| Unsigned integer | 2       | A non-signed whole number                                           |
+| Pointer          | 4       | A non-signed whole number capable of representing a memory location |
+| Long             | 8       | A signed whole-number                                               |
+| Unsigned long    | 8       | A non-signed whole number                                           |
+| Float            | ? (TBD) | A high-precision number                                             |
+| Byte             | 1       | A group of eight bits                                               |
+| Opcode           | 2       | An opcode used only in the bytecode, alias of unsigned integer      |
 
 
 ### Program structure
