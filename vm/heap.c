@@ -91,6 +91,25 @@ void heap_dealloc(HEAP* heap, POINTER value)
     chunk_start->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED); // TODO make method that stitches free chunks back together (basically the start of the GC)
 }
 
+void heap_stitch(HEAP* heap)
+{
+    CHUNK* current = (CHUNK*)heap->start;
+
+    while (current->next != NULL) {
+        bool is_allocated      = (current->flags >> CHUNK_FLAGS_ALLOCATED) & 1;
+        bool is_next_allocated = (current->next->flags >> CHUNK_FLAGS_ALLOCATED) & 1;
+
+        if (!is_allocated && !is_next_allocated) {
+            current->size += current->next->size;
+            current->next = current->next->next;
+
+            if (current->next != NULL) {
+                current->next->previous = current;
+            }
+        }
+    }
+}
+
 void* heap_at(HEAP* heap, POINTER value)
 {
     char* chunk_start = &heap->start[value];

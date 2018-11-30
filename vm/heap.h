@@ -30,6 +30,8 @@ POINTER heap_alloc(HEAP* heap, ULONG size);
 
 void heap_dealloc(HEAP* heap, POINTER value);
 
+void heap_stitch(HEAP* heap);
+
 void* heap_at(HEAP* heap, POINTER value);
 
 POINTER heap_ptr_of_chunk(HEAP* heap, CHUNK* chunk);
