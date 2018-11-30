@@ -7,11 +7,11 @@ void vmstring_concat(VMSTRING_HEADER* a, VMSTRING_HEADER* b, VMSTRING_HEADER* ou
 
     out->length = new_len;
 
-    void* a_string_offset = out + sizeof(VMSTRING_HEADER);
+    void* a_string_offset = vmstring_data_ptr(out);
     void* b_string_offset = a_string_offset + a->length;
 
-    memcpy(a_string_offset, a + sizeof(VMSTRING_HEADER), a->length);
-    memcpy(b_string_offset, b + sizeof(VMSTRING_HEADER), b->length);
+    memcpy(a_string_offset, vmstring_data_ptr(a), a->length);
+    memcpy(b_string_offset, vmstring_data_ptr(b), b->length);
 }
 
 void* vmstring_data_ptr(VMSTRING_HEADER* str)

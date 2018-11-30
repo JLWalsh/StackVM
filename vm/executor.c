@@ -113,10 +113,7 @@ STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     VMSTRING_HEADER* b_str    = (VMSTRING_HEADER*)heap_at(heap, b_ptr);
     VMSTRING_HEADER* dest_str = (VMSTRING_HEADER*)heap_at(heap, dest_ptr);
 
-    dest_str->length = a_str->length + b_str->length;
-
-    memcpy(vmstring_data_ptr(dest_str), vmstring_data_ptr(a_str), a_str->length);
-    memcpy(vmstring_data_ptr(dest_str) + a_str->length, vmstring_data_ptr(b_str), b_str->length);
+    vmstring_concat(a_str, b_str, dest_str);
 
     stack_push(stack, object_of_ptr(dest_ptr));
 
