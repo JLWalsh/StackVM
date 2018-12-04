@@ -85,10 +85,9 @@ POINTER heap_alloc(HEAP* heap, ULONG size)
 
 void heap_dealloc(HEAP* heap, POINTER value)
 {
-    char*  data_start  = &heap->start[value];
-    CHUNK* chunk_start = (CHUNK*)(data_start - sizeof(CHUNK));
+    CHUNK* chunk = heap_chunk_of_ptr(heap, value);
 
-    chunk_start->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED); // TODO make method that stitches free chunks back together (basically the start of the GC)
+    chunk->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED);
 }
 
 void heap_stitch(HEAP* heap)
@@ -123,6 +122,13 @@ POINTER heap_ptr_of_chunk(HEAP* heap, CHUNK* chunk)
     POINTER offset_from_start = (char*)chunk - heap->start;
 
     return offset_from_start;
+}
+
+CHUNK* heap_chunk_of_ptr(HEAP* heap, POINTER ptr)
+{
+    char* chunk_ptr = heap->start + ptr;
+
+    return (CHUNK*)chunk_ptr;
 }
 
 void heap_dump(HEAP* heap)
