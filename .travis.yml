@@ -9,16 +9,7 @@ before_script:
   - cd build
   - cmake ..
 
-jobs:
-  include:
-    - stage: "Build"
-      script: make      
-    - stage: "Test"
-      name: "Unit Tests"
-      script: 
-        - cd test
-        - ctest --verbose
-
-stages:
-  - "Build"
-  - "Test"
+script:
+  - make
+  - cd test
+  - ctest --verbose
