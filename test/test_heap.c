@@ -40,7 +40,7 @@ void test_heap_from_constants_should_store_constants_in_first_chunk()
     TEST_ASSERT_EQUAL_HEX8(FILL_CONSTANTS[2], constants_in_heap[2]);
     TEST_ASSERT_EQUAL_HEX8(FILL_CONSTANTS[3], constants_in_heap[3]);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_from_constants_should_store_in_readonly_chunk()
@@ -54,7 +54,7 @@ void test_heap_from_constants_should_store_in_readonly_chunk()
     TEST_ASSERT_TRUE(is_readonly);
     TEST_ASSERT_TRUE(is_allocated);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_should_reserve_memory_after_constants()
@@ -68,7 +68,7 @@ void test_heap_should_reserve_memory_after_constants()
     TEST_ASSERT_EQUAL_INT(number_of_bytes, data_chunk->size);
     TEST_ASSERT_FALSE(is_allocated);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_ptr_of_first_data_chunk_should_point_after_constants_chunk()
@@ -80,7 +80,7 @@ void test_heap_ptr_of_first_data_chunk_should_point_after_constants_chunk()
     POINTER data_chunk_ptr = heap_ptr_of_chunk(&heap, data_chunk);
     TEST_ASSERT_EQUAL_UINT32(chunk_ptr, data_chunk_ptr);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_alloc_should_create_new_chunk_out_of_remaining_memory()
@@ -90,7 +90,7 @@ void test_heap_alloc_should_create_new_chunk_out_of_remaining_memory()
     heap_alloc(&heap, 60);
     TEST_ASSERT_EQUAL_INT(3, number_of_chunks(heap));
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_alloc_should_set_allocated_flag()
@@ -102,7 +102,7 @@ void test_heap_alloc_should_set_allocated_flag()
     bool    is_allocated    = (allocated_chunk->flags >> CHUNK_FLAGS_ALLOCATED) & 1;
     TEST_ASSERT_TRUE(is_allocated);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_alloc_should_create_chunk_with_specified_size()
@@ -114,7 +114,7 @@ void test_heap_alloc_should_create_chunk_with_specified_size()
     CHUNK* allocated_chunk = heap_chunk_of_ptr(&heap, ptr);
     TEST_ASSERT_EQUAL_UINT(60, allocated_chunk->size);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_alloc_should_not_split_chunks_when_not_enough_memory_for_new_chunk()
@@ -127,7 +127,7 @@ void test_heap_alloc_should_not_split_chunks_when_not_enough_memory_for_new_chun
     TEST_ASSERT_EQUAL_INT(2, number_of_chunks(heap));
     TEST_ASSERT_EQUAL_UINT(first_chunk_size, heap_chunk_of_ptr(&heap, ptr)->size);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_alloc_should_return_null_if_allocation_exceeds_memory_available()
@@ -139,7 +139,7 @@ void test_heap_alloc_should_return_null_if_allocation_exceeds_memory_available()
 
     TEST_ASSERT_EQUAL_INT(VM_NULL, ptr);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 void test_heap_dealloc_should_remove_allocated_flag()
@@ -152,7 +152,7 @@ void test_heap_dealloc_should_remove_allocated_flag()
     bool is_allocated = (allocated_chunk->flags >> CHUNK_FLAGS_ALLOCATED) & 1;
     TEST_ASSERT_FALSE(is_allocated);
 
-    heap_free(heap);
+    //heap_free(heap);
 }
 
 int main(void)
