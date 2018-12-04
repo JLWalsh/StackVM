@@ -8,7 +8,8 @@ HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
     size_t chunk_headers_size = sizeof(CHUNK) * 2;
     size_t size               = chunk_headers_size + constants.length + min_writable_size;
 
-    CHUNK* constants_chunk = (CHUNK*)((char*)malloc(size + 1) + 1); // First byte is reserved for VM_NULL
+    char*  heap_start      = (char*)malloc(size + 1);
+    CHUNK* constants_chunk = (CHUNK*)(heap_start + 1); // First byte is reserved for VM_NULL
 
     constants_chunk->previous = NULL;
     constants_chunk->next     = NULL;
@@ -37,7 +38,7 @@ HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
 
 void heap_free(HEAP heap)
 {
-    free(heap.start);
+    free(heap.start - 1); // First byte is reserved for VM_NULL
 }
 
 POINTER heap_alloc(HEAP* heap, ULONG size)

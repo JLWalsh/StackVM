@@ -40,7 +40,7 @@ void test_heap_from_constants_should_store_constants_in_first_chunk()
     TEST_ASSERT_EQUAL_HEX8(FILL_CONSTANTS[2], constants_in_heap[2]);
     TEST_ASSERT_EQUAL_HEX8(FILL_CONSTANTS[3], constants_in_heap[3]);
 
-    //heap_free(heap);
+    heap_free(heap);
 }
 
 void test_heap_from_constants_should_store_in_readonly_chunk()
