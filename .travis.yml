@@ -1,3 +1,22 @@
-language: c
-compiler: gcc
 script: make
+
+language: c
+
+compiler: gcc
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+
+jobs:
+  include:
+    - stage: "Build"
+      script: make      
+    - stage: "Test"
+      name: "Unit Tests"
+      script: make test
+
+stages:
+  - "Build"
+  - "Test"
