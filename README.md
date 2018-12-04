@@ -7,11 +7,26 @@ In short, Stack VM (SVM for short) is a barebones virtual machine written in C. 
 ### To get started
 In case you want to try it out or contribute to this project, you will need:
 
-- GNU Make
-  - If on Windows, use MinGW32 and be sure to add it to your path
-- The GCC compiler
-  - Other compilers might work, but that is TBD
+- CMake
+    - So far, the project has been succesfully compiled with MinGW32 and GCC on Linux
 - Clang-format, because C can get messy :)
+
+### To build the project solution
+```
+mkdir solution
+cd solution
+cmake ..    
+```
+To generate using a specific generator (i.e MinGW Makefiles, Visual Studio solution, etc), see [the CMake doc on generators](https://cmake.org/cmake/help/v3.13/manual/cmake-generators.7.html?highlight=mingw%20makefiles#id7).
+Or use CMake GUI!
+
+### To run tests
+After having built the project, from the solution directory:
+```
+cd test
+ctest --verbose
+```
+
 
 ### Types
 In a near future, all these types will be part of the VM in some way:
