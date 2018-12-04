@@ -8,7 +8,8 @@ HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
     size_t chunk_headers_size = sizeof(CHUNK) * 2;
     size_t size               = chunk_headers_size + constants.length + min_writable_size;
 
-    CHUNK* constants_chunk = (CHUNK*)((char*)malloc(size + 1) + 1); // First byte is reserved for VM_NULL
+    char*  heap_start      = (char*)malloc(size + 1);
+    CHUNK* constants_chunk = (CHUNK*)(heap_start + 1); // First byte is reserved for VM_NULL
 
     constants_chunk->previous = NULL;
     constants_chunk->next     = NULL;
@@ -37,7 +38,7 @@ HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
 
 void heap_free(HEAP heap)
 {
-    free(heap.start);
+    free(heap.start - 1); // First byte is reserved for VM_NULL
 }
 
 POINTER heap_alloc(HEAP* heap, ULONG size)
@@ -85,10 +86,9 @@ POINTER heap_alloc(HEAP* heap, ULONG size)
 
 void heap_dealloc(HEAP* heap, POINTER value)
 {
-    char*  data_start  = &heap->start[value];
-    CHUNK* chunk_start = (CHUNK*)(data_start - sizeof(CHUNK));
+    CHUNK* chunk = heap_chunk_of_ptr(heap, value);
 
-    chunk_start->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED); // TODO make method that stitches free chunks back together (basically the start of the GC)
+    chunk->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED);
 }
 
 void heap_stitch(HEAP* heap)
@@ -123,6 +123,13 @@ POINTER heap_ptr_of_chunk(HEAP* heap, CHUNK* chunk)
     POINTER offset_from_start = (char*)chunk - heap->start;
 
     return offset_from_start;
+}
+
+CHUNK* heap_chunk_of_ptr(HEAP* heap, POINTER ptr)
+{
+    char* chunk_ptr = heap->start + ptr;
+
+    return (CHUNK*)chunk_ptr;
 }
 
 void heap_dump(HEAP* heap)

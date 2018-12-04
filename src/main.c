@@ -1,11 +1,12 @@
-#include "executable.h"
-#include "heap.h"
-#include "opcode.h"
-#include "vm.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <vm/executable.h>
+#include <vm/heap.h>
+#include <vm/opcode.h>
+#include <vm/vm.h>
+
 
 int main(int argc, char const* argv[])
 {
