@@ -15,7 +15,9 @@ jobs:
       script: make      
     - stage: "Test"
       name: "Unit Tests"
-      script: make test
+      script: 
+        - cd test
+        - ctest --verbose
 
 stages:
   - "Build"
