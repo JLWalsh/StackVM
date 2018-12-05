@@ -1,10 +1,10 @@
 #ifndef MATH_H
 #define MATH_H
 
-#include "type.h"
+#include <stdint.h>
 
-INTEGER math_int_to_big_endian(INTEGER i);
-LONG    math_long_to_big_endian(LONG l);
-POINTER math_ptr_to_big_endian(POINTER ptr);
+int16_t math_int16_to_big_endian(int16_t i);
+int64_t math_int64_to_big_endian(int64_t l);
+int32_t math_int32_to_big_endian(int32_t ptr);
 
 #endif /* MATH_H */

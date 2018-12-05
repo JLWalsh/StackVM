@@ -8,3 +8,4 @@ endmacro()
 
 vm_add_test(test_heap)
 vm_add_test(test_math)
+vm_add_test(test_bytecode)
