@@ -19,6 +19,11 @@ void stack_free(STACK stack)
     }
 }
 
+void stack_reset(STACK* stack)
+{
+    stack->size = 0;
+}
+
 OBJECT stack_top(STACK* stack)
 {
     return stack->objects[stack->size];

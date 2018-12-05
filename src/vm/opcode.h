@@ -20,6 +20,13 @@ enum OPCODES {
 
     OP_I_PUSH,
     OP_I_ADD,
+    OP_I_SUB,
+    OP_I_DIV,
+    OP_I_MUL,
+    OP_I_AND,
+    OP_I_OR,
+    OP_I_XOR,
+    OP_I_NOT,
 
     NUM_OF_OPCODES
 };

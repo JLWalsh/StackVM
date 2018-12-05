@@ -155,3 +155,72 @@ STATE op_iadd(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
     return state;
 }
+
+STATE op_isub(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a - b));
+
+    return state;
+}
+
+STATE op_idiv(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a / b)); // TODO figure out how to handle exceptions (in this case, division by zero)
+
+    return state;
+}
+
+STATE op_imul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a * b));
+
+    return state;
+}
+
+STATE op_iand(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a & b));
+
+    return state;
+}
+
+STATE op_ior(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a | b));
+
+    return state;
+}
+
+STATE op_ixor(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a ^ b));
+
+    return state;
+}
+
+STATE op_inot(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(~a));
+
+    return state;
+}
