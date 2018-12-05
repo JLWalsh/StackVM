@@ -17,6 +17,8 @@ typedef struct EXECUTABLE_T {
 
 EXECUTABLE executable_from(char* bytes);
 
+EXECUTABLE_HEADER executable_read_header(char* bytes);
+
 void executable_free(EXECUTABLE executable);
 
 #endif /* EXECUTABLE_H */

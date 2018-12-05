@@ -1,4 +1,5 @@
 #include "executor.h"
+#include "bytecode.h"
 #include "opcode.h"
 #include "vmstring.h"
 #include <stdio.h>
@@ -6,7 +7,7 @@
 
 STATE op_loadarg(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    INTEGER offset   = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    INTEGER offset   = bytecode_read_int(program);
     INTEGER position = state.frame_position + offset;
     OBJECT  o        = stack_at(stack, position);
 
@@ -19,8 +20,8 @@ STATE op_loadarg(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
 STATE op_call(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    POINTER  fun_addr = *((POINTER*)stream_advance(program, sizeof(POINTER)));
-    UINTEGER num_args = *((UINTEGER*)stream_advance(program, sizeof(UINTEGER)));
+    POINTER  fun_addr = bytecode_read_ptr(program);
+    UINTEGER num_args = bytecode_read_uint(program);
 
     POINTER return_addr = stream_position(program);
 
@@ -53,7 +54,7 @@ STATE op_return(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
 STATE op_halt(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    INTEGER exit_code = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    INTEGER exit_code = bytecode_read_int(program);
 
     state.running   = false;
     state.exit_code = exit_code;
@@ -73,7 +74,7 @@ STATE op_print(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 // Pointer operations
 STATE op_ppush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    POINTER pointer = *((POINTER*)stream_advance(program, sizeof(POINTER)));
+    POINTER pointer = bytecode_read_ptr(program);
 
     stack_push(stack, object_of_ptr(pointer));
 
@@ -84,7 +85,7 @@ STATE op_ppush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
 STATE op_alloc(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    ULONG   alloc_size = *((ULONG*)stream_advance(program, sizeof(ULONG)));
+    ULONG   alloc_size = bytecode_read_ulong(program);
     POINTER ptr        = heap_alloc(heap, alloc_size);
 
     stack_push(stack, object_of_ptr(ptr));
@@ -122,8 +123,9 @@ STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
 STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    POINTER          str_ptr = stack_pop(stack).ptr_val;
-    VMSTRING_HEADER* str     = (VMSTRING_HEADER*)heap_at(heap, str_ptr);
+    POINTER str_ptr = stack_pop(stack).ptr_val;
+
+    VMSTRING_HEADER* str = (VMSTRING_HEADER*)heap_at(heap, str_ptr);
 
     char* data = vmstring_data_ptr(str);
     for (int i = 0; i < str->length; i++) {
@@ -135,7 +137,7 @@ STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
 STATE op_ipush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    INTEGER value = *((INTEGER*)stream_advance(program, sizeof(INTEGER)));
+    INTEGER value = bytecode_read_int(program);
 
     stack_push(stack, object_of_int(value));
 

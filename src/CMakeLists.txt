@@ -21,8 +21,18 @@ add_library(vm-lib STATIC
     vm/vm.h
     vm/vmstring.c
     vm/vmstring.h
+    vm/math.h
+    vm/math.c
+    vm/bytecode.h
+    vm/bytecode.c
 )
 
 target_include_directories(vm-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(vm main.c)
 target_link_libraries(vm vm-lib)
+
+TEST_BIG_ENDIAN(IS_BIG_ENDIAN)
+
+IF(NOT ${IS_BIG_ENDIAN})
+    add_definitions( -DVM_IS_LITTLE_ENDIAN )
+ENDIF()
