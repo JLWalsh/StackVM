@@ -27,12 +27,11 @@ int main(int argc, char const* argv[])
         // Now our storage pointer is on the stack, we are ready to call string cat
         0, OP_S_CAT, // String cat returns the storage pointer onto the stack
         0, OP_S_PRINT,
-        0, OP_HALT
+        0, OP_HALT, 0, 0
     };
 
     EXECUTABLE executable = executable_from(&exe);
-
-    VM vm = vm_create(executable);
+    VM         vm         = vm_create(executable);
 
     int16_t exit_code = vm_run(&vm);
 

@@ -2,7 +2,6 @@
 #include "bytecode.h"
 #include "executor.h"
 
-
 VM vm_create(EXECUTABLE executable)
 {
     VM vm;

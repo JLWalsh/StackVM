@@ -123,8 +123,9 @@ STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
 STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    POINTER          str_ptr = stack_pop(stack).ptr_val;
-    VMSTRING_HEADER* str     = (VMSTRING_HEADER*)heap_at(heap, str_ptr);
+    POINTER str_ptr = stack_pop(stack).ptr_val;
+
+    VMSTRING_HEADER* str = (VMSTRING_HEADER*)heap_at(heap, str_ptr);
 
     char* data = vmstring_data_ptr(str);
     for (int i = 0; i < str->length; i++) {
