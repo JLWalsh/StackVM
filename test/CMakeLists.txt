@@ -1,7 +1,10 @@
 enable_testing()
 
-add_executable(vm-test test_heap.c)
- 
-target_link_libraries(vm-test vm-lib unity)
- 
-add_test(heap-tests vm-test)
+macro(vm_add_test name)
+    add_executable(${name} ${name}.c ${ARGN})
+    target_link_libraries(${name} vm-lib unity)
+    add_test(${name} ${name})
+endmacro()
+
+vm_add_test(test_heap)
+vm_add_test(test_math)
