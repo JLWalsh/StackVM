@@ -34,5 +34,5 @@ target_link_libraries(vm vm-lib)
 TEST_BIG_ENDIAN(IS_BIG_ENDIAN)
 
 IF(NOT ${IS_BIG_ENDIAN})
-    add_compile_options(-D VM_IS_LITTLE_ENDIAN)
+    add_definitions( -DVM_IS_LITTLE_ENDIAN )
 ENDIF()
