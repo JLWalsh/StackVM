@@ -14,6 +14,8 @@ STACK stack_create(uint16_t num_objects);
 
 void stack_free(STACK stack);
 
+void stack_reset(STACK* stack);
+
 OBJECT stack_pop(STACK* stack);
 
 OBJECT stack_at(STACK* stack, INTEGER position);

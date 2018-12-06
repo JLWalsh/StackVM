@@ -23,8 +23,55 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_S_CAT]   = op_scat;
     vm.executors[OP_S_PRINT] = op_sprint;
 
-    vm.executors[OP_I_PUSH] = op_ipush;
-    vm.executors[OP_I_ADD]  = op_iadd;
+    vm.executors[OP_I_PUSH]   = op_ipush;
+    vm.executors[OP_I_ADD]    = op_iadd;
+    vm.executors[OP_I_SUB]    = op_isub;
+    vm.executors[OP_I_DIV]    = op_idiv;
+    vm.executors[OP_I_MUL]    = op_imul;
+    vm.executors[OP_I_AND]    = op_iand;
+    vm.executors[OP_I_OR]     = op_ior;
+    vm.executors[OP_I_XOR]    = op_ixor;
+    vm.executors[OP_I_NOT]    = op_inot;
+    vm.executors[OP_I_LSHIFT] = op_ilshift;
+    vm.executors[OP_I_RSHIFT] = op_irshift;
+
+    vm.executors[OP_UI_PUSH]   = op_uipush;
+    vm.executors[OP_UI_ADD]    = op_uiadd;
+    vm.executors[OP_UI_SUB]    = op_uisub;
+    vm.executors[OP_UI_DIV]    = op_uidiv;
+    vm.executors[OP_UI_MUL]    = op_uimul;
+    vm.executors[OP_UI_AND]    = op_uiand;
+    vm.executors[OP_UI_OR]     = op_uior;
+    vm.executors[OP_UI_XOR]    = op_uixor;
+    vm.executors[OP_UI_NOT]    = op_uinot;
+    vm.executors[OP_UI_LSHIFT] = op_uilshift;
+    vm.executors[OP_UI_RSHIFT] = op_uirshift;
+
+    vm.executors[OP_L_PUSH]   = op_lpush;
+    vm.executors[OP_L_ADD]    = op_ladd;
+    vm.executors[OP_L_SUB]    = op_lsub;
+    vm.executors[OP_L_DIV]    = op_ldiv;
+    vm.executors[OP_L_MUL]    = op_lmul;
+    vm.executors[OP_L_AND]    = op_land;
+    vm.executors[OP_L_OR]     = op_lor;
+    vm.executors[OP_L_XOR]    = op_lxor;
+    vm.executors[OP_L_NOT]    = op_lnot;
+    vm.executors[OP_L_LSHIFT] = op_llshift;
+    vm.executors[OP_L_RSHIFT] = op_lrshift;
+
+    vm.executors[OP_UL_PUSH]    = op_ulpush;
+    vm.executors[OP_UL_ADD]     = op_uladd;
+    vm.executors[OP_UL_SUB]     = op_ulsub;
+    vm.executors[OP_UL_DIV]     = op_uldiv;
+    vm.executors[OP_UL_MUL]     = op_ulmul;
+    vm.executors[OP_UL_AND]     = op_uland;
+    vm.executors[OP_UL_OR]      = op_ulor;
+    vm.executors[OP_UL_XOR]     = op_ulxor;
+    vm.executors[OP_UL_NOT]     = op_ulnot;
+    vm.executors[OP_UL_ULSHIFT] = op_ullshift;
+    vm.executors[OP_UL_RSHIFT]  = op_ulrshift;
+
+    // TODO add static assertion to ensure that sizeof(OPCODE) is big enough to fit all upcodes
 
     return vm;
 }
