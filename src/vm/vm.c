@@ -23,15 +23,29 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_S_CAT]   = op_scat;
     vm.executors[OP_S_PRINT] = op_sprint;
 
-    vm.executors[OP_I_PUSH] = op_ipush;
-    vm.executors[OP_I_ADD]  = op_iadd;
-    vm.executors[OP_I_SUB]  = op_isub;
-    vm.executors[OP_I_DIV]  = op_idiv;
-    vm.executors[OP_I_MUL]  = op_imul;
-    vm.executors[OP_I_AND]  = op_iand;
-    vm.executors[OP_I_OR]   = op_ior;
-    vm.executors[OP_I_XOR]  = op_ixor;
-    vm.executors[OP_I_NOT]  = op_inot;
+    vm.executors[OP_I_PUSH]   = op_ipush;
+    vm.executors[OP_I_ADD]    = op_iadd;
+    vm.executors[OP_I_SUB]    = op_isub;
+    vm.executors[OP_I_DIV]    = op_idiv;
+    vm.executors[OP_I_MUL]    = op_imul;
+    vm.executors[OP_I_AND]    = op_iand;
+    vm.executors[OP_I_OR]     = op_ior;
+    vm.executors[OP_I_XOR]    = op_ixor;
+    vm.executors[OP_I_NOT]    = op_inot;
+    vm.executors[OP_I_LSHIFT] = op_ilshift;
+    vm.executors[OP_I_RSHIFT] = op_irshift;
+
+    vm.executors[OP_UI_PUSH]   = op_uipush;
+    vm.executors[OP_UI_ADD]    = op_uiadd;
+    vm.executors[OP_UI_SUB]    = op_uisub;
+    vm.executors[OP_UI_DIV]    = op_uidiv;
+    vm.executors[OP_UI_MUL]    = op_uimul;
+    vm.executors[OP_UI_AND]    = op_uiand;
+    vm.executors[OP_UI_OR]     = op_uior;
+    vm.executors[OP_UI_XOR]    = op_uixor;
+    vm.executors[OP_UI_NOT]    = op_uinot;
+    vm.executors[OP_UI_LSHIFT] = op_uilshift;
+    vm.executors[OP_UI_RSHIFT] = op_uirshift;
 
     return vm;
 }

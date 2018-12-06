@@ -26,6 +26,7 @@ STATE op_dealloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
+// Integer operations
 STATE op_ipush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_iadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_isub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
@@ -35,5 +36,20 @@ STATE op_iand(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_ior(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_ixor(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_inot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_ilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_irshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+
+// Unsigned integer operations
+STATE op_uipush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uiadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uisub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uidiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uimul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uiand(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uior(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uixor(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uinot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_uirshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
 #endif /* EXECUTOR_H */

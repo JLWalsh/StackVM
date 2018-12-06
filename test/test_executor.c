@@ -131,6 +131,32 @@ void test_inot_should_perform_not_of_int_on_top_of_the_stack()
     TEST_ASSERT_EQUAL_INT16(expected_result, result);
 }
 
+void test_ilshift_should_perform_left_shift_of_two_ints_on_top_of_the_stack()
+{
+    before_each();
+    stack_push(&stack, object_of_int(2));
+    stack_push(&stack, object_of_int(15));
+    INTEGER expected_result = 60;
+
+    op_ilshift(&stack, NULL, NULL, state);
+    INTEGER result = stack_pop(&stack).int_val;
+
+    TEST_ASSERT_EQUAL_INT16(expected_result, result);
+}
+
+void test_irshift_should_perform_right_shift_of_two_ints_on_top_of_the_stack()
+{
+    before_each();
+    stack_push(&stack, object_of_int(2));
+    stack_push(&stack, object_of_int(15));
+    INTEGER expected_result = 3;
+
+    op_irshift(&stack, NULL, NULL, state);
+    INTEGER result = stack_pop(&stack).int_val;
+
+    TEST_ASSERT_EQUAL_INT16(expected_result, result);
+}
+
 int main(void)
 {
     set_up();
@@ -144,5 +170,7 @@ int main(void)
     RUN_TEST(test_ior_should_perform_or_of_two_ints_on_top_of_the_stack);
     RUN_TEST(test_ixor_should_perform_xor_of_two_ints_on_top_of_the_stack);
     RUN_TEST(test_inot_should_perform_not_of_int_on_top_of_the_stack);
+    RUN_TEST(test_ilshift_should_perform_left_shift_of_two_ints_on_top_of_the_stack);
+    RUN_TEST(test_irshift_should_perform_right_shift_of_two_ints_on_top_of_the_stack);
     return UNITY_END();
 }

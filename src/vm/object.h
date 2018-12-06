@@ -4,11 +4,14 @@
 #include "type.h"
 
 typedef union OBJECT_T {
-    INTEGER int_val;
-    POINTER ptr_val;
+    INTEGER  int_val;
+    UINTEGER uint_val;
+    POINTER  ptr_val;
 } OBJECT;
 
 OBJECT object_of_int(INTEGER int_val);
+
+OBJECT object_of_uint(UINTEGER uint_val);
 
 OBJECT object_of_ptr(POINTER ptr_val);
 

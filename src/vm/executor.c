@@ -224,3 +224,133 @@ STATE op_inot(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
     return state;
 }
+
+STATE op_ilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a << b));
+
+    return state;
+}
+
+STATE op_irshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    INTEGER a = stack_pop(stack).int_val;
+    INTEGER b = stack_pop(stack).int_val;
+
+    stack_push(stack, object_of_int(a >> b));
+
+    return state;
+}
+
+STATE op_uipush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER val = bytecode_read_uint(program);
+
+    stack_push(stack, object_of_uint(val));
+
+    state.instruction_ptr = stream_position(program);
+
+    return state;
+}
+
+STATE op_uiadd(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a + b));
+
+    return state;
+}
+
+STATE op_uisub(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a - b));
+
+    return state;
+}
+
+STATE op_uidiv(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a / b));
+
+    return state;
+}
+
+STATE op_uimul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a * b));
+
+    return state;
+}
+
+STATE op_uiand(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a & b));
+
+    return state;
+}
+
+STATE op_uior(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a | b));
+
+    return state;
+}
+
+STATE op_uixor(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a ^ b));
+
+    return state;
+}
+
+STATE op_uinot(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(~a));
+
+    return state;
+}
+
+STATE op_uilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a << b));
+
+    return state;
+}
+
+STATE op_uirshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER a = stack_pop(stack).uint_val;
+    UINTEGER b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_uint(a >> b));
+
+    return state;
+}
