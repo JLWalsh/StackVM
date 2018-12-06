@@ -59,6 +59,20 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_L_LSHIFT] = op_llshift;
     vm.executors[OP_L_RSHIFT] = op_lrshift;
 
+    vm.executors[OP_UL_PUSH]    = op_ulpush;
+    vm.executors[OP_UL_ADD]     = op_uladd;
+    vm.executors[OP_UL_SUB]     = op_ulsub;
+    vm.executors[OP_UL_DIV]     = op_uldiv;
+    vm.executors[OP_UL_MUL]     = op_ulmul;
+    vm.executors[OP_UL_AND]     = op_uland;
+    vm.executors[OP_UL_OR]      = op_ulor;
+    vm.executors[OP_UL_XOR]     = op_ulxor;
+    vm.executors[OP_UL_NOT]     = op_ulnot;
+    vm.executors[OP_UL_ULSHIFT] = op_ullshift;
+    vm.executors[OP_UL_RSHIFT]  = op_ulrshift;
+
+    // TODO add static assertion to ensure that sizeof(OPCODE) is big enough to fit all upcodes
+
     return vm;
 }
 

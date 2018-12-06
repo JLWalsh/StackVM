@@ -24,6 +24,14 @@ OBJECT object_of_long(LONG long_val)
     return o;
 }
 
+OBJECT object_of_ulong(ULONG ulong_val)
+{
+    OBJECT o;
+    o.ulong_val = ulong_val;
+
+    return o;
+}
+
 OBJECT object_of_ptr(POINTER ptr_val)
 {
     OBJECT o;

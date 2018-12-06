@@ -54,6 +54,18 @@ enum OPCODES {
     OP_L_LSHIFT,
     OP_L_RSHIFT,
 
+    OP_UL_PUSH,
+    OP_UL_ADD,
+    OP_UL_SUB,
+    OP_UL_DIV,
+    OP_UL_MUL,
+    OP_UL_AND,
+    OP_UL_OR,
+    OP_UL_XOR,
+    OP_UL_NOT,
+    OP_UL_ULSHIFT,
+    OP_UL_RSHIFT,
+
     NUM_OF_OPCODES
 };
 
