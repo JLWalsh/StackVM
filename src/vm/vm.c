@@ -47,6 +47,18 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_UI_LSHIFT] = op_uilshift;
     vm.executors[OP_UI_RSHIFT] = op_uirshift;
 
+    vm.executors[OP_L_PUSH]   = op_lpush;
+    vm.executors[OP_L_ADD]    = op_ladd;
+    vm.executors[OP_L_SUB]    = op_lsub;
+    vm.executors[OP_L_DIV]    = op_ldiv;
+    vm.executors[OP_L_MUL]    = op_lmul;
+    vm.executors[OP_L_AND]    = op_land;
+    vm.executors[OP_L_OR]     = op_lor;
+    vm.executors[OP_L_XOR]    = op_lxor;
+    vm.executors[OP_L_NOT]    = op_lnot;
+    vm.executors[OP_L_LSHIFT] = op_llshift;
+    vm.executors[OP_L_RSHIFT] = op_lrshift;
+
     return vm;
 }
 

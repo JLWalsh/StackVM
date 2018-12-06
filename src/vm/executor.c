@@ -354,3 +354,113 @@ STATE op_uirshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
     return state;
 }
+
+STATE op_lpush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG val = bytecode_read_long(program);
+
+    stack_push(stack, object_of_long(val));
+
+    state.instruction_ptr = stream_position(program);
+
+    return state;
+}
+
+STATE op_ladd(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a + b));
+
+    return state;
+}
+
+STATE op_lsub(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a - b));
+
+    return state;
+}
+
+STATE op_ldiv(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a / b));
+
+    return state;
+}
+
+STATE op_lmul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a * b));
+
+    return state;
+}
+
+STATE op_land(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a & b));
+
+    return state;
+}
+
+STATE op_lor(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a | b));
+
+    return state;
+}
+
+STATE op_lxor(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a ^ b));
+
+    return state;
+}
+
+STATE op_lnot(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(~a));
+
+    return state;
+}
+
+STATE op_llshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a << b));
+
+    return state;
+}
+
+STATE op_lrshift(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    LONG a = stack_pop(stack).uint_val;
+    LONG b = stack_pop(stack).uint_val;
+
+    stack_push(stack, object_of_long(a >> b));
+
+    return state;
+}

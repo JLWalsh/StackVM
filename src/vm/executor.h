@@ -52,4 +52,17 @@ STATE op_uinot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_uilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_uirshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
+// Long operations
+STATE op_lpush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_ladd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_lsub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_ldiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_lmul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_land(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_lor(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_lxor(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_lnot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_llshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_lrshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+
 #endif /* EXECUTOR_H */

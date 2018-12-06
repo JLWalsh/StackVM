@@ -16,6 +16,14 @@ OBJECT object_of_uint(UINTEGER uint_val)
     return o;
 }
 
+OBJECT object_of_long(LONG long_val)
+{
+    OBJECT o;
+    o.long_val = long_val;
+
+    return o;
+}
+
 OBJECT object_of_ptr(POINTER ptr_val)
 {
     OBJECT o;
