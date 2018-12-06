@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <vm/bytecode.h>
 #include <vm/executable.h>
 #include <vm/heap.h>
 #include <vm/opcode.h>
@@ -29,6 +30,10 @@ int main(int argc, char const* argv[])
     //     0, OP_S_PRINT,
     //     0, OP_HALT, 0, 0
     // };
+    uint32_t a   = 0xc3a31dbc;
+    STREAM   t   = stream_create(&a, 4);
+    float    val = bytecode_read_float(&t);
+    printf("Value is %f", val);
 
     char exe[] = {
         0, 0, 0, 0, 0, 0, 0, 75, // EXE LEN

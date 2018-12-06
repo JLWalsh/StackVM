@@ -9,6 +9,7 @@ typedef union OBJECT_T {
     LONG     long_val;
     ULONG    ulong_val;
     POINTER  ptr_val;
+    float    float_val;
 } OBJECT;
 
 OBJECT object_of_int(INTEGER int_val);
