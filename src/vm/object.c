@@ -1,5 +1,13 @@
 #include "object.h"
 
+OBJECT object_of_float(float float_val)
+{
+    OBJECT o;
+    o.float_val = float_val;
+
+    return o;
+}
+
 OBJECT object_of_int(INTEGER int_val)
 {
     OBJECT o;

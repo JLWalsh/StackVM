@@ -12,6 +12,8 @@ typedef union OBJECT_T {
     float    float_val;
 } OBJECT;
 
+OBJECT object_of_float(float float_val);
+
 OBJECT object_of_int(INTEGER int_val);
 
 OBJECT object_of_uint(UINTEGER uint_val);

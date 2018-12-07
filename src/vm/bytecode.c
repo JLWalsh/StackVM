@@ -69,11 +69,8 @@ POINTER bytecode_read_ptr(STREAM* program)
 
 float bytecode_read_float(STREAM* program)
 {
+    // TODO investigate why no endian swap is required on Windows (which is little-endian)
     SERIALIZED_FLOAT serialized_float = *((SERIALIZED_FLOAT*)stream_advance(program, sizeof(SERIALIZED_FLOAT)));
-
-#ifdef VM_IS_LITTLE_ENDIAN
-    // serialized_float.raw = math_int32_to_big_endian(serialized_float.raw);
-#endif
 
     return serialized_float.value;
 }

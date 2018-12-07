@@ -78,4 +78,11 @@ STATE op_ulnot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_ullshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_ulrshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
+// Float operations
+STATE op_fpush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_fadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_fsub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_fdiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+
 #endif /* EXECUTOR_H */
