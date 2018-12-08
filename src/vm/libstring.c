@@ -23,7 +23,7 @@ VMSTRING_HEADER vmstring_read_header(void* str_ptr)
     VMSTRING_HEADER header = *((VMSTRING_HEADER*)str_ptr);
 
 #ifdef VM_IS_LITTLE_ENDIAN
-    header.length = (INTEGER)math_int16_to_big_endian(header.length);
+    header.length = (INTEGER)math_int16_endian_swap(header.length);
 #endif
 
     return header;
