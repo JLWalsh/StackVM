@@ -1,6 +1,8 @@
 #include "vm.h"
 #include "bytecode.h"
 #include "executor.h"
+#include "integer.h"
+#include "long.h"
 
 VM vm_create(EXECUTABLE executable)
 {

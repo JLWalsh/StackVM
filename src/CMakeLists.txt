@@ -25,6 +25,10 @@ add_library(vm-lib STATIC
     vm/math.c
     vm/bytecode.h
     vm/bytecode.c
+    vm/integer.h
+    vm/integer.c
+    vm/long.h
+    vm/long.c
 )
 
 target_include_directories(vm-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
