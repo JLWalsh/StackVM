@@ -7,19 +7,17 @@
 
 void op_loadarg(VM* vm)
 {
-    INTEGER offset   = bytecode_read_int(&vm->program);
+    INTEGER offset   = bytecode_read_int(vm);
     INTEGER position = vm->state.frame_position + offset;
     OBJECT  o        = stack_at(&vm->stack, position);
 
     stack_push(&vm->stack, o);
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_call(VM* vm)
 {
-    POINTER  fun_addr = bytecode_read_ptr(&vm->program);
-    UINTEGER num_args = bytecode_read_uint(&vm->program);
+    POINTER  fun_addr = bytecode_read_ptr(vm);
+    UINTEGER num_args = bytecode_read_uint(vm);
 
     POINTER return_addr = stream_position(&vm->program);
 
@@ -49,7 +47,7 @@ void op_return(VM* vm)
 void op_halt(VM* vm)
 {
     // Use vm_exit here
-    INTEGER exit_code = bytecode_read_int(&vm->program);
+    INTEGER exit_code = bytecode_read_int(vm);
 
     vm->state.running   = false;
     vm->state.exit_code = exit_code;
@@ -65,21 +63,17 @@ void op_print(VM* vm)
 // Pointer operations
 void op_ppush(VM* vm)
 {
-    POINTER pointer = bytecode_read_ptr(&vm->program);
+    POINTER pointer = bytecode_read_ptr(vm);
 
     stack_push(&vm->stack, object_of_ptr(pointer));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_alloc(VM* vm)
 {
-    ULONG   alloc_size = bytecode_read_ulong(&vm->program);
+    ULONG   alloc_size = bytecode_read_ulong(vm);
     POINTER ptr        = heap_alloc(&vm->heap, alloc_size);
 
     stack_push(&vm->stack, object_of_ptr(ptr));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_dealloc(VM* vm)

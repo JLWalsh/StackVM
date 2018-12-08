@@ -4,11 +4,9 @@
 
 void op_fpush(VM* vm)
 {
-    float float_val = bytecode_read_float(&vm->program);
+    float float_val = bytecode_read_float(vm);
 
     stack_push(&vm->stack, object_of_float(float_val));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_fadd(VM* vm)

@@ -3,11 +3,9 @@
 
 void op_ipush(VM* vm)
 {
-    INTEGER value = bytecode_read_int(&vm->program);
+    INTEGER value = bytecode_read_int(vm);
 
     stack_push(&vm->stack, object_of_int(value));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_iadd(VM* vm)
@@ -91,11 +89,9 @@ void op_irshift(VM* vm)
 
 void op_uipush(VM* vm)
 {
-    UINTEGER val = bytecode_read_uint(&vm->program);
+    UINTEGER val = bytecode_read_uint(vm);
 
     stack_push(&vm->stack, object_of_uint(val));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_uiadd(VM* vm)

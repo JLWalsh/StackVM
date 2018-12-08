@@ -3,11 +3,9 @@
 
 void op_lpush(VM* vm)
 {
-    LONG val = bytecode_read_long(&vm->program);
+    LONG val = bytecode_read_long(vm);
 
     stack_push(&vm->stack, object_of_long(val));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_ladd(VM* vm)
@@ -91,11 +89,9 @@ void op_lrshift(VM* vm)
 
 void op_ulpush(VM* vm)
 {
-    ULONG val = bytecode_read_ulong(&vm->program);
+    ULONG val = bytecode_read_ulong(vm);
 
     stack_push(&vm->stack, object_of_ulong(val));
-
-    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
 void op_uladd(VM* vm)

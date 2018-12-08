@@ -23,8 +23,6 @@ VM vm_create(EXECUTABLE executable);
 
 INTEGER vm_run(VM* vm);
 
-void vm_sync(VM* vm); // TODO implement this: sync the instruction pointer with the program stream
-
 void vm_free(VM vm);
 
 #endif /* VM_H */

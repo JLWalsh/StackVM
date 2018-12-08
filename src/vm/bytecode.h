@@ -1,15 +1,15 @@
 #ifndef BYTECODE_H
 #define BYTECODE_H
 
-#include "stream.h"
 #include "type.h"
+#include "vm.h"
 
-OPCODE   bytecode_read_opcode(STREAM* program);
-INTEGER  bytecode_read_int(STREAM* program);
-UINTEGER bytecode_read_uint(STREAM* program);
-LONG     bytecode_read_long(STREAM* program);
-ULONG    bytecode_read_ulong(STREAM* program);
-POINTER  bytecode_read_ptr(STREAM* program);
-float    bytecode_read_float(STREAM* program);
+OPCODE   bytecode_read_opcode(VM* vm);
+INTEGER  bytecode_read_int(VM* vm);
+UINTEGER bytecode_read_uint(VM* vm);
+LONG     bytecode_read_long(VM* vm);
+ULONG    bytecode_read_ulong(VM* vm);
+POINTER  bytecode_read_ptr(VM* vm);
+float    bytecode_read_float(VM* vm);
 
 #endif /* BYTECODE_H */
