@@ -69,7 +69,7 @@ int main(int argc, char const* argv[])
     // };
 
     char exe[] = {
-        0, 0, 0, 0, 0, 0, 0, 43,
+        0, 0, 0, 0, 0, 0, 0, 44,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, OP_I_PUSH, 0, 0,
         0, OP_I_PUSH, 0, 2,
@@ -89,6 +89,8 @@ int main(int argc, char const* argv[])
 
     executable_free(executable);
     vm_free(vm);
+
+    printf("Halted with %i", exit_code);
 
     return exit_code;
     // return 0;

@@ -33,6 +33,10 @@ add_library(vm-lib STATIC
     vm/libstring.h
     vm/float.h
     vm/float.c
+    vm/guard.h
+    vm/guard.c
+    vm/exception.h
+    vm/exception.c
 )
 
 target_include_directories(vm-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

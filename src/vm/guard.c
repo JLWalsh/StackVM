@@ -1,6 +1,20 @@
 #include "guard.h"
+#include <malloc.h>
 
-GUARD_STACK guard_init(uint16_t max_guards);
+GUARD_STACK guard_stack_init(uint16_t max_guards)
+{
+    GUARD_STACK stack;
+    stack.guards   = (GUARD*)malloc(sizeof(GUARD) * max_guards);
+    stack.size     = 0;
+    stack.max_size = max_guards;
+
+    return stack;
+}
+
+void guard_stack_free(GUARD_STACK stack)
+{
+    free(stack.guards);
+}
 
 GUARD guard_create(UINTEGER ex_code, POINTER jmp_addr)
 {

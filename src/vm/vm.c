@@ -100,6 +100,19 @@ INTEGER vm_run(VM* vm)
     return vm->state.exit_code;
 }
 
+void vm_throw(VM* vm, EXCEPTION exception)
+{
+    GUARD guard = guard_find_matching(&vm->state.guards, exception.code);
+
+    if (!guard_is_null(guard)) {
+        vm->state.instruction_ptr = guard.jmp_addr;
+        return;
+    }
+
+    vm->state.running   = false;
+    vm->state.exit_code = exception.code;
+}
+
 void vm_free(VM vm)
 {
     stack_free(vm.stack);

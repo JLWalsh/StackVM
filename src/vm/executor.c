@@ -85,8 +85,8 @@ void op_dealloc(VM* vm)
 
 void op_exguard(VM* vm)
 {
-    UINTEGER ex_code  = bytecode_read_uint(&vm->program);
-    POINTER  jmp_addr = bytecode_read_ptr(&vm->program);
+    UINTEGER ex_code  = bytecode_read_uint(vm);
+    POINTER  jmp_addr = bytecode_read_ptr(vm);
 
     GUARD guard = guard_create(ex_code, jmp_addr);
     guard_push(&vm->state.guards, guard);

@@ -17,4 +17,6 @@ typedef struct STATE_T {
 
 STATE state_create(EXECUTABLE executable);
 
+void state_free(STATE state);
+
 #endif /* STATE_H */

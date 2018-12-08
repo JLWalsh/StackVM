@@ -18,7 +18,9 @@ typedef struct GUARD_STACK_T {
     uint16_t size;
 } GUARD_STACK;
 
-GUARD_STACK guard_init(uint16_t max_guards);
+GUARD_STACK guard_stack_init(uint16_t max_guards);
+
+void guard_stack_free(GUARD_STACK stack);
 
 GUARD guard_create(UINTEGER ex_code, POINTER jmp_addr);
 

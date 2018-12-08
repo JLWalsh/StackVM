@@ -29,6 +29,13 @@ void op_idiv(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
+    if (b == 0) {
+        EXCEPTION ex = exception_init(1);
+        vm_throw(vm, ex);
+
+        return;
+    }
+
     stack_push(&vm->stack, object_of_int(a / b)); // TODO figure out how to handle exceptions (in this case, division by zero)
 }
 
