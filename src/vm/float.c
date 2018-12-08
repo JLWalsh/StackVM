@@ -2,7 +2,7 @@
 #include "bytecode.h"
 #include <stdio.h>
 
-STATE op_fpush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_fpush(VM* vm)
 {
     float float_val = bytecode_read_float(program);
 
@@ -13,7 +13,7 @@ STATE op_fpush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     return state;
 }
 
-STATE op_fadd(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_fadd(VM* vm)
 {
     float a = stack_pop(stack).float_val;
     float b = stack_pop(stack).float_val;
@@ -23,7 +23,7 @@ STATE op_fadd(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     return state;
 }
 
-STATE op_fsub(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_fsub(VM* vm)
 {
     float a = stack_pop(stack).float_val;
     float b = stack_pop(stack).float_val;
@@ -33,7 +33,7 @@ STATE op_fsub(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     return state;
 }
 
-STATE op_fdiv(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_fdiv(VM* vm)
 {
     float a = stack_pop(stack).float_val;
     float b = stack_pop(stack).float_val;
@@ -43,7 +43,7 @@ STATE op_fdiv(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     return state;
 }
 
-STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_fmul(VM* vm)
 {
     float a = stack_pop(stack).float_val;
     float b = stack_pop(stack).float_val;
@@ -53,7 +53,7 @@ STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     return state;
 }
 
-STATE op_fprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_fprint(VM* vm)
 {
     float a = stack_pop(stack).float_val;
 

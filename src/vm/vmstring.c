@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 // String operations
-STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_scat(VM* vm)
 {
     POINTER dest_ptr = stack_pop(stack).ptr_val;
     POINTER b_ptr    = stack_pop(stack).ptr_val;
@@ -20,7 +20,7 @@ STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
     return state;
 }
 
-STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+STATE op_sprint(VM* vm)
 {
     POINTER str_ptr = stack_pop(stack).ptr_val;
 

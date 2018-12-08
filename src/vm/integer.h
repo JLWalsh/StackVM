@@ -1,30 +1,30 @@
 #ifndef INTEGER_H
 #define INTEGER_H
 
-#include "executor.h"
+#include "vm.h"
 
-STATE op_ipush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_iadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_isub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_idiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_imul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_iand(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_ior(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_ixor(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_inot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_ilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_irshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+void op_ipush(VM* vm);
+void op_iadd(VM* vm);
+void op_isub(VM* vm);
+void op_idiv(VM* vm);
+void op_imul(VM* vm);
+void op_iand(VM* vm);
+void op_ior(VM* vm);
+void op_ixor(VM* vm);
+void op_inot(VM* vm);
+void op_ilshift(VM* vm);
+void op_irshift(VM* vm);
 
-STATE op_uipush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uiadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uisub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uidiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uimul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uiand(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uior(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uixor(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uinot(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uilshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_uirshift(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+void op_uipush(VM* vm);
+void op_uiadd(VM* vm);
+void op_uisub(VM* vm);
+void op_uidiv(VM* vm);
+void op_uimul(VM* vm);
+void op_uiand(VM* vm);
+void op_uior(VM* vm);
+void op_uixor(VM* vm);
+void op_uinot(VM* vm);
+void op_uilshift(VM* vm);
+void op_uirshift(VM* vm);
 
 #endif /* INTEGER_H */
