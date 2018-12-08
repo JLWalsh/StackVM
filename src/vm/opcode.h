@@ -11,6 +11,9 @@ enum OPCODES {
     OP_ALLOC,
     OP_DEALLOC,
 
+    OP_EX_GUARD,
+    OP_EX_UNGUARD,
+
     // PTR
     OP_P_PUSH,
 

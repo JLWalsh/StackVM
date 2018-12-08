@@ -1,6 +1,7 @@
 #ifndef VM_H
 #define VM_H
 
+#include "exception.h"
 #include "executable.h"
 #include "executor.h"
 #include "heap.h"
@@ -19,6 +20,8 @@ typedef struct VM_T {
 VM vm_create(EXECUTABLE executable);
 
 INTEGER vm_run(VM* vm);
+
+void vm_throw(VM* vm, EXCEPTION exception);
 
 void vm_free(VM vm);
 

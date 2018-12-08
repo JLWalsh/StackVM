@@ -22,4 +22,7 @@ STATE op_ppush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_alloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_dealloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
+STATE op_exguard(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_exunguard(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+
 #endif /* EXECUTOR_H */

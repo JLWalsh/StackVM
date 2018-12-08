@@ -1,5 +1,6 @@
 #include "executor.h"
 #include "bytecode.h"
+#include "guard.h"
 #include "opcode.h"
 #include "vmstring.h"
 #include <stdio.h>
@@ -99,6 +100,26 @@ STATE op_dealloc(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
     POINTER ptr = stack_pop(stack).ptr_val;
     heap_dealloc(heap, ptr);
+
+    return state;
+}
+
+STATE op_exguard(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    UINTEGER ex_code  = bytecode_read_uint(program);
+    POINTER  jmp_addr = bytecode_read_ptr(program);
+
+    GUARD guard = guard_create(ex_code, jmp_addr);
+    guard_push(&state.guards, guard);
+
+    state.instruction_ptr = stream_position(program);
+
+    return state;
+}
+
+STATE op_exunguard(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    guard_pop(&state.guards);
 
     return state;
 }
