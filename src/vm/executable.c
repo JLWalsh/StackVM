@@ -29,8 +29,8 @@ EXECUTABLE_HEADER executable_read_header(char* bytes)
     EXECUTABLE_HEADER header = *((EXECUTABLE_HEADER*)bytes);
 
 #ifdef VM_IS_LITTLE_ENDIAN
-    header.constants_length  = (ULONG)math_int64_to_big_endian(header.constants_length);
-    header.executable_length = (ULONG)math_int64_to_big_endian(header.executable_length);
+    header.constants_length  = (ULONG)math_int64_endian_swap(header.constants_length);
+    header.executable_length = (ULONG)math_int64_endian_swap(header.executable_length);
 #endif
 
     return header;

@@ -625,3 +625,12 @@ STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 
     return state;
 }
+
+STATE op_fprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+{
+    float a = stack_pop(stack).float_val;
+
+    printf("%f", a);
+
+    return state;
+}

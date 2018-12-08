@@ -71,6 +71,7 @@ enum OPCODES {
     OP_F_SUB,
     OP_F_DIV,
     OP_F_MUL,
+    OP_F_PRINT,
 
     NUM_OF_OPCODES
 };

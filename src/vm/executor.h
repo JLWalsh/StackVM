@@ -84,5 +84,6 @@ STATE op_fadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_fsub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_fdiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_fprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
 #endif /* EXECUTOR_H */

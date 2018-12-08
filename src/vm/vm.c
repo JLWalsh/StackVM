@@ -71,11 +71,12 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_UL_ULSHIFT] = op_ullshift;
     vm.executors[OP_UL_RSHIFT]  = op_ulrshift;
 
-    vm.executors[OP_F_PUSH] = op_fpush;
-    vm.executors[OP_F_ADD]  = op_fadd;
-    vm.executors[OP_F_SUB]  = op_fsub;
-    vm.executors[OP_F_DIV]  = op_fdiv;
-    vm.executors[OP_F_MUL]  = op_fmul;
+    vm.executors[OP_F_PUSH]  = op_fpush;
+    vm.executors[OP_F_ADD]   = op_fadd;
+    vm.executors[OP_F_SUB]   = op_fsub;
+    vm.executors[OP_F_DIV]   = op_fdiv;
+    vm.executors[OP_F_MUL]   = op_fmul;
+    vm.executors[OP_F_PRINT] = op_fprint;
 
     // TODO add static assertion to ensure that sizeof(OPCODE) is big enough to fit all upcodes
 
