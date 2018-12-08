@@ -3,11 +3,11 @@
 
 #include "executor.h"
 
-STATE op_fpush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_fadd(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_fsub(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_fdiv(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_fprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+void op_fpush(VM* vm);
+void op_fadd(VM* vm);
+void op_fsub(VM* vm);
+void op_fdiv(VM* vm);
+void op_fmul(VM* vm);
+void op_fprint(VM* vm);
 
 #endif /* FLOAT_H */

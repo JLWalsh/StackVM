@@ -3,7 +3,7 @@
 
 #include "executor.h"
 
-STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+void op_scat(VM* vm);
+void op_sprint(VM* vm);
 
 #endif /* STRING_H */

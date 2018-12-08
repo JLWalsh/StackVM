@@ -56,16 +56,22 @@ int main(int argc, char const* argv[])
     //     0, OP_HALT, 0, 0
     // };
 
+    // char exe[] = {
+    //     0, 0, 0, 0, 0, 0, 0, 36,
+    //     0, 0, 0, 0, 0, 0, 0, 0,
+    //     0, OP_F_PUSH,
+    //     195, 163, 29, 188,
+    //     0, OP_F_PUSH,
+    //     195, 163, 29, 188,
+    //     0, OP_F_ADD,
+    //     0, OP_F_PRINT,
+    //     0, OP_HALT, 0, 0
+    // };
+
     char exe[] = {
-        0, 0, 0, 0, 0, 0, 0, 36,
+        0, 0, 0, 0, 0, 0, 0, 20,
         0, 0, 0, 0, 0, 0, 0, 0,
-        0, OP_F_PUSH,
-        195, 163, 29, 188,
-        0, OP_F_PUSH,
-        195, 163, 29, 188,
-        0, OP_F_ADD,
-        0, OP_F_PRINT,
-        0, OP_HALT, 0, 0
+        0, OP_HALT, 0, 1
     };
 
     EXECUTABLE executable = executable_from(&exe);

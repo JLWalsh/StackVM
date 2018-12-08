@@ -1,9 +1,9 @@
 #include "vm.h"
 #include "bytecode.h"
 #include "executor.h"
+#include "float.h"
 #include "integer.h"
 #include "long.h"
-#include "float.h"
 #include "vmstring.h"
 
 VM vm_create(EXECUTABLE executable)
@@ -92,10 +92,10 @@ INTEGER vm_run(VM* vm)
     while (vm->state.running) {
         stream_seek(&vm->program, vm->state.instruction_ptr);
 
-        OPCODE opcode = bytecode_read_opcode(&vm->program);
+        OPCODE opcode             = bytecode_read_opcode(&vm->program);
+        vm->state.instruction_ptr = stream_position(&vm->program);
 
-        vm->state.instruction_ptr += sizeof(OPCODE);
-        vm->state = vm->executors[opcode](&vm->stack, &vm->program, &vm->heap, vm->state);
+        vm->executors[opcode](vm);
     }
 
     return vm->state.exit_code;
