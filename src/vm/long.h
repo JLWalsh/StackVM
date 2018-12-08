@@ -3,28 +3,28 @@
 
 #include "executor.h"
 
-STATE op_lpush(VM* vm);
-STATE op_ladd(VM* vm);
-STATE op_lsub(VM* vm);
-STATE op_ldiv(VM* vm);
-STATE op_lmul(VM* vm);
-STATE op_land(VM* vm);
-STATE op_lor(VM* vm);
-STATE op_lxor(VM* vm);
-STATE op_lnot(VM* vm);
-STATE op_llshift(VM* vm);
-STATE op_lrshift(VM* vm);
+void op_lpush(VM* vm);
+void op_ladd(VM* vm);
+void op_lsub(VM* vm);
+void op_ldiv(VM* vm);
+void op_lmul(VM* vm);
+void op_land(VM* vm);
+void op_lor(VM* vm);
+void op_lxor(VM* vm);
+void op_lnot(VM* vm);
+void op_llshift(VM* vm);
+void op_lrshift(VM* vm);
 
-STATE op_ulpush(VM* vm);
-STATE op_uladd(VM* vm);
-STATE op_ulsub(VM* vm);
-STATE op_uldiv(VM* vm);
-STATE op_ulmul(VM* vm);
-STATE op_uland(VM* vm);
-STATE op_ulor(VM* vm);
-STATE op_ulxor(VM* vm);
-STATE op_ulnot(VM* vm);
-STATE op_ullshift(VM* vm);
-STATE op_ulrshift(VM* vm);
+void op_ulpush(VM* vm);
+void op_uladd(VM* vm);
+void op_ulsub(VM* vm);
+void op_uldiv(VM* vm);
+void op_ulmul(VM* vm);
+void op_uland(VM* vm);
+void op_ulor(VM* vm);
+void op_ulxor(VM* vm);
+void op_ulnot(VM* vm);
+void op_ullshift(VM* vm);
+void op_ulrshift(VM* vm);
 
 #endif /* LONG_H */

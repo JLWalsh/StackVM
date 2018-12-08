@@ -3,11 +3,11 @@
 
 #include "executor.h"
 
-STATE op_fpush(VM* vm);
-STATE op_fadd(VM* vm);
-STATE op_fsub(VM* vm);
-STATE op_fdiv(VM* vm);
-STATE op_fmul(VM* vm);
-STATE op_fprint(VM* vm);
+void op_fpush(VM* vm);
+void op_fadd(VM* vm);
+void op_fsub(VM* vm);
+void op_fdiv(VM* vm);
+void op_fmul(VM* vm);
+void op_fprint(VM* vm);
 
 #endif /* FLOAT_H */

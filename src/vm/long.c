@@ -1,222 +1,178 @@
 #include "long.h"
 #include "bytecode.h"
 
-STATE op_lpush(VM* vm)
+void op_lpush(VM* vm)
 {
-    LONG val = bytecode_read_long(program);
+    LONG val = bytecode_read_long(&vm->program);
 
-    stack_push(stack, object_of_long(val));
+    stack_push(&vm->stack, object_of_long(val));
 
-    state.instruction_ptr = stream_position(program);
-
-    return state;
+    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
-STATE op_ladd(VM* vm)
+void op_ladd(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a + b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a + b));
 }
 
-STATE op_lsub(VM* vm)
+void op_lsub(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a - b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a - b));
 }
 
-STATE op_ldiv(VM* vm)
+void op_ldiv(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a / b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a / b));
 }
 
-STATE op_lmul(VM* vm)
+void op_lmul(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a * b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a * b));
 }
 
-STATE op_land(VM* vm)
+void op_land(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a & b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a & b));
 }
 
-STATE op_lor(VM* vm)
+void op_lor(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a | b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a | b));
 }
 
-STATE op_lxor(VM* vm)
+void op_lxor(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a ^ b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a ^ b));
 }
 
-STATE op_lnot(VM* vm)
+void op_lnot(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(~a));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(~a));
 }
 
-STATE op_llshift(VM* vm)
+void op_llshift(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a << b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a << b));
 }
 
-STATE op_lrshift(VM* vm)
+void op_lrshift(VM* vm)
 {
-    LONG a = stack_pop(stack).long_val;
-    LONG b = stack_pop(stack).long_val;
+    LONG a = stack_pop(&vm->stack).long_val;
+    LONG b = stack_pop(&vm->stack).long_val;
 
-    stack_push(stack, object_of_long(a >> b));
-
-    return state;
+    stack_push(&vm->stack, object_of_long(a >> b));
 }
 
-STATE op_ulpush(VM* vm)
+void op_ulpush(VM* vm)
 {
-    ULONG val = bytecode_read_ulong(program);
+    ULONG val = bytecode_read_ulong(&vm->program);
 
-    stack_push(stack, object_of_ulong(val));
+    stack_push(&vm->stack, object_of_ulong(val));
 
-    state.instruction_ptr = stream_position(program);
-
-    return state;
+    vm->state.instruction_ptr = stream_position(&vm->program);
 }
 
-STATE op_uladd(VM* vm)
+void op_uladd(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a + b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a + b));
 }
 
-STATE op_ulsub(VM* vm)
+void op_ulsub(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a - b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a - b));
 }
 
-STATE op_uldiv(VM* vm)
+void op_uldiv(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a / b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a / b));
 }
 
-STATE op_ulmul(VM* vm)
+void op_ulmul(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a * b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a * b));
 }
 
-STATE op_uland(VM* vm)
+void op_uland(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a & b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a & b));
 }
 
-STATE op_ulor(VM* vm)
+void op_ulor(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a | b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a | b));
 }
 
-STATE op_ulxor(VM* vm)
+void op_ulxor(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a ^ b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a ^ b));
 }
 
-STATE op_ulnot(VM* vm)
+void op_ulnot(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(~a));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(~a));
 }
 
-STATE op_ullshift(VM* vm)
+void op_ullshift(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a << b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a << b));
 }
 
-STATE op_ulrshift(VM* vm)
+void op_ulrshift(VM* vm)
 {
-    ULONG a = stack_pop(stack).ulong_val;
-    ULONG b = stack_pop(stack).ulong_val;
+    ULONG a = stack_pop(&vm->stack).ulong_val;
+    ULONG b = stack_pop(&vm->stack).ulong_val;
 
-    stack_push(stack, object_of_ulong(a >> b));
-
-    return state;
+    stack_push(&vm->stack, object_of_ulong(a >> b));
 }
