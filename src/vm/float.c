@@ -2,62 +2,48 @@
 #include "bytecode.h"
 #include <stdio.h>
 
-STATE op_fpush(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+void op_fpush(VM* vm)
 {
-    float float_val = bytecode_read_float(program);
+    float float_val = bytecode_read_float(vm);
 
-    stack_push(stack, object_of_float(float_val));
-
-    state.instruction_ptr = stream_position(program);
-
-    return state;
+    stack_push(&vm->stack, object_of_float(float_val));
 }
 
-STATE op_fadd(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+void op_fadd(VM* vm)
 {
-    float a = stack_pop(stack).float_val;
-    float b = stack_pop(stack).float_val;
+    float a = stack_pop(&vm->stack).float_val;
+    float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(stack, object_of_float(a + b));
-
-    return state;
+    stack_push(&vm->stack, object_of_float(a + b));
 }
 
-STATE op_fsub(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+void op_fsub(VM* vm)
 {
-    float a = stack_pop(stack).float_val;
-    float b = stack_pop(stack).float_val;
+    float a = stack_pop(&vm->stack).float_val;
+    float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(stack, object_of_float(a - b));
-
-    return state;
+    stack_push(&vm->stack, object_of_float(a - b));
 }
 
-STATE op_fdiv(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+void op_fdiv(VM* vm)
 {
-    float a = stack_pop(stack).float_val;
-    float b = stack_pop(stack).float_val;
+    float a = stack_pop(&vm->stack).float_val;
+    float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(stack, object_of_float(a / b)); // TODO check for division by zero
-
-    return state;
+    stack_push(&vm->stack, object_of_float(a / b)); // TODO check for division by zero
 }
 
-STATE op_fmul(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+void op_fmul(VM* vm)
 {
-    float a = stack_pop(stack).float_val;
-    float b = stack_pop(stack).float_val;
+    float a = stack_pop(&vm->stack).float_val;
+    float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(stack, object_of_float(a * b));
-
-    return state;
+    stack_push(&vm->stack, object_of_float(a * b));
 }
 
-STATE op_fprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
+void op_fprint(VM* vm)
 {
-    float a = stack_pop(stack).float_val;
+    float a = stack_pop(&vm->stack).float_val;
 
     printf("%f", a);
-
-    return state;
 }
