@@ -66,6 +66,13 @@ enum OPCODES {
     OP_UL_ULSHIFT,
     OP_UL_RSHIFT,
 
+    OP_F_PUSH,
+    OP_F_ADD,
+    OP_F_SUB,
+    OP_F_DIV,
+    OP_F_MUL,
+    OP_F_PRINT,
+
     NUM_OF_OPCODES
 };
 

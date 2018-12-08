@@ -66,3 +66,14 @@ POINTER bytecode_read_ptr(STREAM* program)
     return value;
 #endif
 }
+
+float bytecode_read_float(STREAM* program)
+{
+    SERIALIZED_FLOAT serialized_float = *((SERIALIZED_FLOAT*)stream_advance(program, sizeof(SERIALIZED_FLOAT)));
+
+#ifdef VM_IS_LITTLE_ENDIAN
+    serialized_float.raw = math_int32_endian_swap(serialized_float.raw);
+#endif
+
+    return serialized_float.value;
+}

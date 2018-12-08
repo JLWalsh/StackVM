@@ -38,7 +38,7 @@ In a near future, all these types will be part of the VM in some way:
 | Pointer          | 4       | A non-signed whole number capable of representing a memory location |
 | Long             | 8       | A signed whole-number                                               |
 | Unsigned long    | 8       | A non-signed whole number                                           |
-| Float            | ? (TBD) | A high-precision number                                             |
+| Float            | 32      | A high-precision number                                             |
 | Byte             | 1       | A group of eight bits                                               |
 | Opcode           | 2       | An opcode used only in the bytecode, alias of unsigned integer      |
 

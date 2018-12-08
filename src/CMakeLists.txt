@@ -31,6 +31,8 @@ add_library(vm-lib STATIC
     vm/long.c
     vm/libstring.c
     vm/libstring.h
+    vm/float.h
+    vm/float.c
 )
 
 target_include_directories(vm-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
