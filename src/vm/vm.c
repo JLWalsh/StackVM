@@ -24,6 +24,9 @@ VM vm_create(EXECUTABLE executable)
     vm.executors[OP_ALLOC]   = op_alloc;
     vm.executors[OP_DEALLOC] = op_dealloc;
 
+    vm.executors[OP_EX_GUARD]   = op_exguard;
+    vm.executors[OP_EX_UNGUARD] = op_exunguard;
+
     vm.executors[OP_S_CAT]   = op_scat;
     vm.executors[OP_S_PRINT] = op_sprint;
 
@@ -93,7 +96,7 @@ INTEGER vm_run(VM* vm)
         stream_seek(&vm->program, vm->state.instruction_ptr);
 
         OPCODE opcode = bytecode_read_opcode(vm);
-
+        printf("op: %u\n", opcode);
         vm->executors[opcode](vm);
     }
 
@@ -106,6 +109,7 @@ void vm_throw(VM* vm, EXCEPTION exception)
 
     if (!guard_is_null(guard)) {
         vm->state.instruction_ptr = guard.jmp_addr;
+
         return;
     }
 

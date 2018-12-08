@@ -30,13 +30,13 @@ void op_idiv(VM* vm)
     INTEGER b = stack_pop(&vm->stack).int_val;
 
     if (b == 0) {
-        EXCEPTION ex = exception_init(1);
+        EXCEPTION ex = exception_create(1);
         vm_throw(vm, ex);
 
         return;
     }
 
-    stack_push(&vm->stack, object_of_int(a / b)); // TODO figure out how to handle exceptions (in this case, division by zero)
+    stack_push(&vm->stack, object_of_int(a / b));
 }
 
 void op_imul(VM* vm)

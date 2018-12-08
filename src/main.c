@@ -71,7 +71,7 @@ int main(int argc, char const* argv[])
     char exe[] = {
         0, 0, 0, 0, 0, 0, 0, 44,
         0, 0, 0, 0, 0, 0, 0, 0,
-        0, OP_I_PUSH, 0, 0,
+        0, OP_I_PUSH, 0, 1,
         0, OP_I_PUSH, 0, 2,
         0, OP_EX_GUARD,
         0, 1, // Guard for exception type 1 (div by 0)
