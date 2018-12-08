@@ -3,6 +3,7 @@
 #include "executor.h"
 #include "integer.h"
 #include "long.h"
+#include "vmstring.h"
 
 VM vm_create(EXECUTABLE executable)
 {

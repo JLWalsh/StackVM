@@ -1,16 +1,9 @@
-#ifndef VMSTRING_H
-#define VMSTRING_H
+#ifndef STRING_H
+#define STRING_H
 
-#include "type.h"
+#include "executor.h"
 
-typedef struct VMSTRING_HEADER_T {
-    INTEGER length; // TODO change this back to ULONG
-} VMSTRING_HEADER;
+STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state);
+STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
-void vmstring_concat(VMSTRING_HEADER* a, VMSTRING_HEADER* b, VMSTRING_HEADER* out);
-
-VMSTRING_HEADER vmstring_read_header(void*);
-
-void* vmstring_data_ptr(VMSTRING_HEADER* str);
-
-#endif /* VMSTRING_H */
+#endif /* STRING_H */

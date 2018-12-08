@@ -22,8 +22,4 @@ STATE op_ppush(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_alloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 STATE op_dealloc(STACK* stack, STREAM* program, HEAP* heap, STATE state);
 
-// String operations
-STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state);
-
 #endif /* EXECUTOR_H */

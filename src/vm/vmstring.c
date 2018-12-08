@@ -1,37 +1,35 @@
 #include "vmstring.h"
-#include "math.h"
-#include <string.h>
+#include "libstring.h"
+#include <stdio.h>
 
-void vmstring_concat(VMSTRING_HEADER* a, VMSTRING_HEADER* b, VMSTRING_HEADER* out)
+// String operations
+STATE op_scat(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    VMSTRING_HEADER a_header = vmstring_read_header(a);
-    VMSTRING_HEADER b_header = vmstring_read_header(b);
+    POINTER dest_ptr = stack_pop(stack).ptr_val;
+    POINTER b_ptr    = stack_pop(stack).ptr_val;
+    POINTER a_ptr    = stack_pop(stack).ptr_val;
 
-    ULONG new_len = a_header.length + b_header.length; // TODO maybe check for overflow?
+    VMSTRING_HEADER* a_str    = (VMSTRING_HEADER*)heap_at(heap, a_ptr);
+    VMSTRING_HEADER* b_str    = (VMSTRING_HEADER*)heap_at(heap, b_ptr);
+    VMSTRING_HEADER* dest_str = (VMSTRING_HEADER*)heap_at(heap, dest_ptr);
 
-    out->length = new_len;
+    vmstring_concat(a_str, b_str, dest_str);
 
-    void* a_string_offset = vmstring_data_ptr(out);
-    void* b_string_offset = a_string_offset + a_header.length;
+    stack_push(stack, object_of_ptr(dest_ptr));
 
-    memcpy(a_string_offset, vmstring_data_ptr(a), a_header.length);
-    memcpy(b_string_offset, vmstring_data_ptr(b), b_header.length);
+    return state;
 }
 
-VMSTRING_HEADER vmstring_read_header(void* str_ptr)
+STATE op_sprint(STACK* stack, STREAM* program, HEAP* heap, STATE state)
 {
-    VMSTRING_HEADER header = *((VMSTRING_HEADER*)str_ptr);
+    POINTER str_ptr = stack_pop(stack).ptr_val;
 
-#ifdef VM_IS_LITTLE_ENDIAN
-    header.length = (INTEGER)math_int16_to_big_endian(header.length);
-#endif
+    VMSTRING_HEADER* str = (VMSTRING_HEADER*)heap_at(heap, str_ptr);
 
-    return header;
-}
+    char* data = vmstring_data_ptr(str);
+    for (int i = 0; i < str->length; i++) {
+        printf("%c", data[i]);
+    }
 
-void* vmstring_data_ptr(VMSTRING_HEADER* str)
-{
-    char* data_ptr = (char*)str + sizeof(VMSTRING_HEADER);
-
-    return (void*)data_ptr;
+    return state;
 }
