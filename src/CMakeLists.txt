@@ -7,8 +7,8 @@ add_library(vm-lib STATIC
     vm/executor.h
     vm/heap.c
     vm/heap.h
-    vm/object.c
-    vm/object.h
+    vm/stackobject.c
+    vm/stackobject.h
     vm/opcode.h
     vm/stack.c
     vm/stack.h

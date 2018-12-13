@@ -5,7 +5,7 @@ void op_ipush(VM* vm)
 {
     INTEGER value = bytecode_read_int(vm);
 
-    stack_push(&vm->stack, object_of_int(value));
+    stack_push(&vm->stack, stack_object_of_int(value));
 }
 
 void op_iadd(VM* vm)
@@ -13,7 +13,7 @@ void op_iadd(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a + b));
+    stack_push(&vm->stack, stack_object_of_int(a + b));
 }
 
 void op_isub(VM* vm)
@@ -21,7 +21,7 @@ void op_isub(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a - b));
+    stack_push(&vm->stack, stack_object_of_int(a - b));
 }
 
 void op_idiv(VM* vm)
@@ -29,7 +29,7 @@ void op_idiv(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a / b)); // TODO figure out how to handle exceptions (in this case, division by zero)
+    stack_push(&vm->stack, stack_object_of_int(a / b)); // TODO figure out how to handle exceptions (in this case, division by zero)
 }
 
 void op_imul(VM* vm)
@@ -37,7 +37,7 @@ void op_imul(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a * b));
+    stack_push(&vm->stack, stack_object_of_int(a * b));
 }
 
 void op_iand(VM* vm)
@@ -45,7 +45,7 @@ void op_iand(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a & b));
+    stack_push(&vm->stack, stack_object_of_int(a & b));
 }
 
 void op_ior(VM* vm)
@@ -53,7 +53,7 @@ void op_ior(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a | b));
+    stack_push(&vm->stack, stack_object_of_int(a | b));
 }
 
 void op_ixor(VM* vm)
@@ -61,14 +61,14 @@ void op_ixor(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a ^ b));
+    stack_push(&vm->stack, stack_object_of_int(a ^ b));
 }
 
 void op_inot(VM* vm)
 {
     INTEGER a = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(~a));
+    stack_push(&vm->stack, stack_object_of_int(~a));
 }
 
 void op_ilshift(VM* vm)
@@ -76,7 +76,7 @@ void op_ilshift(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a << b));
+    stack_push(&vm->stack, stack_object_of_int(a << b));
 }
 
 void op_irshift(VM* vm)
@@ -84,14 +84,14 @@ void op_irshift(VM* vm)
     INTEGER a = stack_pop(&vm->stack).int_val;
     INTEGER b = stack_pop(&vm->stack).int_val;
 
-    stack_push(&vm->stack, object_of_int(a >> b));
+    stack_push(&vm->stack, stack_object_of_int(a >> b));
 }
 
 void op_uipush(VM* vm)
 {
     UINTEGER val = bytecode_read_uint(vm);
 
-    stack_push(&vm->stack, object_of_uint(val));
+    stack_push(&vm->stack, stack_object_of_uint(val));
 }
 
 void op_uiadd(VM* vm)
@@ -99,7 +99,7 @@ void op_uiadd(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a + b));
+    stack_push(&vm->stack, stack_object_of_uint(a + b));
 }
 
 void op_uisub(VM* vm)
@@ -107,7 +107,7 @@ void op_uisub(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a - b));
+    stack_push(&vm->stack, stack_object_of_uint(a - b));
 }
 
 void op_uidiv(VM* vm)
@@ -115,7 +115,7 @@ void op_uidiv(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a / b));
+    stack_push(&vm->stack, stack_object_of_uint(a / b));
 }
 
 void op_uimul(VM* vm)
@@ -123,7 +123,7 @@ void op_uimul(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a * b));
+    stack_push(&vm->stack, stack_object_of_uint(a * b));
 }
 
 void op_uiand(VM* vm)
@@ -131,7 +131,7 @@ void op_uiand(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a & b));
+    stack_push(&vm->stack, stack_object_of_uint(a & b));
 }
 
 void op_uior(VM* vm)
@@ -139,7 +139,7 @@ void op_uior(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a | b));
+    stack_push(&vm->stack, stack_object_of_uint(a | b));
 }
 
 void op_uixor(VM* vm)
@@ -147,14 +147,14 @@ void op_uixor(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a ^ b));
+    stack_push(&vm->stack, stack_object_of_uint(a ^ b));
 }
 
 void op_uinot(VM* vm)
 {
     UINTEGER a = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(~a));
+    stack_push(&vm->stack, stack_object_of_uint(~a));
 }
 
 void op_uilshift(VM* vm)
@@ -162,7 +162,7 @@ void op_uilshift(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a << b));
+    stack_push(&vm->stack, stack_object_of_uint(a << b));
 }
 
 void op_uirshift(VM* vm)
@@ -170,5 +170,5 @@ void op_uirshift(VM* vm)
     UINTEGER a = stack_pop(&vm->stack).uint_val;
     UINTEGER b = stack_pop(&vm->stack).uint_val;
 
-    stack_push(&vm->stack, object_of_uint(a >> b));
+    stack_push(&vm->stack, stack_object_of_uint(a >> b));
 }

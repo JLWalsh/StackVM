@@ -32,8 +32,8 @@ void test_fpush_should_push_float_on_top_of_the_stack()
 void test_fadd_should_add_two_floats_on_top_of_the_stack()
 {
     before_each();
-    stack_push(&vm.stack, object_of_float(10.239));
-    stack_push(&vm.stack, object_of_float(-381.3));
+    stack_push(&vm.stack, stack_object_of_float(10.239));
+    stack_push(&vm.stack, stack_object_of_float(-381.3));
     float expected_result = -371.061;
 
     op_fadd(&vm);
@@ -45,8 +45,8 @@ void test_fadd_should_add_two_floats_on_top_of_the_stack()
 void test_fsub_should_subtract_two_floats_on_top_of_the_stack()
 {
     before_each();
-    stack_push(&vm.stack, object_of_float(991.313));
-    stack_push(&vm.stack, object_of_float(2381.23));
+    stack_push(&vm.stack, stack_object_of_float(991.313));
+    stack_push(&vm.stack, stack_object_of_float(2381.23));
     float expected_result = 1389.917;
 
     op_fsub(&vm);
@@ -58,8 +58,8 @@ void test_fsub_should_subtract_two_floats_on_top_of_the_stack()
 void test_fdiv_should_divide_two_floats_on_top_of_the_stack() // TODO add test case for division by 0 when exceptions are implemented
 {
     before_each();
-    stack_push(&vm.stack, object_of_float(2));
-    stack_push(&vm.stack, object_of_float(23.82));
+    stack_push(&vm.stack, stack_object_of_float(2));
+    stack_push(&vm.stack, stack_object_of_float(23.82));
     float expected_result = 11.91;
 
     op_fdiv(&vm);
@@ -71,8 +71,8 @@ void test_fdiv_should_divide_two_floats_on_top_of_the_stack() // TODO add test c
 void test_fmul_should_multiply_two_floats_on_top_of_the_stack()
 {
     before_each();
-    stack_push(&vm.stack, object_of_float(512.83));
-    stack_push(&vm.stack, object_of_float(-193.35));
+    stack_push(&vm.stack, stack_object_of_float(512.83));
+    stack_push(&vm.stack, stack_object_of_float(-193.35));
     float expected_result = -99155.6805;
 
     op_fmul(&vm);

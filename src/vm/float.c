@@ -6,7 +6,7 @@ void op_fpush(VM* vm)
 {
     float float_val = bytecode_read_float(vm);
 
-    stack_push(&vm->stack, object_of_float(float_val));
+    stack_push(&vm->stack, stack_object_of_float(float_val));
 }
 
 void op_fadd(VM* vm)
@@ -14,7 +14,7 @@ void op_fadd(VM* vm)
     float a = stack_pop(&vm->stack).float_val;
     float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(&vm->stack, object_of_float(a + b));
+    stack_push(&vm->stack, stack_object_of_float(a + b));
 }
 
 void op_fsub(VM* vm)
@@ -22,7 +22,7 @@ void op_fsub(VM* vm)
     float a = stack_pop(&vm->stack).float_val;
     float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(&vm->stack, object_of_float(a - b));
+    stack_push(&vm->stack, stack_object_of_float(a - b));
 }
 
 void op_fdiv(VM* vm)
@@ -30,7 +30,7 @@ void op_fdiv(VM* vm)
     float a = stack_pop(&vm->stack).float_val;
     float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(&vm->stack, object_of_float(a / b)); // TODO check for division by zero
+    stack_push(&vm->stack, stack_object_of_float(a / b)); // TODO check for division by zero
 }
 
 void op_fmul(VM* vm)
@@ -38,7 +38,7 @@ void op_fmul(VM* vm)
     float a = stack_pop(&vm->stack).float_val;
     float b = stack_pop(&vm->stack).float_val;
 
-    stack_push(&vm->stack, object_of_float(a * b));
+    stack_push(&vm->stack, stack_object_of_float(a * b));
 }
 
 void op_fprint(VM* vm)

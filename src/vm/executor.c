@@ -7,9 +7,9 @@
 
 void op_loadarg(VM* vm)
 {
-    INTEGER offset   = bytecode_read_int(vm);
-    INTEGER position = vm->state.frame_position + offset;
-    OBJECT  o        = stack_at(&vm->stack, position);
+    INTEGER      offset   = bytecode_read_int(vm);
+    INTEGER      position = vm->state.frame_position + offset;
+    STACK_OBJECT o        = stack_at(&vm->stack, position);
 
     stack_push(&vm->stack, o);
 }
@@ -24,14 +24,14 @@ void op_call(VM* vm)
     vm->state.instruction_ptr = fun_addr;
     vm->state.frame_position  = stack_size(&vm->stack) - num_args;
 
-    stack_push(&vm->stack, object_of_int(num_args));
-    stack_push(&vm->stack, object_of_ptr(return_addr));
-    stack_push(&vm->stack, object_of_int(vm->state.frame_position));
+    stack_push(&vm->stack, stack_object_of_int(num_args));
+    stack_push(&vm->stack, stack_object_of_ptr(return_addr));
+    stack_push(&vm->stack, stack_object_of_int(vm->state.frame_position));
 }
 
 void op_return(VM* vm)
 {
-    OBJECT return_val         = stack_pop(&vm->stack);
+    STACK_OBJECT return_val   = stack_pop(&vm->stack);
     vm->state.frame_position  = stack_pop(&vm->stack).ptr_val;
     vm->state.instruction_ptr = stack_pop(&vm->stack).ptr_val;
 
@@ -55,7 +55,7 @@ void op_halt(VM* vm)
 
 void op_print(VM* vm)
 {
-    OBJECT o = stack_pop(&vm->stack);
+    STACK_OBJECT o = stack_pop(&vm->stack);
 
     printf("%i\n", o.int_val);
 }
@@ -65,7 +65,7 @@ void op_ppush(VM* vm)
 {
     POINTER pointer = bytecode_read_ptr(vm);
 
-    stack_push(&vm->stack, object_of_ptr(pointer));
+    stack_push(&vm->stack, stack_object_of_ptr(pointer));
 }
 
 void op_alloc(VM* vm)
@@ -73,7 +73,7 @@ void op_alloc(VM* vm)
     ULONG   alloc_size = bytecode_read_ulong(vm);
     POINTER ptr        = heap_alloc(&vm->heap, alloc_size);
 
-    stack_push(&vm->stack, object_of_ptr(ptr));
+    stack_push(&vm->stack, stack_object_of_ptr(ptr));
 }
 
 void op_dealloc(VM* vm)

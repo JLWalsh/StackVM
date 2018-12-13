@@ -5,7 +5,7 @@
 STACK stack_create(uint16_t num_objects)
 {
     STACK stack;
-    stack.objects  = (OBJECT*)malloc(sizeof(OBJECT) * num_objects);
+    stack.objects  = (STACK_OBJECT*)malloc(sizeof(STACK_OBJECT) * num_objects);
     stack.max_size = num_objects;
     stack.size     = 0;
 
@@ -24,22 +24,22 @@ void stack_reset(STACK* stack)
     stack->size = 0;
 }
 
-OBJECT stack_top(STACK* stack)
+STACK_OBJECT stack_top(STACK* stack)
 {
     return stack->objects[stack->size];
 }
 
-OBJECT stack_pop(STACK* stack)
+STACK_OBJECT stack_pop(STACK* stack)
 {
     return stack->objects[--stack->size];
 }
 
-OBJECT stack_at(STACK* stack, INTEGER position)
+STACK_OBJECT stack_at(STACK* stack, INTEGER position)
 {
     return stack->objects[position];
 }
 
-void stack_push(STACK* stack, OBJECT object)
+void stack_push(STACK* stack, STACK_OBJECT object)
 {
     stack->objects[stack->size++] = object;
 }

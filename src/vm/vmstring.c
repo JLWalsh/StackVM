@@ -15,7 +15,7 @@ void op_scat(VM* vm)
 
     vmstring_concat(a_str, b_str, dest_str);
 
-    stack_push(&vm->stack, object_of_ptr(dest_ptr));
+    stack_push(&vm->stack, stack_object_of_ptr(dest_ptr));
 }
 
 void op_sprint(VM* vm)
