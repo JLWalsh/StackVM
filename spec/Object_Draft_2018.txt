@@ -1,0 +1,15 @@
+
+
+~~~StackVM Object Implementation~~~
+
+After some reflexion, I have decided to make the SVM fully object-oriented. 
+The advantages I have come up with are:
+- No memory fragmentation, as the SVM can move objects around in the heap and automatically update their references
+- Will better fit the long term vision: an object oriented language that compiles to object-oriented bytecode for the SVM
+
+~~~Object representation~~~
+An object will need:
+	- A reference
+	- A function pointer table. This could be loaded when the SVM starts, to avoid having to parse the pointers over and over
+	- A fixed size, in order to know how many bytes to allocate for that object
+	
