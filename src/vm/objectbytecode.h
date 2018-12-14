@@ -1,0 +1,18 @@
+#ifndef OBJECTBYTECODE_H
+#define OBJECTBYTECODE_H
+
+#include "type.h"
+
+typedef struct OBJECT_BYTECODE_HEADER_T {
+    UINTEGER object_id;
+    ULONG    bytecode_size;
+} OBJECT_BYTECODE_HEADER;
+
+typedef struct OBJECT_BYTECODE_FUNC_TABLE_HEADER_T {
+    ULONG table_size;
+} OBJECT_BYTECODE_FUNC_TABLE_HEADER;
+
+typedef struct OBJECT_BYTECODE_VFUNC_TABLE_HEADER_T {
+} OBJECT_BYTECODE_VFUNC_TABLE_HEADER_T;
+
+#endif /* OBJECTBYTECODE_H */
