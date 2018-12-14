@@ -1,7 +1,6 @@
 #ifndef EXECUTABLE_H
 #define EXECUTABLE_H
 
-#include "constants.h"
 #include "stream.h"
 #include "type.h"
 
@@ -11,13 +10,14 @@ typedef struct EXECUTABLE_HEADER_T {
 } EXECUTABLE_HEADER;
 
 typedef struct EXECUTABLE_T {
-    CONSTANTS constants;
-    STREAM    program;
+    void*  constants;
+    ULONG  constants_length;
+    STREAM program;
 } EXECUTABLE;
 
 EXECUTABLE executable_from(char* bytes);
 
-EXECUTABLE_HEADER executable_read_header(STREAM bytes_stream);
+EXECUTABLE_HEADER executable_read_header(STREAM* bytes_stream);
 
 void executable_free(EXECUTABLE executable);
 

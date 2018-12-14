@@ -1,6 +1,4 @@
 add_library(vm-lib STATIC
-    vm/constants.c
-    vm/constants.h
     vm/executable.c
     vm/executable.h
     vm/executor.c

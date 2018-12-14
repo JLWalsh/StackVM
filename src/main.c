@@ -75,7 +75,8 @@ int main(int argc, char const* argv[])
     };
 
     EXECUTABLE executable = executable_from(&exe);
-    VM         vm         = vm_create(executable);
+
+    VM vm = vm_create(executable);
 
     int16_t exit_code = vm_run(&vm);
 
