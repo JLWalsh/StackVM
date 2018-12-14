@@ -8,10 +8,9 @@
 typedef struct STREAM_T {
     void*   raw;
     POINTER current;
-    size_t  size;
 } STREAM;
 
-STREAM stream_create(void* raw, size_t size);
+STREAM stream_create(void* raw);
 
 POINTER stream_position(STREAM* stream);
 

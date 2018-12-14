@@ -6,7 +6,7 @@ static VM      vm;
 
 void set_up()
 {
-    vm.program = stream_create(&RANDOM_NUMBERS, 8);
+    vm.program = stream_create(&RANDOM_NUMBERS);
 }
 
 void before_each()
