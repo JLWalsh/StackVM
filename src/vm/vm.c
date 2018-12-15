@@ -99,7 +99,7 @@ INTEGER vm_run(VM* vm)
     while (vm->state.running) {
         stream_seek(&vm->program, vm->state.instruction_ptr);
 
-        OPCODE opcode = bytecode_read_opcode(vm);
+        OPCODE opcode = bytecode_program_read_opcode(vm);
 
         vm->executors[opcode](vm);
     }

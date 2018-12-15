@@ -3,7 +3,7 @@
 
 void op_ipush(VM* vm)
 {
-    INTEGER value = bytecode_read_int(vm);
+    INTEGER value = bytecode_program_read_int(vm);
 
     stack_push(&vm->stack, stack_object_of_int(value));
 }
@@ -89,7 +89,7 @@ void op_irshift(VM* vm)
 
 void op_uipush(VM* vm)
 {
-    UINTEGER val = bytecode_read_uint(vm);
+    UINTEGER val = bytecode_program_read_uint(vm);
 
     stack_push(&vm->stack, stack_object_of_uint(val));
 }

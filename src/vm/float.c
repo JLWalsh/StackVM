@@ -4,7 +4,7 @@
 
 void op_fpush(VM* vm)
 {
-    float float_val = bytecode_read_float(vm);
+    float float_val = bytecode_program_read_float(vm);
 
     stack_push(&vm->stack, stack_object_of_float(float_val));
 }

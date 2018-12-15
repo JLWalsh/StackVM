@@ -3,7 +3,7 @@
 
 void op_lpush(VM* vm)
 {
-    LONG val = bytecode_read_long(vm);
+    LONG val = bytecode_program_read_long(vm);
 
     stack_push(&vm->stack, stack_object_of_long(val));
 }
@@ -89,7 +89,7 @@ void op_lrshift(VM* vm)
 
 void op_ulpush(VM* vm)
 {
-    ULONG val = bytecode_read_ulong(vm);
+    ULONG val = bytecode_program_read_ulong(vm);
 
     stack_push(&vm->stack, stack_object_of_ulong(val));
 }
