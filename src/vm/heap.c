@@ -3,35 +3,23 @@
 #include <stdio.h>
 #include <string.h>
 
-HEAP heap_from(CONSTANTS constants, ULONG min_writable_size)
+HEAP heap_create(ULONG start_size)
 {
-    size_t chunk_headers_size = sizeof(CHUNK) * 2;
-    size_t size               = chunk_headers_size + constants.length + min_writable_size;
+    size_t chunk_headers_size = sizeof(CHUNK);
+    size_t full_size          = chunk_headers_size + start_size;
 
-    char*  heap_start      = (char*)malloc(size + 1);
-    CHUNK* constants_chunk = (CHUNK*)(heap_start + 1); // First byte is reserved for VM_NULL
+    char*  heap_start  = (char*)malloc(full_size + 1);
+    CHUNK* first_chunk = (CHUNK*)(heap_start + 1); // First byte is reserved for VM_NULL
 
-    constants_chunk->previous = NULL;
-    constants_chunk->next     = NULL;
-    constants_chunk->size     = constants.length;
-    constants_chunk->flags    = CHUNK_FLAGS_NONE;
-    constants_chunk->flags |= 1 << CHUNK_FLAGS_READONLY;
-    constants_chunk->flags |= 1 << CHUNK_FLAGS_ALLOCATED;
+    first_chunk->previous = NULL;
+    first_chunk->next     = NULL;
+    first_chunk->size     = start_size;
 
-    char* data = (char*)constants_chunk + sizeof(CHUNK);
-    memcpy(data, constants.data, constants.length);
-
-    CHUNK* writable_chunk    = (CHUNK*)((char*)constants_chunk + sizeof(CHUNK) + constants.length);
-    writable_chunk->next     = NULL;
-    writable_chunk->previous = constants_chunk;
-    writable_chunk->size     = min_writable_size;
-    writable_chunk->flags    = CHUNK_FLAGS_NONE;
-
-    constants_chunk->next = writable_chunk;
+    heap_chunk_reset_flags(first_chunk);
 
     HEAP heap;
-    heap.size  = size;
-    heap.start = (char*)constants_chunk;
+    heap.size  = start_size;
+    heap.start = (char*)first_chunk;
 
     return heap;
 }
@@ -46,14 +34,11 @@ POINTER heap_alloc(HEAP* heap, ULONG size)
     CHUNK* current = (CHUNK*)heap->start;
 
     while (current != NULL) {
-        INTEGER flags        = current->flags;
-        bool    is_allocated = (flags >> CHUNK_FLAGS_ALLOCATED) & 1;
-        bool    is_readonly  = (flags >> CHUNK_FLAGS_READONLY) & 1;
-
+        bool is_allocated = heap_chunk_read_flag(current, CHUNK_FLAGS_ALLOCATED);
+        bool is_readonly  = heap_chunk_read_flag(current, CHUNK_FLAGS_READONLY);
         if (current->size >= size && !is_allocated && !is_readonly) {
             POINTER pointer = heap_ptr_of_chunk(heap, current);
-
-            current->flags |= 1 << CHUNK_FLAGS_ALLOCATED;
+            heap_chunk_enable_flag(current, CHUNK_FLAGS_ALLOCATED);
 
             if (current->size > size + sizeof(CHUNK)) {
                 CHUNK* data_end = (CHUNK*)((char*)current + sizeof(CHUNK) + size);
@@ -66,9 +51,9 @@ POINTER heap_alloc(HEAP* heap, ULONG size)
                 data_end->previous = current;
                 current->next      = data_end;
 
-                data_end->flags = CHUNK_FLAGS_NONE;
-                data_end->size  = current->size - sizeof(CHUNK) - size;
-                current->size   = size;
+                heap_chunk_reset_flags(data_end);
+                data_end->size = current->size - sizeof(CHUNK) - size;
+                current->size  = size;
             }
 
             return pointer;
@@ -88,26 +73,7 @@ void heap_dealloc(HEAP* heap, POINTER value)
 {
     CHUNK* chunk = heap_chunk_of_ptr(heap, value);
 
-    chunk->flags &= ~(1 << CHUNK_FLAGS_ALLOCATED);
-}
-
-void heap_stitch(HEAP* heap)
-{
-    CHUNK* current = (CHUNK*)heap->start;
-
-    while (current->next != NULL) {
-        bool is_allocated      = (current->flags >> CHUNK_FLAGS_ALLOCATED) & 1;
-        bool is_next_allocated = (current->next->flags >> CHUNK_FLAGS_ALLOCATED) & 1;
-
-        if (!is_allocated && !is_next_allocated) {
-            current->size += current->next->size;
-            current->next = current->next->next;
-
-            if (current->next != NULL) {
-                current->next->previous = current;
-            }
-        }
-    }
+    heap_chunk_disable_flag(chunk, CHUNK_FLAGS_ALLOCATED);
 }
 
 void* heap_at(HEAP* heap, POINTER value)
@@ -130,6 +96,26 @@ CHUNK* heap_chunk_of_ptr(HEAP* heap, POINTER ptr)
     char* chunk_ptr = heap->start + ptr;
 
     return (CHUNK*)chunk_ptr;
+}
+
+void heap_chunk_enable_flag(CHUNK* chunk, CHUNK_FLAGS flags)
+{
+    chunk->flags |= (flags);
+}
+
+void heap_chunk_disable_flag(CHUNK* chunk, CHUNK_FLAGS flags)
+{
+    chunk->flags &= ~flags;
+}
+
+void heap_chunk_reset_flags(CHUNK* chunk)
+{
+    chunk->flags = 0;
+}
+
+bool heap_chunk_read_flag(CHUNK* chunk, CHUNK_FLAGS flag)
+{
+    return chunk->flags & flag;
 }
 
 void heap_dump(HEAP* heap)
