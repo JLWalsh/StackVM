@@ -20,7 +20,7 @@ void test_fpush_should_push_float_on_top_of_the_stack()
     before_each();
 
     char   bytecode[] = { 195, 163, 29, 188 };
-    STREAM program    = stream_create(&bytecode, 4);
+    STREAM program    = stream_create(&bytecode);
     vm.program        = program;
 
     op_fpush(&vm);

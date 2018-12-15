@@ -1,11 +1,10 @@
 #include "stream.h"
 
-STREAM stream_create(void* raw, size_t size)
+STREAM stream_create(void* raw)
 {
     STREAM stream;
     stream.raw     = raw;
     stream.current = 0;
-    stream.size    = size;
 
     return stream;
 }

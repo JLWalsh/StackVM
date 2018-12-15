@@ -20,7 +20,7 @@ void test_lpush_should_push_long_on_top_of_the_stack()
     before_each();
 
     char   bytecode[] = { 0, 0, 0, 0, 2, 15, 118, 185 };
-    STREAM program    = stream_create(&bytecode, 8);
+    STREAM program    = stream_create(&bytecode);
     vm.program        = program;
 
     op_lpush(&vm);
@@ -163,7 +163,7 @@ void test_ulpush_should_push_ulong_on_top_of_the_stack()
     before_each();
 
     char   bytecode[] = { 0, 0, 0, 0, 2, 15, 118, 185 };
-    STREAM program    = stream_create(&bytecode, 8);
+    STREAM program    = stream_create(&bytecode);
     vm.program        = program;
 
     op_lpush(&vm);

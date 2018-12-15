@@ -11,8 +11,15 @@ VM vm_create(EXECUTABLE executable)
     VM vm;
     vm.stack   = stack_create(10); // TODO find clean way to specify stack size
     vm.program = executable.program;
-    vm.heap    = heap_from(executable.constants, 500); // TODO also applies to heap
+    vm.heap    = heap_create(executable.constants_length + 500); // TODO also applies to heap
     vm.state   = state_create(executable);
+
+    if (executable.constants_length > 0) {
+        POINTER constants       = heap_alloc(&vm.heap, executable.constants_length);
+        CHUNK*  constants_chunk = heap_chunk_of_ptr(&vm.heap, constants);
+
+        heap_chunk_enable_flag(constants_chunk, CHUNK_FLAGS_READONLY | CHUNK_FLAGS_ALLOCATED);
+    }
 
     vm.executors[OP_LOADARG] = op_loadarg;
     vm.executors[OP_CALL]    = op_call;

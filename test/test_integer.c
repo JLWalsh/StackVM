@@ -20,7 +20,7 @@ void test_ipush_should_push_int_on_top_of_the_stack()
     before_each();
 
     char   bytecode[] = { 0, 15 };
-    STREAM program    = stream_create(&bytecode, 2);
+    STREAM program    = stream_create(&bytecode);
     vm.program        = program;
 
     op_ipush(&vm);
@@ -163,7 +163,7 @@ void test_uipush_should_push_uint_on_top_of_the_stack()
     before_each();
 
     char   bytecode[] = { 0, 15 };
-    STREAM program    = stream_create(&bytecode, 2);
+    STREAM program    = stream_create(&bytecode);
     vm.program        = program;
 
     op_uipush(&vm);
